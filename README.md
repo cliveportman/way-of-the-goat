@@ -8,7 +8,6 @@ This repository contains multiple implementations of the same core application:
 
 ```
 way-of-the-goat/
-├── website/          # Next.js marketing website
 ├── mobile/           # Native mobile apps
 │   ├── androidApp/   # Native Android app (Jetpack Compose)
 │   └── iosApp/       # Native iOS app (SwiftUI - future)
@@ -34,9 +33,18 @@ The scoring methodology comes from "Racing Weight" by Matt Fitzgerald, designed 
 ![jetpack-compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=flat&logo=jetpackcompose&logoColor=white)
 ![swiftui](https://img.shields.io/badge/SwiftUI-FA7343?style=flat&logo=swift&logoColor=white)
 
-### Website (Next.js)
-![nextjs](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
-![typescript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+## Getting Started
+
+### Prerequisites
+- IntelliJ IDEA (Community Edition works fine)
+- Android SDK
+- Java 17+ (Azul Zulu recommended)
+
+### Running the Android App
+1. Open the `mobile/` directory in IntelliJ IDEA
+2. Let Gradle sync complete
+3. Create "Android App" run configuration
+4. Run on emulator or connected device
 
 ## User interface
 
