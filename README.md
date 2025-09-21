@@ -8,13 +8,11 @@ This repository contains multiple implementations of the same core application:
 
 ```
 way-of-the-goat/
-├── dqs-app/          # React Native/Expo app (legacy)
 ├── website/          # Next.js marketing website
 ├── mobile/           # Native mobile apps
-│   ├── shared/       # Kotlin Multiplatform shared code
 │   ├── androidApp/   # Native Android app (Jetpack Compose)
-│   └── iosApp/       # Native iOS app (SwiftUI)
-├── api/              # Go backend API
+│   └── iosApp/       # Native iOS app (SwiftUI - future)
+├── api/              # Go backend API (future)
 └── global-assets/    # Shared assets across platforms
 ```
 
@@ -36,12 +34,9 @@ The scoring methodology comes from "Racing Weight" by Matt Fitzgerald, designed 
 ![jetpack-compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=flat&logo=jetpackcompose&logoColor=white)
 ![swiftui](https://img.shields.io/badge/SwiftUI-FA7343?style=flat&logo=swift&logoColor=white)
 
-### Legacy React Native App
-![react](https://img.shields.io/badge/React-brown)
-![react native](https://img.shields.io/badge/React_Native-brown)
-![expo](https://img.shields.io/badge/Expo-brown)
-![tailwind](https://img.shields.io/badge/Tailwind/Nativewind-brown)
-![typescript](https://img.shields.io/badge/Typescript-blue)
+### Website (Next.js)
+![nextjs](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
+![typescript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 
 ## User interface
 
