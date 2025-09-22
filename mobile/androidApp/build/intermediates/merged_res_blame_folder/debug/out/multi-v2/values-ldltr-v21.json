@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "co.cliveportman.wayofthegoat.androidApp-mergeDebugResources-48:/values-ldltr-v21/values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "/Users/clive/.gradle/caches/transforms-3/b6dee9f4e355d9f4c7a2dd3489d2ed25/transformed/appcompat-1.6.1/res/values-ldltr-v21/values-ldltr-v21.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "112",
+                        "endOffsets": "163"
+                    }
+                }
+            ]
+        }
+    ]
+}

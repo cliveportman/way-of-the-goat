@@ -11,6 +11,7 @@ way-of-the-goat/
 ├── mobile/           # Native mobile apps
 │   ├── androidApp/   # Native Android app (Jetpack Compose)
 │   └── iosApp/       # Native iOS app (SwiftUI - future)
+├── website/          # Simple website (future)
 ├── api/              # Go backend API (future)
 └── global-assets/    # Shared assets across platforms
 ```
