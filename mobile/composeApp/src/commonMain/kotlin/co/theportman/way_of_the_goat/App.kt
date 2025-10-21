@@ -29,6 +29,9 @@ fun App() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
+        // State to hold the target date for scores screen
+        var targetScoresDateEpochDay by remember { mutableStateOf<Long?>(null) }
+
         // Determine if bottom nav should be visible (hide on SecondPage and Home)
         val showBottomNav = currentRoute in listOf(
             Screen.Progress.route,
@@ -41,7 +44,8 @@ fun App() {
                 if (showBottomNav) {
                     BottomNavigationBar(
                         navController = navController,
-                        currentRoute = currentRoute
+                        currentRoute = currentRoute,
+                        onScoresNavigate = { targetScoresDateEpochDay = null }
                     )
                 }
             }
@@ -62,10 +66,19 @@ fun App() {
                     SecondPage()
                 }
                 composable(Screen.Progress.route) {
-                    ProgressScreen()
+                    ProgressScreen(
+                        onDateClick = { date ->
+                            targetScoresDateEpochDay = date.toEpochDays().toLong()
+                            navController.navigate(Screen.Scores.route) {
+                                launchSingleTop = true
+                            }
+                        }
+                    )
                 }
                 composable(Screen.Scores.route) {
-                    ScoresScreen()
+                    ScoresScreen(
+                        targetDateEpochDay = targetScoresDateEpochDay
+                    )
                 }
                 composable(Screen.Help.route) {
                     HelpScreen()
@@ -78,7 +91,8 @@ fun App() {
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
-    currentRoute: String?
+    currentRoute: String?,
+    onScoresNavigate: () -> Unit
 ) {
     NavigationBar {
         bottomNavItems.forEach { item ->
@@ -87,6 +101,10 @@ fun BottomNavigationBar(
                 label = { Text(item.label) },
                 selected = currentRoute == item.screen.route,
                 onClick = {
+                    // Clear target date when navigating from bottom nav
+                    if (item.screen == Screen.Scores) {
+                        onScoresNavigate()
+                    }
                     navController.navigate(item.screen.route) {
                         // Pop up to the start destination to avoid building up a large stack
                         popUpTo(navController.graph.startDestinationId) {
