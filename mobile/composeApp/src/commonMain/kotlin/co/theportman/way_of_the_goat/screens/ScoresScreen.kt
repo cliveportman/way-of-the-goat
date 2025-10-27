@@ -97,6 +97,11 @@ fun ScoresScreen(
         }
     }
 
+    // Monitor scroll position and preload data
+    LaunchedEffect(currentDate.value) {
+        viewModel.ensureDateLoaded(currentDate.value)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -129,11 +134,15 @@ fun ScoresScreen(
             val daysAgo = numberOfDays - 1 - page
             val pageDate = today.minus(daysAgo, DateTimeUnit.DAY)
 
+            // Check if this date's data is loaded
+            val isDateLoaded = viewModel.isDateLoaded(pageDate)
+
             ScoresPageContent(
                 date = pageDate,
                 viewMode = viewMode,
                 viewModel = viewModel,
-                uiState = uiState
+                uiState = uiState,
+                isDateLoaded = isDateLoaded
             )
         }
     }
@@ -144,8 +153,32 @@ private fun ScoresPageContent(
     date: LocalDate,
     viewMode: TodayViewMode,
     viewModel: ScoresViewModel,
-    uiState: ScoresUiState
+    uiState: ScoresUiState,
+    isDateLoaded: Boolean
 ) {
+    // Show loading indicator if date data isn't loaded yet
+    if (!isDateLoaded) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                androidx.compose.material3.CircularProgressIndicator()
+                Text(
+                    text = "Loading day data...",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+        return
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

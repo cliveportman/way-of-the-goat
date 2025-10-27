@@ -2,8 +2,8 @@ package co.theportman.way_of_the_goat.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.theportman.way_of_the_goat.data.cache.ActivityDataManager
 import co.theportman.way_of_the_goat.data.remote.models.Activity
-import co.theportman.way_of_the_goat.data.repository.IntervalsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +23,7 @@ import kotlinx.datetime.minus
  */
 class ProgressViewModel : ViewModel() {
 
-    private val repository = IntervalsRepository()
+    private val dataManager = ActivityDataManager
 
     private val _uiState = MutableStateFlow<ProgressUiState>(ProgressUiState.Loading)
     val uiState: StateFlow<ProgressUiState> = _uiState.asStateFlow()
@@ -34,9 +34,6 @@ class ProgressViewModel : ViewModel() {
     // Track loaded weeks (using Monday of the week as key)
     private val loadedWeeks = mutableSetOf<LocalDate>()
     private val loadingWeeks = mutableSetOf<LocalDate>()
-
-    // Store all activities across all loaded weeks
-    private val allActivities = mutableListOf<Activity>()
 
     init {
         loadInitialWeeks()
@@ -61,13 +58,24 @@ class ProgressViewModel : ViewModel() {
                 val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
                 val currentWeekMonday = getMonday(today)
 
-                // Load current week and 4 weeks back
-                for (weeksBack in 0..4) {
-                    val weekMonday = currentWeekMonday.minus(weeksBack * 7, DateTimeUnit.DAY)
-                    loadWeekData(weekMonday, isInitialLoad = true)
-                }
+                // Load initial data through ActivityDataManager
+                // Load ~35 days (5 weeks worth)
+                val oldest = currentWeekMonday.minus(4 * 7, DateTimeUnit.DAY)
+                val newest = currentWeekMonday.plus(6, DateTimeUnit.DAY) // Include current week's Sunday
 
-                _uiState.value = ProgressUiState.Success(allActivities.toList())
+                dataManager.loadInitialData(aroundDate = today, bufferDays = 28).fold(
+                    onSuccess = {
+                        // Mark weeks as loaded
+                        for (weeksBack in 0..4) {
+                            val weekMonday = currentWeekMonday.minus(weeksBack * 7, DateTimeUnit.DAY)
+                            loadedWeeks.add(weekMonday)
+                        }
+                        _uiState.value = ProgressUiState.Success(emptyList()) // Success with empty, data comes from dataManager
+                    },
+                    onFailure = { error ->
+                        _uiState.value = ProgressUiState.Error(error.message ?: "Unknown error")
+                    }
+                )
             } catch (e: Exception) {
                 _uiState.value = ProgressUiState.Error(e.message ?: "Unknown error")
             }
@@ -90,7 +98,7 @@ class ProgressViewModel : ViewModel() {
             val targetWeekMonday = currentWeekMonday.minus(4 * 7, DateTimeUnit.DAY)
 
             if (!isWeekLoaded(targetWeekMonday) && !loadingWeeks.contains(targetWeekMonday)) {
-                loadWeekData(targetWeekMonday, isInitialLoad = false)
+                loadWeekData(targetWeekMonday)
             }
         }
     }
@@ -98,7 +106,7 @@ class ProgressViewModel : ViewModel() {
     /**
      * Load activities for a specific week (Monday to Sunday)
      */
-    private suspend fun loadWeekData(weekMonday: LocalDate, isInitialLoad: Boolean) {
+    private suspend fun loadWeekData(weekMonday: LocalDate) {
         if (loadedWeeks.contains(weekMonday) || loadingWeeks.contains(weekMonday)) {
             return // Already loaded or loading
         }
@@ -107,39 +115,17 @@ class ProgressViewModel : ViewModel() {
 
         try {
             val weekSunday = weekMonday.plus(6, DateTimeUnit.DAY)
-            val result = repository.getActivities(
-                oldest = weekMonday.toString(),
-                newest = weekSunday.toString()
-            )
 
-            result.fold(
-                onSuccess = { activities ->
-                    // Add new activities and remove duplicates
-                    val activityIds = allActivities.map { it.id }.toSet()
-                    val newActivities = activities.filter { it.id !in activityIds }
-                    allActivities.addAll(newActivities)
+            // Use ActivityDataManager to check and load if needed
+            val didLoad = dataManager.ensureDateLoaded(weekMonday, bufferDays = 3)
 
-                    loadedWeeks.add(weekMonday)
-                    loadingWeeks.remove(weekMonday)
+            loadedWeeks.add(weekMonday)
+            loadingWeeks.remove(weekMonday)
 
-                    // Update UI state if not initial load
-                    if (!isInitialLoad) {
-                        _uiState.value = ProgressUiState.Success(allActivities.toList())
-                    }
-                },
-                onFailure = { error ->
-                    loadingWeeks.remove(weekMonday)
-                    if (!isInitialLoad) {
-                        // Don't change state on background load failures
-                        println("Failed to load week $weekMonday: ${error.message}")
-                    }
-                }
-            )
+            // UI state doesn't need updating as data comes from dataManager
         } catch (e: Exception) {
             loadingWeeks.remove(weekMonday)
-            if (!isInitialLoad) {
-                println("Exception loading week $weekMonday: ${e.message}")
-            }
+            println("Exception loading week $weekMonday: ${e.message}")
         }
     }
 
@@ -161,14 +147,7 @@ class ProgressViewModel : ViewModel() {
     }
 
     fun getActivitiesForDate(date: LocalDate): List<Activity> {
-        val currentState = _uiState.value
-        if (currentState !is ProgressUiState.Success) return emptyList()
-
-        return currentState.activities.filter { activity ->
-            // Parse the ISO date from the activity and match it with the given date
-            activity.startDateLocal.isNotEmpty() &&
-            activity.startDateLocal.substringBefore('T') == date.toString()
-        }
+        return dataManager.getActivitiesForDate(date)
     }
 
     /**
@@ -189,15 +168,7 @@ class ProgressViewModel : ViewModel() {
      * Get week summary for the week containing the given dates
      */
     fun getWeekSummary(weekMonday: LocalDate, weekSunday: LocalDate): WeekSummary {
-        val currentState = _uiState.value
-        if (currentState !is ProgressUiState.Success) return WeekSummary(0, 0.0)
-
-        val weekActivities = currentState.activities.filter { activity ->
-            if (activity.startDateLocal.isEmpty()) return@filter false
-
-            val activityDate = activity.startDateLocal.substringBefore('T')
-            activityDate >= weekMonday.toString() && activityDate <= weekSunday.toString()
-        }
+        val weekActivities = dataManager.getActivitiesForRange(weekMonday, weekSunday)
 
         val totalDistanceMeters = weekActivities.sumOf { it.distance ?: 0.0 }
         val totalDistanceKm = totalDistanceMeters / 1000.0
@@ -240,7 +211,8 @@ class ProgressViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        repository.close()
+        // ActivityDataManager is a singleton, don't close it here
+        // It will be closed when the app terminates
     }
 }
 
