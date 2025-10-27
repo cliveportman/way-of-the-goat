@@ -92,6 +92,47 @@ object ActivityDataManager {
     }
 
     /**
+     * Refresh data for a specific date range
+     * Removes cached activities in the range and fetches fresh data from API
+     * Updates existing activities by ID (handles edits) and adds new ones
+     */
+    suspend fun refreshDateRange(oldest: LocalDate, newest: LocalDate): Result<Unit> {
+        return mutex.withLock {
+            try {
+                // Fetch fresh data from API
+                val result = repository.getActivities(
+                    oldest = oldest.toString(),
+                    newest = newest.toString()
+                )
+
+                result.fold(
+                    onSuccess = { freshActivities ->
+                        // Remove activities in this date range from cache
+                        allActivities.removeAll { activity ->
+                            if (activity.startDateLocal.isEmpty()) return@removeAll false
+                            val activityDate = activity.startDateLocal.substringBefore('T')
+                            activityDate >= oldest.toString() && activityDate <= newest.toString()
+                        }
+
+                        // Add all fresh activities (new ones and updated ones)
+                        allActivities.addAll(freshActivities)
+
+                        // Emit updated activities
+                        _activitiesFlow.value = allActivities.toList()
+
+                        Result.success(Unit)
+                    },
+                    onFailure = { error ->
+                        Result.failure(error)
+                    }
+                )
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    /**
      * Check if a specific date is loaded
      */
     fun isDateLoaded(date: LocalDate): Boolean {

@@ -22,8 +22,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -148,6 +150,7 @@ fun ScoresScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ScoresPageContent(
     date: LocalDate,
@@ -156,6 +159,9 @@ private fun ScoresPageContent(
     uiState: ScoresUiState,
     isDateLoaded: Boolean
 ) {
+    // Collect refresh state
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+
     // Show loading indicator if date data isn't loaded yet
     if (!isDateLoaded) {
         Box(
@@ -179,67 +185,73 @@ private fun ScoresPageContent(
         return
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = { viewModel.refreshCurrentDate(date) },
+        modifier = Modifier.fillMaxSize()
     ) {
-        // Date heading
-        Text(
-            text = formatDate(date),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            // Date heading
+            Text(
+                text = formatDate(date),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
 
-        when (viewMode) {
-            TodayViewMode.NUTRITION -> {
-                // 3x3 Grid for nutrition
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(3),
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(9) { index ->
-                        GridCell(index = index)
+            when (viewMode) {
+                TodayViewMode.NUTRITION -> {
+                    // 3x3 Grid for nutrition
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(3),
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(9) { index ->
+                            GridCell(index = index)
+                        }
                     }
                 }
-            }
-            TodayViewMode.ACTIVITIES -> {
-                // Activities list
-                when (uiState) {
-                    is ScoresUiState.Loading -> {
-                        Text(
-                            text = "Loading activities...",
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                    is ScoresUiState.Success -> {
-                        val activities = viewModel.getActivitiesForDate(date)
-                        if (activities.isEmpty()) {
+                TodayViewMode.ACTIVITIES -> {
+                    // Activities list
+                    when (uiState) {
+                        is ScoresUiState.Loading -> {
                             Text(
-                                text = "No activities for this day",
+                                text = "Loading activities...",
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        is ScoresUiState.Success -> {
+                            val activities = viewModel.getActivitiesForDate(date)
+                            if (activities.isEmpty()) {
+                                Text(
+                                    text = "No activities for this day",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            } else {
+                                ActivitiesList(activities = activities)
+                            }
+                        }
+                        is ScoresUiState.Error -> {
+                            Text(
+                                text = "Error: ${uiState.message}",
                                 style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.error
                             )
-                        } else {
-                            ActivitiesList(activities = activities)
                         }
-                    }
-                    is ScoresUiState.Error -> {
-                        Text(
-                            text = "Error: ${uiState.message}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.error
-                        )
                     }
                 }
             }

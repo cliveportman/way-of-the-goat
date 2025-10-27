@@ -31,6 +31,9 @@ class ProgressViewModel : ViewModel() {
     private val _viewMode = MutableStateFlow(ViewMode.ACTIVITIES)
     val viewMode: StateFlow<ViewMode> = _viewMode.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     // Track loaded weeks (using Monday of the week as key)
     private val loadedWeeks = mutableSetOf<LocalDate>()
     private val loadingWeeks = mutableSetOf<LocalDate>()
@@ -99,6 +102,35 @@ class ProgressViewModel : ViewModel() {
 
             if (!isWeekLoaded(targetWeekMonday) && !loadingWeeks.contains(targetWeekMonday)) {
                 loadWeekData(targetWeekMonday)
+            }
+        }
+    }
+
+    /**
+     * Refresh the current visible week's data
+     * Reloads just the specified week (Monday to Sunday)
+     */
+    fun refreshCurrentWeek(weekMonday: LocalDate) {
+        viewModelScope.launch {
+            _isRefreshing.value = true
+
+            try {
+                val weekSunday = weekMonday.plus(6, DateTimeUnit.DAY)
+
+                // Refresh the week's data through ActivityDataManager
+                dataManager.refreshDateRange(weekMonday, weekSunday).fold(
+                    onSuccess = {
+                        // Success - data is automatically updated via StateFlow
+                    },
+                    onFailure = { error ->
+                        // Handle error - could show a toast/snackbar
+                        println("Error refreshing week: ${error.message}")
+                    }
+                )
+            } catch (e: Exception) {
+                println("Exception refreshing week: ${e.message}")
+            } finally {
+                _isRefreshing.value = false
             }
         }
     }

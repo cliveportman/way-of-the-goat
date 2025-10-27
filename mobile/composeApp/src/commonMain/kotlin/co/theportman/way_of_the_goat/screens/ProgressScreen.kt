@@ -20,7 +20,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -178,6 +180,7 @@ fun ProgressScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ProgressWeekContent(
     weekMonday: LocalDate,
@@ -187,6 +190,9 @@ private fun ProgressWeekContent(
     isWeekLoaded: Boolean,
     onDateClick: (LocalDate) -> Unit
 ) {
+    // Collect refresh state
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+
     // Show loading indicator if week data isn't loaded yet
     if (!isWeekLoaded) {
         Box(
@@ -210,45 +216,51 @@ private fun ProgressWeekContent(
         return
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = { viewModel.refreshCurrentWeek(weekMonday) },
+        modifier = Modifier.fillMaxSize()
     ) {
-        // Week date range heading
-        Text(
-            text = formatWeekRange(weekMonday, weekSunday),
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-
-        // Week summary
-        val weekSummary = viewModel.getWeekSummary(weekMonday, weekSunday)
-        val weekNutritionSummary = viewModel.getWeekNutritionSummary(weekMonday, weekSunday)
-        WeekSummaryCard(
-            activitySummary = weekSummary,
-            nutritionSummary = weekNutritionSummary,
-            viewMode = viewMode
-        )
-
-        // 7 bars for days of the week
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            for (dayOffset in 0..6) {
-                val currentDay = weekMonday.plus(dayOffset, DateTimeUnit.DAY)
-                val daySummary = viewModel.getDaySummary(currentDay)
-                val nutritionSummary = viewModel.getNutritionSummary(currentDay)
-                DayBar(
-                    date = currentDay,
-                    activitySummary = daySummary,
-                    nutritionSummary = nutritionSummary,
-                    viewMode = viewMode,
-                    onClick = { onDateClick(currentDay) }
-                )
+            // Week date range heading
+            Text(
+                text = formatWeekRange(weekMonday, weekSunday),
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+
+            // Week summary
+            val weekSummary = viewModel.getWeekSummary(weekMonday, weekSunday)
+            val weekNutritionSummary = viewModel.getWeekNutritionSummary(weekMonday, weekSunday)
+            WeekSummaryCard(
+                activitySummary = weekSummary,
+                nutritionSummary = weekNutritionSummary,
+                viewMode = viewMode
+            )
+
+            // 7 bars for days of the week
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                for (dayOffset in 0..6) {
+                    val currentDay = weekMonday.plus(dayOffset, DateTimeUnit.DAY)
+                    val daySummary = viewModel.getDaySummary(currentDay)
+                    val nutritionSummary = viewModel.getNutritionSummary(currentDay)
+                    DayBar(
+                        date = currentDay,
+                        activitySummary = daySummary,
+                        nutritionSummary = nutritionSummary,
+                        viewMode = viewMode,
+                        onClick = { onDateClick(currentDay) }
+                    )
+                }
             }
         }
     }

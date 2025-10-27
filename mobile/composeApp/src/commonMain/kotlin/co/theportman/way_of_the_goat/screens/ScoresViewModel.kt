@@ -32,6 +32,9 @@ class ScoresViewModel : ViewModel() {
     private val _viewMode = MutableStateFlow(TodayViewMode.NUTRITION)
     val viewMode: StateFlow<TodayViewMode> = _viewMode.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     // Track last viewed date for scroll direction detection
     private var lastViewedDate: LocalDate? = null
 
@@ -94,6 +97,33 @@ class ScoresViewModel : ViewModel() {
             }
 
             lastViewedDate = currentDate
+        }
+    }
+
+    /**
+     * Refresh the current visible date's data
+     * Reloads just the specified date
+     */
+    fun refreshCurrentDate(date: LocalDate) {
+        viewModelScope.launch {
+            _isRefreshing.value = true
+
+            try {
+                // Refresh just this date through ActivityDataManager
+                dataManager.refreshDateRange(date, date).fold(
+                    onSuccess = {
+                        // Success - data is automatically updated via StateFlow
+                    },
+                    onFailure = { error ->
+                        // Handle error - could show a toast/snackbar
+                        println("Error refreshing date: ${error.message}")
+                    }
+                )
+            } catch (e: Exception) {
+                println("Exception refreshing date: ${e.message}")
+            } finally {
+                _isRefreshing.value = false
+            }
         }
     }
 
