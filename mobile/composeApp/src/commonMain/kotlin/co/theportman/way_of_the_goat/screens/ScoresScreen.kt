@@ -5,24 +5,37 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import co.theportman.way_of_the_goat.data.remote.models.Activity
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -32,9 +45,16 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.todayIn
 
 @Composable
-fun ScoresScreen(targetDateEpochDay: Long? = null) {
+fun ScoresScreen(
+    targetDateEpochDay: Long? = null,
+    viewModel: ScoresViewModel = viewModel()
+) {
     // Get today's date
     val today = remember { Clock.System.todayIn(TimeZone.currentSystemDefault()) }
+
+    // Collect view mode state
+    val viewMode by viewModel.viewMode.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     // Calculate number of days to show (e.g., last 365 days up to today)
     val numberOfDays = 365
@@ -81,6 +101,26 @@ fun ScoresScreen(targetDateEpochDay: Long? = null) {
         modifier = Modifier
             .fillMaxSize()
     ) {
+        // Toggle button
+        Button(
+            onClick = { viewModel.toggleViewMode() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        ) {
+            Text(
+                text = when (viewMode) {
+                    TodayViewMode.ACTIVITIES -> "Activities"
+                    TodayViewMode.NUTRITION -> "Nutrition"
+                },
+                style = MaterialTheme.typography.labelLarge
+            )
+        }
+
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
@@ -89,13 +129,23 @@ fun ScoresScreen(targetDateEpochDay: Long? = null) {
             val daysAgo = numberOfDays - 1 - page
             val pageDate = today.minus(daysAgo, DateTimeUnit.DAY)
 
-            ScoresPageContent(date = pageDate)
+            ScoresPageContent(
+                date = pageDate,
+                viewMode = viewMode,
+                viewModel = viewModel,
+                uiState = uiState
+            )
         }
     }
 }
 
 @Composable
-private fun ScoresPageContent(date: LocalDate) {
+private fun ScoresPageContent(
+    date: LocalDate,
+    viewMode: TodayViewMode,
+    viewModel: ScoresViewModel,
+    uiState: ScoresUiState
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -110,15 +160,130 @@ private fun ScoresPageContent(date: LocalDate) {
             textAlign = TextAlign.Center
         )
 
-        // 3x3 Grid
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        when (viewMode) {
+            TodayViewMode.NUTRITION -> {
+                // 3x3 Grid for nutrition
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(9) { index ->
+                        GridCell(index = index)
+                    }
+                }
+            }
+            TodayViewMode.ACTIVITIES -> {
+                // Activities list
+                when (uiState) {
+                    is ScoresUiState.Loading -> {
+                        Text(
+                            text = "Loading activities...",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                    is ScoresUiState.Success -> {
+                        val activities = viewModel.getActivitiesForDate(date)
+                        if (activities.isEmpty()) {
+                            Text(
+                                text = "No activities for this day",
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        } else {
+                            ActivitiesList(activities = activities)
+                        }
+                    }
+                    is ScoresUiState.Error -> {
+                        Text(
+                            text = "Error: ${uiState.message}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ActivitiesList(activities: List<Activity>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(activities) { activity ->
+            ActivityCard(activity = activity)
+        }
+    }
+}
+
+@Composable
+private fun ActivityCard(activity: Activity) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(9) { index ->
-                GridCell(index = index)
+            // Activity name
+            Text(
+                text = activity.name ?: "Unnamed Activity",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            // Activity type
+            activity.type?.let { type ->
+                Text(
+                    text = type,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                )
+            }
+
+            // Distance and moving time row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                activity.distance?.let { distance ->
+                    val distanceKm = (distance / 1000.0 * 100).toInt() / 100.0
+                    Text(
+                        text = "Distance: $distanceKm km",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                activity.movingTime?.let { movingTime ->
+                    val hours = movingTime / 3600
+                    val minutes = (movingTime % 3600) / 60
+                    val timeStr = if (hours > 0) {
+                        "${hours}h ${minutes}m"
+                    } else {
+                        "${minutes}m"
+                    }
+                    Text(
+                        text = "Time: $timeStr",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
     }
@@ -149,7 +314,7 @@ private fun formatDate(date: LocalDate): String {
         DayOfWeek.FRIDAY -> "Friday"
         DayOfWeek.SATURDAY -> "Saturday"
         DayOfWeek.SUNDAY -> "Sunday"
-        else -> "Unknown"
+        else -> "Unknown" // Required: DayOfWeek is an expect enum in KMP, compiler requires else branch
     }
 
     val month = when (date.monthNumber) {
