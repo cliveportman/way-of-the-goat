@@ -58,7 +58,7 @@ fun App() {
                 composable(Screen.Home.route) {
                     HomeScreen(
                         onContinueClick = {
-                            navController.navigate(Screen.Progress.route)
+                            navController.navigate(Screen.Today.route)
                         }
                     )
                 }

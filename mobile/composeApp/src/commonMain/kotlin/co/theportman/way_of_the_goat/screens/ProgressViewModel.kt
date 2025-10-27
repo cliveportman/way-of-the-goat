@@ -11,7 +11,11 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.todayIn
 import kotlinx.datetime.plus
+import kotlinx.datetime.minus
 
 /**
  * ViewModel for the Progress screen
@@ -27,8 +31,15 @@ class ProgressViewModel : ViewModel() {
     private val _viewMode = MutableStateFlow(ViewMode.ACTIVITIES)
     val viewMode: StateFlow<ViewMode> = _viewMode.asStateFlow()
 
+    // Track loaded weeks (using Monday of the week as key)
+    private val loadedWeeks = mutableSetOf<LocalDate>()
+    private val loadingWeeks = mutableSetOf<LocalDate>()
+
+    // Store all activities across all loaded weeks
+    private val allActivities = mutableListOf<Activity>()
+
     init {
-        loadRecentActivities()
+        loadInitialWeeks()
     }
 
     fun cycleViewMode() {
@@ -39,19 +50,114 @@ class ProgressViewModel : ViewModel() {
         }
     }
 
-    fun loadRecentActivities() {
+    /**
+     * Load initial 5 weeks of data (current week + 4 weeks back)
+     */
+    private fun loadInitialWeeks() {
         viewModelScope.launch {
             _uiState.value = ProgressUiState.Loading
 
-            repository.getRecentActivities().fold(
+            try {
+                val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+                val currentWeekMonday = getMonday(today)
+
+                // Load current week and 4 weeks back
+                for (weeksBack in 0..4) {
+                    val weekMonday = currentWeekMonday.minus(weeksBack * 7, DateTimeUnit.DAY)
+                    loadWeekData(weekMonday, isInitialLoad = true)
+                }
+
+                _uiState.value = ProgressUiState.Success(allActivities.toList())
+            } catch (e: Exception) {
+                _uiState.value = ProgressUiState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    /**
+     * Check if a week is already loaded
+     */
+    fun isWeekLoaded(weekMonday: LocalDate): Boolean {
+        return loadedWeeks.contains(weekMonday)
+    }
+
+    /**
+     * Ensure data is loaded for the specified week and 4 weeks before it
+     */
+    fun ensureWeekLoaded(currentWeekMonday: LocalDate) {
+        viewModelScope.launch {
+            // Load the week that's 4 weeks before the current visible week
+            val targetWeekMonday = currentWeekMonday.minus(4 * 7, DateTimeUnit.DAY)
+
+            if (!isWeekLoaded(targetWeekMonday) && !loadingWeeks.contains(targetWeekMonday)) {
+                loadWeekData(targetWeekMonday, isInitialLoad = false)
+            }
+        }
+    }
+
+    /**
+     * Load activities for a specific week (Monday to Sunday)
+     */
+    private suspend fun loadWeekData(weekMonday: LocalDate, isInitialLoad: Boolean) {
+        if (loadedWeeks.contains(weekMonday) || loadingWeeks.contains(weekMonday)) {
+            return // Already loaded or loading
+        }
+
+        loadingWeeks.add(weekMonday)
+
+        try {
+            val weekSunday = weekMonday.plus(6, DateTimeUnit.DAY)
+            val result = repository.getActivities(
+                oldest = weekMonday.toString(),
+                newest = weekSunday.toString()
+            )
+
+            result.fold(
                 onSuccess = { activities ->
-                    _uiState.value = ProgressUiState.Success(activities)
+                    // Add new activities and remove duplicates
+                    val activityIds = allActivities.map { it.id }.toSet()
+                    val newActivities = activities.filter { it.id !in activityIds }
+                    allActivities.addAll(newActivities)
+
+                    loadedWeeks.add(weekMonday)
+                    loadingWeeks.remove(weekMonday)
+
+                    // Update UI state if not initial load
+                    if (!isInitialLoad) {
+                        _uiState.value = ProgressUiState.Success(allActivities.toList())
+                    }
                 },
                 onFailure = { error ->
-                    _uiState.value = ProgressUiState.Error(error.message ?: "Unknown error")
+                    loadingWeeks.remove(weekMonday)
+                    if (!isInitialLoad) {
+                        // Don't change state on background load failures
+                        println("Failed to load week $weekMonday: ${error.message}")
+                    }
                 }
             )
+        } catch (e: Exception) {
+            loadingWeeks.remove(weekMonday)
+            if (!isInitialLoad) {
+                println("Exception loading week $weekMonday: ${e.message}")
+            }
         }
+    }
+
+    /**
+     * Get the Monday of the week for a given date
+     */
+    private fun getMonday(date: LocalDate): LocalDate {
+        val daysFromMonday = when (date.dayOfWeek) {
+            DayOfWeek.MONDAY -> 0
+            DayOfWeek.TUESDAY -> 1
+            DayOfWeek.WEDNESDAY -> 2
+            DayOfWeek.THURSDAY -> 3
+            DayOfWeek.FRIDAY -> 4
+            DayOfWeek.SATURDAY -> 5
+            DayOfWeek.SUNDAY -> 6
+            else -> 0
+        }
+        return date.minus(daysFromMonday, DateTimeUnit.DAY)
     }
 
     fun getActivitiesForDate(date: LocalDate): List<Activity> {

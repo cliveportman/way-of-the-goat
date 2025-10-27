@@ -117,23 +117,61 @@ fun ProgressScreen(
                 }
             }
             is ProgressUiState.Success -> {
-                HorizontalPager(
-                    state = pagerState,
+                Column(
                     modifier = Modifier.fillMaxSize()
-                ) { page ->
-                    // Calculate the Monday of this week
-                    val weeksAgo = numberOfWeeks - 1 - page
-                    val weekMonday = currentWeekMonday.minus(weeksAgo * 7, DateTimeUnit.DAY)
-                    val weekSunday = weekMonday.plus(6, DateTimeUnit.DAY)
+                ) {
+                    // View mode toggle button - fixed at top, doesn't swipe
+                    Button(
+                        onClick = { viewModel.cycleViewMode() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    ) {
+                        Text(
+                            text = when (viewMode) {
+                                ViewMode.ACTIVITIES -> "Activities"
+                                ViewMode.NUTRITION -> "Nutrition"
+                                ViewMode.COMBINED -> "Combined"
+                            },
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                    }
 
-                    ProgressWeekContent(
-                        weekMonday = weekMonday,
-                        weekSunday = weekSunday,
-                        viewModel = viewModel,
-                        viewMode = viewMode,
-                        onViewModeClick = { viewModel.cycleViewMode() },
-                        onDateClick = onDateClick
-                    )
+                    // Monitor scroll position and preload data for upcoming weeks
+                    androidx.compose.runtime.LaunchedEffect(pagerState.currentPage) {
+                        val currentPage = pagerState.currentPage
+                        val weeksAgo = numberOfWeeks - 1 - currentPage
+                        val visibleWeekMonday = currentWeekMonday.minus(weeksAgo * 7, DateTimeUnit.DAY)
+
+                        // Trigger loading for the week that's 4 weeks before the visible week
+                        viewModel.ensureWeekLoaded(visibleWeekMonday)
+                    }
+
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier.fillMaxSize()
+                    ) { page ->
+                        // Calculate the Monday of this week
+                        val weeksAgo = numberOfWeeks - 1 - page
+                        val weekMonday = currentWeekMonday.minus(weeksAgo * 7, DateTimeUnit.DAY)
+                        val weekSunday = weekMonday.plus(6, DateTimeUnit.DAY)
+
+                        // Check if this week's data is loaded
+                        val isWeekLoaded = viewModel.isWeekLoaded(weekMonday)
+
+                        ProgressWeekContent(
+                            weekMonday = weekMonday,
+                            weekSunday = weekSunday,
+                            viewModel = viewModel,
+                            viewMode = viewMode,
+                            isWeekLoaded = isWeekLoaded,
+                            onDateClick = onDateClick
+                        )
+                    }
                 }
             }
         }
@@ -146,34 +184,38 @@ private fun ProgressWeekContent(
     weekSunday: LocalDate,
     viewModel: ProgressViewModel,
     viewMode: ViewMode,
-    onViewModeClick: () -> Unit,
+    isWeekLoaded: Boolean,
     onDateClick: (LocalDate) -> Unit
 ) {
+    // Show loading indicator if week data isn't loaded yet
+    if (!isWeekLoaded) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                CircularProgressIndicator()
+                Text(
+                    text = "Loading week data...",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+        return
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        // View mode toggle button
-        Button(
-            onClick = onViewModeClick,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-            )
-        ) {
-            Text(
-                text = when (viewMode) {
-                    ViewMode.ACTIVITIES -> "Activities"
-                    ViewMode.NUTRITION -> "Nutrition"
-                    ViewMode.COMBINED -> "Combined"
-                },
-                style = MaterialTheme.typography.labelLarge
-            )
-        }
-
         // Week date range heading
         Text(
             text = formatWeekRange(weekMonday, weekSunday),
