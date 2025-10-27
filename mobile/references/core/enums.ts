@@ -1,0 +1,15 @@
+export enum FoodCat {
+  veg = "veg",
+  fruit = "fruit",
+  nuts = "nuts",
+  wholegrains = "wholegrains",
+  dairy = "dairy",
+  leanproteins = "leanproteins",
+  beverages = "beverages",
+  refinedgrains = "refinedgrains",
+  sweets = "sweets",
+  fattyproteins = "fattyproteins",
+  friedfoods = "friedfoods",
+  alcohol = "alcohol",
+  other = "other",
+}
