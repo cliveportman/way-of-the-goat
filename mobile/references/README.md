@@ -1,4 +1,4 @@
-# Reference Files - Original React Native App
+/usage# Reference Files - Original React Native App
 
 This directory contains the complete source code from the original **Way of the Goat** React Native application. These files serve as reference material for migrating features to the new Kotlin Multiplatform (KMP) implementation.
 
@@ -183,7 +183,13 @@ SQLite operations for local storage:
 The scoring system in `constants.ts` is based on the **Racing Weight** methodology by Matt Fitzgerald. These values are calibrated for endurance athletes and should be replicated **exactly** in the KMP implementation.
 
 ### Half Servings Support
-The old app has code for 0.5 servings (see `Score.tsx` line 37), but this feature was never fully implemented. Consider whether to include this in the KMP version.
+The old app has code for 0.5 servings (see `Score.tsx` line 37), but this feature was never fully implemented.
+
+**KMP Implementation Approach**:
+- The codebase will **continue to support half servings** (0.5 increments) in the data models and scoring calculations
+- The UI will **NOT expose half-serving functionality** in Phase 1-8
+- This will be implemented in a later phase once core functionality is stable
+- Database schema uses `Double` for servings count to maintain this flexibility
 
 ### Date Format Consistency
 The old app uses `YYYY-MM-DD` string format throughout. The new KMP app uses `kotlinx.datetime.LocalDate`. Ensure proper conversion when migrating.
@@ -204,7 +210,7 @@ The old app uses 5 weights of Inter: light, regular, medium, semi-bold, bold. Fo
 
 This section outlines the plan for implementing the food scoring system in the new KMP app with **multiple scoring suites** support (Racing Weight, Ketogenic, Coeliac, Endurance 45+).
 
-### Design Overview: Option 3 - Hybrid Approach
+### Design Overview
 
 **Core Principle**: Scoring suites are **configuration** (defined in code), not user data (stored in database).
 
@@ -279,26 +285,54 @@ data class DayTotals(
 )
 ```
 
+### Suite Design Constraints
+
+**All scoring suites must follow these rules**:
+
+1. **Category Count Consistency**: Each suite must have **exactly the same total number of categories** (13 categories)
+   - This ensures UI consistency across suite switches
+   - Maintains comparable scoring complexity
+   - Simplifies UI rendering logic
+
+2. **Point Total Consistency**: All **positive scores** must total **exactly 32 points** per suite
+   - This is the **theoretical maximum** if a user only ate healthy foods
+   - In practice, users will score **much lower** because they also eat unhealthy foods (which give negative points)
+   - Actual daily total = (sum of positive scores) - (sum of negative scores)
+   - This normalizes the "healthy eating" ceiling across all suites
+   - Allows fair comparison between different dietary approaches
+   - Negative scores can vary per suite based on dietary philosophy
+
+3. **Category Structure**: Each category must have exactly 6 serving positions with integer scores
+   - Scoring array format: `[score1, score2, score3, score4, score5, score6]`
+   - Individual scores can be: -2, -1, 0, 1, or 2 points
+   - Total for 6 servings = sum of all 6 positions
+
 ### Suite Examples
 
 **Racing Weight (Original)**:
 - 13 categories: vegetables, fruit, nuts, whole grains, dairy, lean proteins, beverages, refined grains, sweets, fatty proteins, fried foods, alcohol, other
 - Direct port from `references/core/constants.ts`
+- **Positive point total**: Verify this totals exactly 32 points
 
 **Ketogenic**:
 - Focus: healthy fats, proteins, low-carb vegetables
 - Penalizes: all grains, sugars, starchy vegetables, high-sugar fruits
-- Categories: ~9 categories optimized for low-carb high-fat
+- **Categories**: Must have exactly 13 categories (same as Racing Weight)
+- **Positive point total**: Must total exactly 32 points
 
 **Coeliac Safe**:
 - Separates gluten-free grains from gluten grains
 - Cross-contamination risk category
 - Safe proteins and processed GF foods tracking
+- **Categories**: Must have exactly 13 categories
+- **Positive point total**: Must total exactly 32 points
 
 **Endurance 45+**:
 - Age-adjusted scoring (more vegetables, protein emphasized)
 - Calcium-rich foods for bone health
 - Anti-inflammatory foods category
+- **Categories**: Must have exactly 13 categories
+- **Positive point total**: Must total exactly 32 points
 
 ### Business Logic Rules
 
