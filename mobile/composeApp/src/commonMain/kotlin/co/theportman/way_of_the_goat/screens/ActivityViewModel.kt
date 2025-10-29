@@ -9,25 +9,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.minus
-import kotlinx.datetime.plus
 
 /**
- * ViewModel for the Scores (Nutrition) screen
- * Manages nutrition data for a specific date
+ * ViewModel for the Activity screen
+ * Manages activity data for a specific date
  * Supports bidirectional lazy loading
  */
-class ScoresViewModel : ViewModel() {
+class ActivityViewModel : ViewModel() {
 
     private val dataManager = ActivityDataManager
 
-    private val _uiState = MutableStateFlow<ScoresUiState>(ScoresUiState.Loading)
-    val uiState: StateFlow<ScoresUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<ActivityUiState>(ActivityUiState.Loading)
+    val uiState: StateFlow<ActivityUiState> = _uiState.asStateFlow()
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -44,7 +40,7 @@ class ScoresViewModel : ViewModel() {
      */
     fun loadInitialData(targetDate: LocalDate? = null) {
         viewModelScope.launch {
-            _uiState.value = ScoresUiState.Loading
+            _uiState.value = ActivityUiState.Loading
 
             try {
                 val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
@@ -53,14 +49,14 @@ class ScoresViewModel : ViewModel() {
                 // Load ±30 days around the center date
                 dataManager.loadInitialData(aroundDate = centerDate, bufferDays = 30).fold(
                     onSuccess = {
-                        _uiState.value = ScoresUiState.Success(emptyList())
+                        _uiState.value = ActivityUiState.Success(emptyList())
                     },
                     onFailure = { error ->
-                        _uiState.value = ScoresUiState.Error(error.message ?: "Unknown error")
+                        _uiState.value = ActivityUiState.Error(error.message ?: "Unknown error")
                     }
                 )
             } catch (e: Exception) {
-                _uiState.value = ScoresUiState.Error(e.message ?: "Unknown error")
+                _uiState.value = ActivityUiState.Error(e.message ?: "Unknown error")
             }
         }
     }
@@ -131,30 +127,14 @@ class ScoresViewModel : ViewModel() {
         return dataManager.getActivitiesForDate(date)
     }
 
-    /**
-     * Get nutrition summary for a specific date (mock data for now)
-     */
-    fun getNutritionScore(date: LocalDate): Int {
-        return when (date.dayOfWeek) {
-            DayOfWeek.MONDAY -> 16
-            DayOfWeek.TUESDAY -> 4
-            DayOfWeek.WEDNESDAY -> 12
-            DayOfWeek.THURSDAY -> 8
-            DayOfWeek.FRIDAY -> 20
-            DayOfWeek.SATURDAY -> -2
-            DayOfWeek.SUNDAY -> 15
-            else -> 0 // Required: DayOfWeek is an expect enum in KMP, compiler requires else branch
-        }
-    }
-
     override fun onCleared() {
         super.onCleared()
         // ActivityDataManager is a singleton, don't close it here
     }
 }
 
-sealed class ScoresUiState {
-    data object Loading : ScoresUiState()
-    data class Success(val activities: List<Activity>) : ScoresUiState()
-    data class Error(val message: String) : ScoresUiState()
+sealed class ActivityUiState {
+    data object Loading : ActivityUiState()
+    data class Success(val activities: List<Activity>) : ActivityUiState()
+    data class Error(val message: String) : ActivityUiState()
 }

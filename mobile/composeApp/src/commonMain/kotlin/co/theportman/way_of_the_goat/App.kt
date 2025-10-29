@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import co.theportman.way_of_the_goat.screens.ActivityScreen
 import co.theportman.way_of_the_goat.screens.HelpScreen
 import co.theportman.way_of_the_goat.screens.HomeScreen
 import co.theportman.way_of_the_goat.screens.ProgressScreen
@@ -29,13 +30,15 @@ fun App() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        // State to hold the target date for today screen
-        var targetTodayDateEpochDay by remember { mutableStateOf<Long?>(null) }
+        // State to hold the target dates for Activity and Scores screens
+        var targetActivityDateEpochDay by remember { mutableStateOf<Long?>(null) }
+        var targetScoresDateEpochDay by remember { mutableStateOf<Long?>(null) }
 
         // Determine if bottom nav should be visible (hide on SecondPage and Home)
         val showBottomNav = currentRoute in listOf(
             Screen.Progress.route,
-            Screen.Today.route,
+            Screen.Scores.route,
+            Screen.Activity.route,
             Screen.Help.route
         )
 
@@ -45,7 +48,13 @@ fun App() {
                     BottomNavigationBar(
                         navController = navController,
                         currentRoute = currentRoute,
-                        onTodayNavigate = { targetTodayDateEpochDay = null }
+                        onScreenNavigate = { screen ->
+                            when (screen) {
+                                Screen.Scores -> targetScoresDateEpochDay = null
+                                Screen.Activity -> targetActivityDateEpochDay = null
+                                else -> {}
+                            }
+                        }
                     )
                 }
             }
@@ -58,7 +67,7 @@ fun App() {
                 composable(Screen.Home.route) {
                     HomeScreen(
                         onContinueClick = {
-                            navController.navigate(Screen.Today.route)
+                            navController.navigate(Screen.Scores.route)
                         }
                     )
                 }
@@ -67,24 +76,42 @@ fun App() {
                 }
                 composable(Screen.Progress.route) {
                     ProgressScreen(
-                        onDateClick = { date ->
-                            targetTodayDateEpochDay = date.toEpochDays().toLong()
-                            navController.navigate(Screen.Today.route) {
-                                // Pop up to the start destination to avoid building up a large stack
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
+                        onDateClick = { date, targetScreen ->
+                            val epochDay = date.toEpochDays().toLong()
+                            when (targetScreen) {
+                                Screen.Activity -> {
+                                    targetActivityDateEpochDay = epochDay
+                                    navController.navigate(Screen.Activity.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
                                 }
-                                // Avoid multiple copies of the same destination
-                                launchSingleTop = true
-                                // Restore state when reselecting a previously selected item
-                                restoreState = true
+                                Screen.Scores -> {
+                                    targetScoresDateEpochDay = epochDay
+                                    navController.navigate(Screen.Scores.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                }
+                                else -> {}
                             }
                         }
                     )
                 }
-                composable(Screen.Today.route) {
+                composable(Screen.Scores.route) {
                     ScoresScreen(
-                        targetDateEpochDay = targetTodayDateEpochDay
+                        targetDateEpochDay = targetScoresDateEpochDay
+                    )
+                }
+                composable(Screen.Activity.route) {
+                    ActivityScreen(
+                        targetDateEpochDay = targetActivityDateEpochDay
                     )
                 }
                 composable(Screen.Help.route) {
@@ -99,7 +126,7 @@ fun App() {
 fun BottomNavigationBar(
     navController: NavHostController,
     currentRoute: String?,
-    onTodayNavigate: () -> Unit
+    onScreenNavigate: (Screen) -> Unit
 ) {
     NavigationBar {
         bottomNavItems.forEach { item ->
@@ -109,9 +136,7 @@ fun BottomNavigationBar(
                 selected = currentRoute == item.screen.route,
                 onClick = {
                     // Clear target date when navigating from bottom nav
-                    if (item.screen == Screen.Today) {
-                        onTodayNavigate()
-                    }
+                    onScreenNavigate(item.screen)
                     navController.navigate(item.screen.route) {
                         // Pop up to the start destination to avoid building up a large stack
                         popUpTo(navController.graph.startDestinationId) {

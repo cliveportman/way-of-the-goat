@@ -45,7 +45,7 @@ import kotlinx.datetime.todayIn
 
 @Composable
 fun ProgressScreen(
-    onDateClick: (LocalDate) -> Unit = {},
+    onDateClick: (LocalDate, co.theportman.way_of_the_goat.Screen) -> Unit = { _, _ -> },
     viewModel: ProgressViewModel = viewModel { ProgressViewModel() }
 ) {
     // Get today's date
@@ -188,7 +188,7 @@ private fun ProgressWeekContent(
     viewModel: ProgressViewModel,
     viewMode: ViewMode,
     isWeekLoaded: Boolean,
-    onDateClick: (LocalDate) -> Unit
+    onDateClick: (LocalDate, co.theportman.way_of_the_goat.Screen) -> Unit
 ) {
     // Collect refresh state
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -258,7 +258,7 @@ private fun ProgressWeekContent(
                         activitySummary = daySummary,
                         nutritionSummary = nutritionSummary,
                         viewMode = viewMode,
-                        onClick = { onDateClick(currentDay) }
+                        onDateClick = onDateClick
                     )
                 }
             }
@@ -402,13 +402,12 @@ private fun DayBar(
     activitySummary: DaySummary,
     nutritionSummary: NutritionSummary,
     viewMode: ViewMode,
-    onClick: () -> Unit
+    onDateClick: (LocalDate, co.theportman.way_of_the_goat.Screen) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(48.dp)
-            .clickable(onClick = onClick),
+            .height(48.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -426,6 +425,7 @@ private fun DayBar(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
+                        .clickable { onDateClick(date, co.theportman.way_of_the_goat.Screen.Activity) }
                         .background(
                             color = if (activitySummary.activityCount > 0) {
                                 MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
@@ -466,6 +466,7 @@ private fun DayBar(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
+                        .clickable { onDateClick(date, co.theportman.way_of_the_goat.Screen.Scores) }
                         .background(
                             color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f),
                             shape = RoundedCornerShape(4.dp)
@@ -490,6 +491,7 @@ private fun DayBar(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight()
+                            .clickable { onDateClick(date, co.theportman.way_of_the_goat.Screen.Activity) }
                             .background(
                                 color = if (activitySummary.activityCount > 0) {
                                     MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
@@ -514,6 +516,7 @@ private fun DayBar(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight()
+                            .clickable { onDateClick(date, co.theportman.way_of_the_goat.Screen.Scores) }
                             .background(
                                 color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f),
                                 shape = RoundedCornerShape(4.dp)

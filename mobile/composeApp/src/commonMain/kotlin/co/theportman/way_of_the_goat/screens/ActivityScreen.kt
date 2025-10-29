@@ -1,18 +1,18 @@
 package co.theportman.way_of_the_goat.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import co.theportman.way_of_the_goat.data.remote.models.Activity
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -37,9 +38,9 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.todayIn
 
 @Composable
-fun ScoresScreen(
+fun ActivityScreen(
     targetDateEpochDay: Long? = null,
-    viewModel: ScoresViewModel = viewModel()
+    viewModel: ActivityViewModel = viewModel()
 ) {
     // Get today's date
     val today = remember { Clock.System.todayIn(TimeZone.currentSystemDefault()) }
@@ -104,7 +105,7 @@ fun ScoresScreen(
         // Check if this date's data is loaded
         val isDateLoaded = viewModel.isDateLoaded(pageDate)
 
-        ScoresPageContent(
+        ActivityPageContent(
             date = pageDate,
             viewModel = viewModel,
             uiState = uiState,
@@ -115,10 +116,10 @@ fun ScoresScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ScoresPageContent(
+private fun ActivityPageContent(
     date: LocalDate,
-    viewModel: ScoresViewModel,
-    uiState: ScoresUiState,
+    viewModel: ActivityViewModel,
+    uiState: ActivityUiState,
     isDateLoaded: Boolean
 ) {
     // Collect refresh state
@@ -166,15 +167,38 @@ private fun ScoresPageContent(
                 textAlign = TextAlign.Center
             )
 
-            // 3x3 Grid for nutrition scores
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(9) { index ->
-                    GridCell(index = index)
+            // Activities list
+            when (uiState) {
+                is ActivityUiState.Loading -> {
+                    Text(
+                        text = "Loading activities...",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
+                }
+                is ActivityUiState.Success -> {
+                    val activities = viewModel.getActivitiesForDate(date)
+                    if (activities.isEmpty()) {
+                        Text(
+                            text = "No activities for this day",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } else {
+                        ActivitiesList(activities = activities)
+                    }
+                }
+                is ActivityUiState.Error -> {
+                    Text(
+                        text = "Error: ${uiState.message}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.error
+                    )
                 }
             }
         }
@@ -182,18 +206,77 @@ private fun ScoresPageContent(
 }
 
 @Composable
-private fun GridCell(index: Int) {
-    Box(
-        modifier = Modifier
-            .aspectRatio(1f)
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline
-            )
-            .background(MaterialTheme.colorScheme.surface),
-        contentAlignment = Alignment.Center
+private fun ActivitiesList(activities: List<Activity>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        // Empty cell for now
+        items(activities) { activity ->
+            ActivityCard(activity = activity)
+        }
+    }
+}
+
+@Composable
+private fun ActivityCard(activity: Activity) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            // Activity name
+            Text(
+                text = activity.name ?: "Unnamed Activity",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            // Activity type
+            activity.type?.let { type ->
+                Text(
+                    text = type,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                )
+            }
+
+            // Distance and moving time row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                activity.distance?.let { distance ->
+                    val distanceKm = (distance / 1000.0 * 100).toInt() / 100.0
+                    Text(
+                        text = "Distance: $distanceKm km",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                activity.movingTime?.let { movingTime ->
+                    val hours = movingTime / 3600
+                    val minutes = (movingTime % 3600) / 60
+                    val timeStr = if (hours > 0) {
+                        "${hours}h ${minutes}m"
+                    } else {
+                        "${minutes}m"
+                    }
+                    Text(
+                        text = "Time: $timeStr",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
     }
 }
 
