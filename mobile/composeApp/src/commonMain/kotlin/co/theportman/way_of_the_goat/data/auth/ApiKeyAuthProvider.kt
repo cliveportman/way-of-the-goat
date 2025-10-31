@@ -10,7 +10,7 @@ import io.ktor.util.encodeBase64
  * This is temporary for development only. Will be replaced with OAuth flow.
  */
 class ApiKeyAuthProvider(
-    private val apiKey: String = "XXXXXXXXXXXXXXcommit "
+    private val apiKey: String = "7175zqcded0ia5at5t1tlsq4q"
 ) : IntervalsAuthProvider {
 
     override suspend fun getAuthHeader(): String {
