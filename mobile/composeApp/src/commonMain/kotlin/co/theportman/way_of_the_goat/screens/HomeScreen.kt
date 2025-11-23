@@ -123,13 +123,17 @@ fun HomeScreen(onContinueClick: () -> Unit) {
             // Continue button
             OutlinedButton(
                 onClick = onContinueClick,
-                modifier = Modifier.size(110.dp),
+                modifier = Modifier
+                    .size(110.dp)
+                    .background(GoatColors.Navy900, CircleShape),
                 shape = CircleShape,
                 border = BorderStroke(1.dp, GoatColors.Navy800)
             ) {
                 Text(
                     text = "Continue",
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontSize = 14.sp
+                    ),
                     color = GoatColors.Slate50
                 )
             }
