@@ -39,7 +39,7 @@ import kotlinx.datetime.todayIn
 @Composable
 fun ScoresScreen(
     targetDateEpochDay: Long? = null,
-    viewModel: ScoresViewModel = viewModel()
+    viewModel: ScoresViewModel = viewModel { ScoresViewModel() }
 ) {
     // Get today's date
     val today = remember { Clock.System.todayIn(TimeZone.currentSystemDefault()) }

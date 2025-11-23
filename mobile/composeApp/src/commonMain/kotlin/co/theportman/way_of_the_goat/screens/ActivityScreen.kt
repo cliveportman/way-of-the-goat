@@ -40,7 +40,7 @@ import kotlinx.datetime.todayIn
 @Composable
 fun ActivityScreen(
     targetDateEpochDay: Long? = null,
-    viewModel: ActivityViewModel = viewModel()
+    viewModel: ActivityViewModel = viewModel { ActivityViewModel() }
 ) {
     // Get today's date
     val today = remember { Clock.System.todayIn(TimeZone.currentSystemDefault()) }
