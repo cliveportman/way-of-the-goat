@@ -1,65 +1,141 @@
 package co.theportman.way_of_the_goat.screens
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import co.theportman.way_of_the_goat.Greeting
-import org.jetbrains.compose.resources.painterResource
-import way_of_the_goat.composeapp.generated.resources.Res
-import way_of_the_goat.composeapp.generated.resources.compose_multiplatform
+import androidx.compose.ui.unit.sp
+import co.theportman.way_of_the_goat.ui.icons.GoatMoon
+import co.theportman.way_of_the_goat.ui.theme.GoatColors
 
 @Composable
 fun HomeScreen(onContinueClick: () -> Unit) {
-    var showContent by remember { mutableStateOf(false) }
-    Column(
+    Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .safeContentPadding()
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+            .background(GoatColors.Navy950),
+        contentAlignment = Alignment.Center
     ) {
-        // Top content
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 64.dp)
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
-        }
+            // Top spacing
+            Spacer(modifier = Modifier.height(40.dp))
 
-        // Bottom continue button
-        Button(
-            onClick = onContinueClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Continue")
+            // Main content
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                // Goat logo
+                Image(
+                    painter = rememberVectorPainter(GoatMoon),
+                    contentDescription = "Way of the Goat Logo",
+                    modifier = Modifier.size(100.dp)
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                // Title
+                Text(
+                    text = "Way of the Goat",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = GoatColors.Slate50,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Subtitle
+                Text(
+                    text = "Diet scoring for endurance athletes",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    color = GoatColors.Slate400,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                // Attribution text
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Normal,
+                                fontStyle = FontStyle.Normal
+                            )
+                        ) {
+                            append("Based on the book\n")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Normal,
+                                fontStyle = FontStyle.Italic
+                            )
+                        ) {
+                            append("Racing Weight\n")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Normal,
+                                fontStyle = FontStyle.Normal
+                            )
+                        ) {
+                            append("by Matt Fitzgerald")
+                        }
+                    },
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = GoatColors.Slate50,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 22.sp
+                )
+            }
+
+            // Continue button
+            OutlinedButton(
+                onClick = onContinueClick,
+                modifier = Modifier.size(110.dp),
+                shape = CircleShape,
+                border = BorderStroke(1.dp, GoatColors.Navy800)
+            ) {
+                Text(
+                    text = "Continue",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = GoatColors.Slate50
+                )
+            }
+
+            // Bottom spacing
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }

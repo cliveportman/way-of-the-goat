@@ -20,12 +20,13 @@ import co.theportman.way_of_the_goat.screens.HomeScreen
 import co.theportman.way_of_the_goat.screens.ProgressScreen
 import co.theportman.way_of_the_goat.screens.ScoresScreen
 import co.theportman.way_of_the_goat.screens.SecondPage
+import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    WayOfTheGoatTheme {
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
