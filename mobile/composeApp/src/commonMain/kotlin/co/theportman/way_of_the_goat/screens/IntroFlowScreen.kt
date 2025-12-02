@@ -151,7 +151,7 @@ private fun IntroPage(
                 }
             }
 
-            // Continue button (matching HomeScreen.kt styling and position)
+            // Continue button (matching HomeScreen.kt exact position)
             OutlinedButton(
                 onClick = onContinueClick,
                 modifier = Modifier
@@ -169,16 +169,14 @@ private fun IntroPage(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            // Bottom spacing (matches HomeScreen exactly)
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Page indicators (below button)
+            // Page indicators (at very bottom)
             PageIndicators(
                 currentPage = currentPage,
                 totalPages = totalPages
             )
-
-            // Bottom spacing (matches HomeScreen)
-            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
