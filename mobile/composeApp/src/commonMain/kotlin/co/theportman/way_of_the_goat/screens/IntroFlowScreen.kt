@@ -76,7 +76,7 @@ fun IntroFlowScreen(onComplete: () -> Unit) {
 
     HorizontalPager(
         state = pagerState,
-        userScrollEnabled = false // Disable swipe for forward-only navigation
+        userScrollEnabled = true // Enable swipe gestures to navigate between pages
     ) { page ->
         IntroPage(
             content = pages[page],
@@ -151,39 +151,34 @@ private fun IntroPage(
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Bottom section with indicators and button
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(24.dp)
+            // Continue button (matching HomeScreen.kt styling and position)
+            OutlinedButton(
+                onClick = onContinueClick,
+                modifier = Modifier
+                    .size(110.dp)
+                    .background(GoatColors.Navy900, CircleShape),
+                shape = CircleShape,
+                border = BorderStroke(1.dp, GoatColors.Navy800)
             ) {
-                // Page indicators
-                PageIndicators(
-                    currentPage = currentPage,
-                    totalPages = totalPages
+                Text(
+                    text = "Continue",
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontSize = 14.sp
+                    ),
+                    color = GoatColors.Slate50
                 )
-
-                // Continue button (matching HomeScreen.kt styling)
-                OutlinedButton(
-                    onClick = onContinueClick,
-                    modifier = Modifier
-                        .size(110.dp)
-                        .background(GoatColors.Navy900, CircleShape),
-                    shape = CircleShape,
-                    border = BorderStroke(1.dp, GoatColors.Navy800)
-                ) {
-                    Text(
-                        text = "Continue",
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontSize = 14.sp
-                        ),
-                        color = GoatColors.Slate50
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Page indicators (below button)
+            PageIndicators(
+                currentPage = currentPage,
+                totalPages = totalPages
+            )
+
+            // Bottom spacing (matches HomeScreen)
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
