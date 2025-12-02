@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import co.theportman.way_of_the_goat.screens.ActivityScreen
 import co.theportman.way_of_the_goat.screens.HelpScreen
 import co.theportman.way_of_the_goat.screens.HomeScreen
+import co.theportman.way_of_the_goat.screens.IntroFlowScreen
 import co.theportman.way_of_the_goat.screens.ProgressScreen
 import co.theportman.way_of_the_goat.screens.ScoresScreen
 import co.theportman.way_of_the_goat.screens.SecondPage
@@ -68,7 +69,16 @@ fun App() {
                 composable(Screen.Home.route) {
                     HomeScreen(
                         onContinueClick = {
-                            navController.navigate(Screen.Scores.route)
+                            navController.navigate(Screen.IntroFlow.route)
+                        }
+                    )
+                }
+                composable(Screen.IntroFlow.route) {
+                    IntroFlowScreen(
+                        onComplete = {
+                            navController.navigate(Screen.Scores.route) {
+                                popUpTo(Screen.Home.route) { inclusive = false }
+                            }
                         }
                     )
                 }
