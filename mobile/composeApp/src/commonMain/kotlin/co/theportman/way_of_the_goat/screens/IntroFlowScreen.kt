@@ -73,97 +73,83 @@ fun IntroFlowScreen(onComplete: () -> Unit) {
         )
     )
 
-    HorizontalPager(
-        state = pagerState,
-        userScrollEnabled = true // Enable swipe gestures to navigate between pages
-    ) { page ->
-        IntroPage(
-            content = pages[page],
-            currentPage = page,
-            totalPages = 3,
-            onContinueClick = {
-                if (page < 2) {
-                    scope.launch { pagerState.animateScrollToPage(page + 1) }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(GoatColors.Navy950)
+    ) {
+        // Only the text content slides
+        HorizontalPager(
+            state = pagerState,
+            userScrollEnabled = true,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            IntroPageContent(content = pages[page])
+        }
+
+        // Fixed bottom section - doesn't slide with pager
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 24.dp)
+                .padding(bottom = 64.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            PageIndicators(
+                currentPage = pagerState.currentPage,
+                totalPages = 3
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            ContinueButton(onClick = {
+                if (pagerState.currentPage < 2) {
+                    scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
                 } else {
                     onComplete()
                 }
-            }
-        )
+            })
+            Spacer(modifier = Modifier.height(24.dp))
+        }
     }
 }
 
 /**
- * Reusable component for a single intro page
+ * Content for a single intro page (only the sliding content)
  */
 @Composable
-private fun IntroPage(
-    content: IntroContent,
-    currentPage: Int,
-    totalPages: Int,
-    onContinueClick: () -> Unit
-) {
-    Box(
+private fun IntroPageContent(content: IntroContent) {
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(GoatColors.Navy950),
-        contentAlignment = Alignment.Center
+            .padding(horizontal = 24.dp)
+            .padding(top = 64.dp, bottom = 200.dp) // Bottom padding for fixed controls
+            .verticalScroll(rememberScrollState())
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 64.dp)
-        ) {
-            // Scrollable content area
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                // Heading
-                Text(
-                    text = content.heading,
-                    style = MaterialTheme.typography.headlineLarge.copy(
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    color = GoatColors.Slate100
-                )
+        // Heading
+        Text(
+            text = content.heading,
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            color = GoatColors.Slate100
+        )
 
-                Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-                // Body paragraphs
-                content.bodyParagraphs.forEachIndexed { index, paragraph ->
-                    Text(
-                        text = paragraph,
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            fontSize = 16.sp,
-                            lineHeight = 22.sp
-                        ),
-                        color = GoatColors.Slate50
-                    )
-
-                    if (index < content.bodyParagraphs.size - 1) {
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
-                }
-            }
-
-            // Page indicators (at very bottom)
-            PageIndicators(
-                currentPage = currentPage,
-                totalPages = totalPages
+        // Body paragraphs
+        content.bodyParagraphs.forEachIndexed { index, paragraph ->
+            Text(
+                text = paragraph,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 16.sp,
+                    lineHeight = 22.sp
+                ),
+                color = GoatColors.Slate50
             )
 
-            
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Continue button
-            ContinueButton(onClick = onContinueClick)
-
-            // Bottom spacing (matches HomeScreen exactly)
-            Spacer(modifier = Modifier.height(24.dp))
+            if (index < content.bodyParagraphs.size - 1) {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }
