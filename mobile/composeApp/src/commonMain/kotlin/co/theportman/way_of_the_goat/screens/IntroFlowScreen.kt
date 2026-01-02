@@ -1,6 +1,5 @@
 package co.theportman.way_of_the_goat.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.theportman.way_of_the_goat.ui.components.ContinueButton
 import co.theportman.way_of_the_goat.ui.theme.GoatColors
 import kotlinx.coroutines.launch
 
@@ -151,32 +150,20 @@ private fun IntroPage(
                 }
             }
 
-            // Continue button (matching HomeScreen.kt exact position)
-            OutlinedButton(
-                onClick = onContinueClick,
-                modifier = Modifier
-                    .size(110.dp)
-                    .background(GoatColors.Navy900, CircleShape),
-                shape = CircleShape,
-                border = BorderStroke(1.dp, GoatColors.Navy800)
-            ) {
-                Text(
-                    text = "Continue",
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        fontSize = 14.sp
-                    ),
-                    color = GoatColors.Slate50
-                )
-            }
-
-            // Bottom spacing (matches HomeScreen exactly)
-            Spacer(modifier = Modifier.height(24.dp))
-
             // Page indicators (at very bottom)
             PageIndicators(
                 currentPage = currentPage,
                 totalPages = totalPages
             )
+
+            
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Continue button
+            ContinueButton(onClick = onContinueClick)
+
+            // Bottom spacing (matches HomeScreen exactly)
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }

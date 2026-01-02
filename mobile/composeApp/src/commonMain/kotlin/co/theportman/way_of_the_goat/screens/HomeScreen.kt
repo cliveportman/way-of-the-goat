@@ -1,6 +1,5 @@
 package co.theportman.way_of_the_goat.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.theportman.way_of_the_goat.ui.components.ContinueButton
 import co.theportman.way_of_the_goat.ui.icons.GoatMoon
 import co.theportman.way_of_the_goat.ui.theme.GoatColors
 
@@ -121,22 +119,7 @@ fun HomeScreen(onContinueClick: () -> Unit) {
             }
 
             // Continue button
-            OutlinedButton(
-                onClick = onContinueClick,
-                modifier = Modifier
-                    .size(110.dp)
-                    .background(GoatColors.Navy900, CircleShape),
-                shape = CircleShape,
-                border = BorderStroke(1.dp, GoatColors.Navy800)
-            ) {
-                Text(
-                    text = "Continue",
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        fontSize = 14.sp
-                    ),
-                    color = GoatColors.Slate50
-                )
-            }
+            ContinueButton(onClick = onContinueClick)
 
             // Bottom spacing
             Spacer(modifier = Modifier.height(24.dp))
