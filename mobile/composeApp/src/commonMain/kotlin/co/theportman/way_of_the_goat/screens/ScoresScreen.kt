@@ -1,18 +1,19 @@
 package co.theportman.way_of_the_goat.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,9 +26,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
+import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
+import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
+import co.theportman.way_of_the_goat.screens.components.ScoreSummary
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -35,6 +42,10 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.todayIn
+
+// Figma colors
+private val BackgroundColor = Color(0xFF020618)  // slate-950
+private val TextColor = Color(0xFFF1F5F9)        // slate-100
 
 @Composable
 fun ScoresScreen(
@@ -46,6 +57,12 @@ fun ScoresScreen(
 
     // Collect UI state
     val uiState by viewModel.uiState.collectAsState()
+
+    // Collect active suite
+    val activeSuite by viewModel.activeSuite.collectAsState()
+
+    // Collect servings flow for reactive updates
+    val servingsMap by viewModel.servingsFlow.collectAsState()
 
     // Calculate number of days to show (e.g., last 365 days up to today)
     val numberOfDays = 365
@@ -93,23 +110,34 @@ fun ScoresScreen(
         viewModel.ensureDateLoaded(currentDate.value)
     }
 
-    HorizontalPager(
-        state = pagerState,
-        modifier = Modifier.fillMaxSize()
-    ) { page ->
-        // Calculate date for this page
-        val daysAgo = numberOfDays - 1 - page
-        val pageDate = today.minus(daysAgo, DateTimeUnit.DAY)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundColor)
+    ) {
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            // Calculate date for this page
+            val daysAgo = numberOfDays - 1 - page
+            val pageDate = today.minus(daysAgo, DateTimeUnit.DAY)
 
-        // Check if this date's data is loaded
-        val isDateLoaded = viewModel.isDateLoaded(pageDate)
+            // Check if this date's data is loaded
+            val isDateLoaded = viewModel.isDateLoaded(pageDate)
 
-        ScoresPageContent(
-            date = pageDate,
-            viewModel = viewModel,
-            uiState = uiState,
-            isDateLoaded = isDateLoaded
-        )
+            // Get servings for this date from the flow
+            val dailyServings = servingsMap[pageDate]
+
+            ScoresPageContent(
+                date = pageDate,
+                viewModel = viewModel,
+                uiState = uiState,
+                isDateLoaded = isDateLoaded,
+                activeSuite = activeSuite,
+                dailyServings = dailyServings
+            )
+        }
     }
 }
 
@@ -119,16 +147,19 @@ private fun ScoresPageContent(
     date: LocalDate,
     viewModel: ScoresViewModel,
     uiState: ScoresUiState,
-    isDateLoaded: Boolean
+    isDateLoaded: Boolean,
+    activeSuite: ScoringSuite,
+    dailyServings: DailyServings?
 ) {
     // Collect refresh state
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
     // Show loading indicator if date data isn't loaded yet
-    if (!isDateLoaded) {
+    if (!isDateLoaded && uiState is ScoresUiState.Loading) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(BackgroundColor)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -136,77 +167,86 @@ private fun ScoresPageContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                androidx.compose.material3.CircularProgressIndicator()
+                CircularProgressIndicator(color = TextColor)
                 Text(
                     text = "Loading day data...",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = TextColor.copy(alpha = 0.7f),
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
         return
     }
 
+    // Get totals for display
+    val totals = viewModel.getTotalsForDate(date)
+
     PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = { viewModel.refreshCurrentDate(date) },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundColor)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+                .padding(horizontal = 20.dp)
         ) {
             // Date heading
+            Spacer(modifier = Modifier.height(32.dp))
             Text(
                 text = formatDate(date),
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
+                color = TextColor,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth()
             )
 
-            // 3x3 Grid for nutrition scores
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+            Spacer(modifier = Modifier.height(48.dp))
+
+            // Food categories list
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(3.dp)
             ) {
-                items(9) { index ->
-                    GridCell(index = index)
+                items(
+                    items = activeSuite.categories,
+                    key = { it.id.value }
+                ) { category ->
+                    val servingCount = dailyServings?.getServings(category.id) ?: 0
+
+                    FoodCategoryRow(
+                        category = category,
+                        servingCount = servingCount,
+                        onIncrement = {
+                            viewModel.incrementServings(date, category.id)
+                        },
+                        onDecrement = {
+                            viewModel.decrementServings(date, category.id)
+                        }
+                    )
                 }
             }
-        }
-    }
-}
 
-@Composable
-private fun GridCell(index: Int) {
-    Box(
-        modifier = Modifier
-            .aspectRatio(1f)
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline
-            )
-            .background(MaterialTheme.colorScheme.surface),
-        contentAlignment = Alignment.Center
-    ) {
-        // Empty cell for now
+            // Score summary at bottom
+            ScoreSummary(totals = totals)
+        }
     }
 }
 
 private fun formatDate(date: LocalDate): String {
     val dayOfWeek = when (date.dayOfWeek) {
-        DayOfWeek.MONDAY -> "Monday"
-        DayOfWeek.TUESDAY -> "Tuesday"
-        DayOfWeek.WEDNESDAY -> "Wednesday"
-        DayOfWeek.THURSDAY -> "Thursday"
-        DayOfWeek.FRIDAY -> "Friday"
-        DayOfWeek.SATURDAY -> "Saturday"
-        DayOfWeek.SUNDAY -> "Sunday"
-        else -> "Unknown" // Required: DayOfWeek is an expect enum in KMP, compiler requires else branch
+        DayOfWeek.MONDAY -> "Mon"
+        DayOfWeek.TUESDAY -> "Tue"
+        DayOfWeek.WEDNESDAY -> "Wed"
+        DayOfWeek.THURSDAY -> "Thu"
+        DayOfWeek.FRIDAY -> "Fri"
+        DayOfWeek.SATURDAY -> "Sat"
+        DayOfWeek.SUNDAY -> "Sun"
+        else -> ""
     }
 
     val month = when (date.monthNumber) {
@@ -225,5 +265,5 @@ private fun formatDate(date: LocalDate): String {
         else -> ""
     }
 
-    return "$dayOfWeek, $month ${date.dayOfMonth}, ${date.year}"
+    return "$dayOfWeek ${date.dayOfMonth} $month"
 }
