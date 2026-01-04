@@ -56,7 +56,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("leanproteins"),
-                name = "Lean Proteins",
+                name = "Lean proteins",
                 shortName = "Protein",
                 icon = null,
                 displayOrder = 3,
@@ -78,7 +78,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("wholegrains"),
-                name = "Whole Grains",
+                name = "Whole grains",
                 shortName = "Grains",
                 icon = null,
                 displayOrder = 5,
@@ -89,7 +89,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("nuts"),
-                name = "Nuts & Seeds",
+                name = "Nuts + seeds",
                 shortName = "Nuts",
                 icon = null,
                 displayOrder = 6,
@@ -102,7 +102,7 @@ object SuiteDefinitions {
             // === UNHEALTHY CATEGORIES (negative scoring) ===
             FoodCategory(
                 id = CategoryId("fattymeats"),
-                name = "Fatty Meats",
+                name = "Fatty meats",
                 shortName = "Fatty",
                 icon = null,
                 displayOrder = 7,
@@ -113,7 +113,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("refinedgrains"),
-                name = "Refined Grains",
+                name = "Refined grains",
                 shortName = "Refined",
                 icon = null,
                 displayOrder = 8,
@@ -135,7 +135,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("junkfoods"),
-                name = "Junk Foods",
+                name = "Junk foods",
                 shortName = "Junk",
                 icon = null,
                 displayOrder = 10,
@@ -193,7 +193,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("leanproteins"),
-                name = "Lean Meats & Fish",
+                name = "Lean meats",
                 shortName = "Protein",
                 icon = null,
                 displayOrder = 3,
@@ -204,7 +204,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("nuts"),
-                name = "Nuts & Seeds",
+                name = "Nuts + seeds",
                 shortName = "Nuts",
                 icon = null,
                 displayOrder = 4,
@@ -215,7 +215,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("wholegrains"),
-                name = "Whole Grains",
+                name = "Whole grains",
                 shortName = "Grains",
                 icon = null,
                 displayOrder = 5,
@@ -239,7 +239,7 @@ object SuiteDefinitions {
             // === UNHEALTHY CATEGORIES (negative scoring) ===
             FoodCategory(
                 id = CategoryId("refinedgrains"),
-                name = "Refined Grains",
+                name = "Refined grains",
                 shortName = "Refined",
                 icon = null,
                 displayOrder = 7,
@@ -261,7 +261,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("friedfoods"),
-                name = "Fried Foods",
+                name = "Fried foods",
                 shortName = "Fried",
                 icon = null,
                 displayOrder = 9,
@@ -272,7 +272,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("fattyproteins"),
-                name = "Fatty Proteins",
+                name = "Fatty proteins",
                 shortName = "Fatty",
                 icon = null,
                 displayOrder = 10,
@@ -319,7 +319,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("leanproteins"),
-                name = "Lean Proteins",
+                name = "Lean proteins",
                 shortName = "Protein",
                 icon = null,
                 displayOrder = 3,
@@ -330,7 +330,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("leandairy"),
-                name = "Lean Dairy",
+                name = "Lean dairy",
                 shortName = "L.Dairy",
                 icon = null,
                 displayOrder = 4,
@@ -341,7 +341,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("wholegrains"),
-                name = "Whole Grains",
+                name = "Whole grains",
                 shortName = "Grains",
                 icon = null,
                 displayOrder = 5,
@@ -352,7 +352,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("nuts"),
-                name = "Nuts & Seeds",
+                name = "Nuts + seeds",
                 shortName = "Nuts",
                 icon = null,
                 displayOrder = 6,
@@ -365,7 +365,7 @@ object SuiteDefinitions {
             // === UNHEALTHY CATEGORIES (negative scoring) ===
             FoodCategory(
                 id = CategoryId("fattyproteins"),
-                name = "Fatty Proteins",
+                name = "Fatty proteins",
                 shortName = "Fatty",
                 icon = null,
                 displayOrder = 7,
@@ -376,7 +376,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("refinedgrains"),
-                name = "Refined Grains",
+                name = "Refined grains",
                 shortName = "Refined",
                 icon = null,
                 displayOrder = 8,
@@ -398,7 +398,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("junkfoods"),
-                name = "Junk Foods",
+                name = "Junk foods",
                 shortName = "Junk",
                 icon = null,
                 displayOrder = 10,
@@ -456,7 +456,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("leanproteins"),
-                name = "Lean Proteins",
+                name = "Lean proteins",
                 shortName = "Protein",
                 icon = null,
                 displayOrder = 3,
@@ -467,7 +467,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("leandairy"),
-                name = "Lean Dairy",
+                name = "Lean dairy",
                 shortName = "L.Dairy",
                 icon = null,
                 displayOrder = 4,
@@ -478,7 +478,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("wholegrains"),
-                name = "Whole Grains",
+                name = "Whole grains",
                 shortName = "Grains",
                 icon = null,
                 displayOrder = 5,
@@ -489,7 +489,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("nuts"),
-                name = "Nuts & Seeds",
+                name = "Nuts + seeds",
                 shortName = "Nuts",
                 icon = null,
                 displayOrder = 6,
@@ -502,7 +502,7 @@ object SuiteDefinitions {
             // === UNHEALTHY CATEGORIES (negative scoring) ===
             FoodCategory(
                 id = CategoryId("fattyproteins"),
-                name = "Fatty Proteins",
+                name = "Fatty proteins",
                 shortName = "Fatty",
                 icon = null,
                 displayOrder = 7,
@@ -513,7 +513,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("refinedgrains"),
-                name = "Refined Grains",
+                name = "Refined grains",
                 shortName = "Refined",
                 icon = null,
                 displayOrder = 8,
@@ -535,7 +535,7 @@ object SuiteDefinitions {
             ),
             FoodCategory(
                 id = CategoryId("junkfoods"),
-                name = "Junk Foods",
+                name = "Junk foods",
                 shortName = "Junk",
                 icon = null,
                 displayOrder = 10,
