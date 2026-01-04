@@ -34,7 +34,7 @@ Fried foods
 Fatty proteins
 -1,-1,-2,-2,-2,2
 
-## Body fat reduction
+## Body composition
 
 Discouraging higher fat foods even if they're still nutritional and focusing on fewer portions
 
@@ -54,7 +54,7 @@ Whole grains
 +2,+2,+1,0,-1,-2
 
 Nuts + seeds
-+2,0,-2,-2,-2,-2
++2,0,-1,-2,-2,-2
 
 Fatty proteins (cheese, whole milk, cream, bacon, sausage, fatty beef, fried chicken)
 -1,-1,-2,-2,-2,-2
