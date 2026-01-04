@@ -16,9 +16,147 @@ import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 object SuiteDefinitions {
 
     // Suite IDs as constants for type-safe references
+    val BALANCED_ID = SuiteId("balanced")
     val RACING_WEIGHT_ID = SuiteId("racing_weight")
     val BODY_FAT_REDUCTION_ID = SuiteId("body_fat_reduction")
     val HIGH_LOAD_ID = SuiteId("high_load")
+
+    /**
+     * Balanced suite - default recommendation.
+     * Sustainable fueling for consistent training and performance.
+     */
+    val BALANCED = ScoringSuite(
+        id = BALANCED_ID,
+        name = "Balanced",
+        description = "Sustainable fueling for consistent training and performance",
+        version = 1,
+        categories = listOf(
+            // === HEALTHY CATEGORIES (positive scoring) ===
+            FoodCategory(
+                id = CategoryId("fruit"),
+                name = "Fruit",
+                shortName = "Fruit",
+                icon = null,
+                displayOrder = 1,
+                scoringRule = ScoringRule(
+                    targetServings = 4,
+                    scorePerServing = listOf(2, 2, 2, 1, 0, 0)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("veg"),
+                name = "Vegetables",
+                shortName = "Veg",
+                icon = null,
+                displayOrder = 2,
+                scoringRule = ScoringRule(
+                    targetServings = 4,
+                    scorePerServing = listOf(2, 2, 2, 1, 0, 0)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("leanproteins"),
+                name = "Lean Proteins",
+                shortName = "Protein",
+                icon = null,
+                displayOrder = 3,
+                scoringRule = ScoringRule(
+                    targetServings = 3,
+                    scorePerServing = listOf(2, 2, 1, 0, -1, -2)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("dairy"),
+                name = "Dairy",
+                shortName = "Dairy",
+                icon = null,
+                displayOrder = 4,
+                scoringRule = ScoringRule(
+                    targetServings = 3,
+                    scorePerServing = listOf(2, 2, 1, 0, -1, -2)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("wholegrains"),
+                name = "Whole Grains",
+                shortName = "Grains",
+                icon = null,
+                displayOrder = 5,
+                scoringRule = ScoringRule(
+                    targetServings = 3,
+                    scorePerServing = listOf(2, 2, 1, 0, -1, -2)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("nuts"),
+                name = "Nuts & Seeds",
+                shortName = "Nuts",
+                icon = null,
+                displayOrder = 6,
+                scoringRule = ScoringRule(
+                    targetServings = 2,
+                    scorePerServing = listOf(2, 1, 0, -1, -2, -2)
+                )
+            ),
+
+            // === UNHEALTHY CATEGORIES (negative scoring) ===
+            FoodCategory(
+                id = CategoryId("fattymeats"),
+                name = "Fatty Meats",
+                shortName = "Fatty",
+                icon = null,
+                displayOrder = 7,
+                scoringRule = ScoringRule(
+                    targetServings = 0,
+                    scorePerServing = listOf(-1, -1, -2, -2, -2, -2)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("refinedgrains"),
+                name = "Refined Grains",
+                shortName = "Refined",
+                icon = null,
+                displayOrder = 8,
+                scoringRule = ScoringRule(
+                    targetServings = 0,
+                    scorePerServing = listOf(-1, -1, -2, -2, -2, -2)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("sweets"),
+                name = "Sweets",
+                shortName = "Sweets",
+                icon = null,
+                displayOrder = 9,
+                scoringRule = ScoringRule(
+                    targetServings = 0,
+                    scorePerServing = listOf(-1, -2, -2, -2, -2, -2)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("junkfoods"),
+                name = "Junk Foods",
+                shortName = "Junk",
+                icon = null,
+                displayOrder = 10,
+                scoringRule = ScoringRule(
+                    targetServings = 0,
+                    scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
+                )
+            ),
+            FoodCategory(
+                id = CategoryId("alcohol"),
+                name = "Alcohol",
+                shortName = "Alcohol",
+                icon = null,
+                displayOrder = 11,
+                scoringRule = ScoringRule(
+                    targetServings = 0,
+                    scorePerServing = listOf(0, -1, -2, -2, -2, -2)
+                )
+            )
+        )
+    )
 
     /**
      * Racing Weight suite - original scoring from the book.
@@ -424,6 +562,7 @@ object SuiteDefinitions {
      * All available suites in display order.
      */
     val allSuites: List<ScoringSuite> = listOf(
+        BALANCED,
         RACING_WEIGHT,
         BODY_FAT_REDUCTION,
         HIGH_LOAD
@@ -437,5 +576,5 @@ object SuiteDefinitions {
     /**
      * Default suite for new users.
      */
-    val defaultSuite: ScoringSuite = RACING_WEIGHT
+    val defaultSuite: ScoringSuite = BALANCED
 }
