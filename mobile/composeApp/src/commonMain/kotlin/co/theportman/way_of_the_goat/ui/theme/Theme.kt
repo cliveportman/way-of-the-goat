@@ -13,6 +13,13 @@ object GoatColors {
     val Slate50 = Color(0xFFf8fafc)      // Primary text
     val Slate100 = Color(0xFFf1f5f9)     // Logo color
     val Slate400 = Color(0xFF90a1b9)     // Subtitle text
+
+    // Score colours (from Figma design)
+    val ScorePlus2 = Color(0xFF9ae600)   // lime-400
+    val ScorePlus1 = Color(0xFFbbf451)   // lime-300
+    val ScoreZero = Color(0xFF7bf1a8)    // green-300 (teal)
+    val ScoreMinus1 = Color(0xFFffb86a)  // orange-300
+    val ScoreMinus2 = Color(0xFFff8904)  // orange-400
 }
 
 private val DarkColorScheme = darkColorScheme(
