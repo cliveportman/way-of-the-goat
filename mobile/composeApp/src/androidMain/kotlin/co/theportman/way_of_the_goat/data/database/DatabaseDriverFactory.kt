@@ -9,7 +9,7 @@ actual class DatabaseDriverFactory(private val context: Context) {
         return AndroidSqliteDriver(
             schema = WayOfTheGoatDatabase.Schema,
             context = context,
-            name = "way_of_the_goat.db"
+            name = "way_of_the_goat.db" // Pass null for in-memory database
         )
     }
 }

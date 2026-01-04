@@ -7,7 +7,7 @@ actual class DatabaseDriverFactory {
     actual fun createDriver(): SqlDriver {
         return NativeSqliteDriver(
             schema = WayOfTheGoatDatabase.Schema,
-            name = "way_of_the_goat.db"
+            name = "way_of_the_goat.db" // Pass null for in-memory database
         )
     }
 }
