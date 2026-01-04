@@ -191,7 +191,7 @@ private fun ScoresPageContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 10.dp)
         ) {
             // Date heading
             Spacer(modifier = Modifier.height(32.dp))
@@ -210,7 +210,7 @@ private fun ScoresPageContent(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(3.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 items(
                     items = activeSuite.categories,
