@@ -18,7 +18,7 @@ object SuiteDefinitions {
     // Suite IDs as constants for type-safe references
     val BALANCED_ID = SuiteId("balanced")
     val RACING_WEIGHT_ID = SuiteId("racing_weight")
-    val BODY_FAT_REDUCTION_ID = SuiteId("body_fat_reduction")
+    val BODY_COMPOSITION_ID = SuiteId("body_composition")
     val HIGH_LOAD_ID = SuiteId("high_load")
 
     /**
@@ -285,12 +285,12 @@ object SuiteDefinitions {
     )
 
     /**
-     * Body Fat Reduction suite.
+     * Body Composition suite.
      * Discourages higher fat foods and focuses on fewer portions.
      */
-    val BODY_FAT_REDUCTION = ScoringSuite(
-        id = BODY_FAT_REDUCTION_ID,
-        name = "Body Fat Reduction",
+    val BODY_COMPOSITION = ScoringSuite(
+        id = BODY_COMPOSITION_ID,
+        name = "Body Composition",
         description = "Discourages higher fat foods, focuses on fewer portions",
         version = 1,
         categories = listOf(
@@ -564,7 +564,7 @@ object SuiteDefinitions {
     val allSuites: List<ScoringSuite> = listOf(
         BALANCED,
         RACING_WEIGHT,
-        BODY_FAT_REDUCTION,
+        BODY_COMPOSITION,
         HIGH_LOAD
     )
 
