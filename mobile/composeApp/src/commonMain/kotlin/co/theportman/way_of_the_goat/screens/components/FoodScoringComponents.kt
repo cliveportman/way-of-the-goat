@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
@@ -63,14 +64,14 @@ fun FoodCategoryRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(34.dp),
+            .height(38.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Category name label
         Box(
             modifier = Modifier
-                .width(114.dp)
-                .height(34.dp)
+                .weight(1f)
+                .height(38.dp)
                 .background(CategoryLabelBg),
             contentAlignment = Alignment.CenterStart
         ) {
@@ -78,13 +79,18 @@ fun FoodCategoryRow(
                 text = category.name,
                 color = TextColor,
                 fontSize = 16.sp,
-                modifier = Modifier.padding(start = 5.dp)
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
         }
 
+        // Gap between category label and score cells
+        Spacer(modifier = Modifier.width(4.dp))
+
         // Serving cells
         Row(
-            horizontalArrangement = Arrangement.spacedBy(0.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             val scoringRule = category.scoringRule
             val maxServings = scoringRule.maxTrackedServings
@@ -134,8 +140,8 @@ fun ServingCell(
 
     Box(
         modifier = modifier
-            .width(34.dp)
-            .height(34.dp)
+            .width(36.dp)
+            .height(38.dp)
             .background(scoreColor.copy(alpha = backgroundAlpha))
             .combinedClickable(
                 onClick = onClick,
@@ -146,7 +152,7 @@ fun ServingCell(
         Text(
             text = formatPointValue(pointValue),
             color = textColor,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
