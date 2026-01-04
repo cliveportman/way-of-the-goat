@@ -24,12 +24,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
 import co.theportman.way_of_the_goat.data.scoring.model.FoodCategory
+import co.theportman.way_of_the_goat.ui.theme.GoatColors
 
 // Figma colors
 private val BackgroundColor = Color(0xFF020618)        // slate-950
 private val TextColor = Color(0xFFF1F5F9)              // slate-100
 private val CategoryLabelBg = Color(0xFF1D293D)        // slate-800
-private val ServingCellBg = Color(0xFFD9D9D9)          // gray with 50% opacity
+
+/**
+ * Get the background colour for a score cell based on its point value.
+ */
+private fun getScoreColor(score: Int): Color = when (score) {
+    2 -> GoatColors.ScorePlus2
+    1 -> GoatColors.ScorePlus1
+    0 -> GoatColors.ScoreZero
+    -1 -> GoatColors.ScoreMinus1
+    -2 -> GoatColors.ScoreMinus2
+    else -> GoatColors.ScoreZero // fallback
+}
 
 /**
  * A row displaying a food category with its serving cells.
@@ -103,7 +115,9 @@ fun FoodCategoryRow(
 }
 
 /**
- * A single serving cell showing the point value when filled.
+ * A single serving cell showing the point value.
+ * - Filled (selected): full opacity background, dark navy text
+ * - Empty (unselected): 0.5 opacity background, 0.1 opacity text showing potential score
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -114,26 +128,28 @@ fun ServingCell(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val scoreColor = getScoreColor(pointValue)
+    val backgroundAlpha = if (isFilled) 1f else 0.5f
+    val textColor = if (isFilled) GoatColors.Navy950 else GoatColors.Navy950.copy(alpha = 0.1f)
+
     Box(
         modifier = modifier
             .width(34.dp)
             .height(34.dp)
-            .background(ServingCellBg.copy(alpha = 0.5f))
+            .background(scoreColor.copy(alpha = backgroundAlpha))
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
             ),
         contentAlignment = Alignment.Center
     ) {
-        if (isFilled) {
-            Text(
-                text = formatPointValue(pointValue),
-                color = TextColor,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-        }
+        Text(
+            text = formatPointValue(pointValue),
+            color = textColor,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
