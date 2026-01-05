@@ -136,7 +136,6 @@ fun ServingCell(
 ) {
     val scoreColor = getScoreColor(pointValue)
     val backgroundAlpha = if (isFilled) 1f else 0.5f
-    val textColor = if (isFilled) GoatColors.Navy950 else GoatColors.Navy950.copy(alpha = 0.1f)
 
     Box(
         modifier = modifier
@@ -149,13 +148,15 @@ fun ServingCell(
             ),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = formatPointValue(pointValue),
-            color = textColor,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
+        if (isFilled) {
+            Text(
+                text = formatPointValue(pointValue),
+                color = GoatColors.Navy950,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
