@@ -4,11 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -27,14 +33,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
+import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
 import co.theportman.way_of_the_goat.screens.components.ScoreSummary
+import co.theportman.way_of_the_goat.ui.theme.GoatColors
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -194,16 +203,43 @@ private fun ScoresPageContent(
                 .padding(horizontal = 10.dp)
         ) {
             // Date heading
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = formatDate(date),
                 color = TextColor,
-                fontSize = 28.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(48.dp))
+            // Score profile name
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = activeSuite.name,
+                    color = GoatColors.Slate400,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = if (activeSuite.id == SuiteDefinitions.RACING_WEIGHT_ID) FontStyle.Italic else FontStyle.Normal
+                )
+                Text(
+                    text = " profile",
+                    color = GoatColors.Slate400,
+                    fontSize = 16.sp
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(
+                    imageVector = Icons.Filled.Info,
+                    contentDescription = "Profile info",
+                    tint = GoatColors.Slate400,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
 
             // Food categories list
             LazyColumn(
@@ -265,5 +301,7 @@ private fun formatDate(date: LocalDate): String {
         else -> ""
     }
 
-    return "$dayOfWeek ${date.dayOfMonth} $month"
+    val day = date.dayOfMonth.toString().padStart(2, '0')
+
+    return "$dayOfWeek $day $month"
 }
