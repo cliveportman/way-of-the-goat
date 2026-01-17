@@ -368,6 +368,31 @@ class ServingsDataManager private constructor() {
         }
     }
 
+    /**
+     * Delete all servings for a specific date.
+     * Used when switching profiles to clear existing data.
+     */
+    suspend fun deleteServingsForDate(date: LocalDate): Result<Unit> {
+        val repo = repository ?: return Result.failure(IllegalStateException("Not initialized"))
+
+        return repo.deleteServingsForDate(date).also { result ->
+            if (result.isSuccess) {
+                mutex.withLock {
+                    cachedServings.remove(date)
+                    _servingsFlow.value = cachedServings.toMap()
+                }
+            }
+        }
+    }
+
+    /**
+     * Check if a date has any servings data.
+     */
+    fun hasServingsForDate(date: LocalDate): Boolean {
+        val servings = cachedServings[date]
+        return servings != null && servings.servings.values.any { it > 0 }
+    }
+
     companion object {
         /**
          * Singleton instance.
