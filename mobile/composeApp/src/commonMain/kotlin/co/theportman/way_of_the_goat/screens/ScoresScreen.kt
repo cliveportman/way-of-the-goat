@@ -1,6 +1,7 @@
 package co.theportman.way_of_the_goat.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,15 +13,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.Icon
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -38,10 +39,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
-import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
+import co.theportman.way_of_the_goat.screens.components.DataLossConfirmationDialog
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
+import co.theportman.way_of_the_goat.screens.components.ProfileSwitcherSheet
 import co.theportman.way_of_the_goat.screens.components.ScoreSummary
 import co.theportman.way_of_the_goat.ui.theme.GoatColors
 import kotlinx.datetime.Clock
@@ -56,6 +59,7 @@ import kotlinx.datetime.todayIn
 private val BackgroundColor = Color(0xFF020618)  // slate-950
 private val TextColor = Color(0xFFF1F5F9)        // slate-100
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScoresScreen(
     targetDateEpochDay: Long? = null,
@@ -72,6 +76,9 @@ fun ScoresScreen(
 
     // Collect servings flow for reactive updates
     val servingsMap by viewModel.servingsFlow.collectAsState()
+
+    // Collect profile switcher state
+    val profileSwitcherState by viewModel.profileSwitcherState.collectAsState()
 
     // Calculate number of days to show (e.g., last 365 days up to today)
     val numberOfDays = 365
@@ -138,15 +145,50 @@ fun ScoresScreen(
             // Get servings for this date from the flow
             val dailyServings = servingsMap[pageDate]
 
+            // Derive suite reactively from servingsMap data
+            // If day has data, use its stored suite; otherwise use global activeSuite
+            val pageSuite = if (dailyServings != null) {
+                SuiteDefinitions.getSuiteById(dailyServings.suiteId) ?: activeSuite
+            } else {
+                activeSuite
+            }
+
             ScoresPageContent(
                 date = pageDate,
+                today = today,
                 viewModel = viewModel,
                 uiState = uiState,
                 isDateLoaded = isDateLoaded,
-                activeSuite = activeSuite,
-                dailyServings = dailyServings
+                displaySuite = pageSuite,
+                dailyServings = dailyServings,
+                onProfileClick = { viewModel.openProfileSwitcher(pageDate) }
             )
         }
+
+        // Profile Switcher Bottom Sheet
+        ProfileSwitcherSheet(
+            isOpen = profileSwitcherState.isSheetOpen,
+            onDismiss = { viewModel.closeProfileSwitcher() },
+            profiles = viewModel.allProfiles,
+            currentProfileId = activeSuite.id,
+            selectedProfileId = profileSwitcherState.selectedSuiteId ?: activeSuite.id,
+            onProfileSelected = { viewModel.selectProfileInSheet(it) },
+            isToday = profileSwitcherState.targetDate == today,
+            useFutureChecked = profileSwitcherState.useFutureChecked,
+            onUseFutureChanged = { viewModel.toggleFutureProfileCheckbox(it) },
+            hasExistingData = profileSwitcherState.targetDate?.let { viewModel.hasExistingData(it) } ?: false,
+            onSwitchProfile = { viewModel.initiateProfileSwitch() },
+            onCancel = { viewModel.closeProfileSwitcher() }
+        )
+
+        // Data Loss Confirmation Dialog
+        DataLossConfirmationDialog(
+            isOpen = profileSwitcherState.showConfirmationDialog,
+            onDismiss = { viewModel.cancelConfirmation() },
+            profileName = viewModel.allProfiles.find { it.id == profileSwitcherState.selectedSuiteId }?.name ?: "",
+            onSwitchAnyway = { viewModel.confirmProfileSwitch() },
+            onKeepCurrent = { viewModel.cancelConfirmation() }
+        )
     }
 }
 
@@ -154,11 +196,13 @@ fun ScoresScreen(
 @Composable
 private fun ScoresPageContent(
     date: LocalDate,
+    today: LocalDate,
     viewModel: ScoresViewModel,
     uiState: ScoresUiState,
     isDateLoaded: Boolean,
-    activeSuite: ScoringSuite,
-    dailyServings: DailyServings?
+    displaySuite: ScoringSuite,
+    dailyServings: DailyServings?,
+    onProfileClick: () -> Unit
 ) {
     // Collect refresh state
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -187,8 +231,8 @@ private fun ScoresPageContent(
         return
     }
 
-    // Get totals for display
-    val totals = viewModel.getTotalsForDate(date)
+    // Get totals for display using the reactive servings and suite
+    val totals = viewModel.getTotalsForDisplay(dailyServings, displaySuite)
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,
@@ -213,17 +257,19 @@ private fun ScoresPageContent(
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Score profile name
+            // Score profile name (clickable to open switcher)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .clickable { onProfileClick() }
+                    .padding(vertical = 4.dp)
             ) {
                 Text(
-                    text = activeSuite.name,
+                    text = displaySuite.name,
                     color = GoatColors.Slate400,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    fontStyle = if (activeSuite.id == SuiteDefinitions.RACING_WEIGHT_ID) FontStyle.Italic else FontStyle.Normal
+                    fontStyle = if (displaySuite.id == SuiteDefinitions.RACING_WEIGHT_ID) FontStyle.Italic else FontStyle.Normal
                 )
                 Text(
                     text = " profile",
@@ -233,7 +279,7 @@ private fun ScoresPageContent(
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(
                     imageVector = Icons.Filled.Info,
-                    contentDescription = "Profile info",
+                    contentDescription = "Change profile",
                     tint = GoatColors.Slate400,
                     modifier = Modifier.size(18.dp)
                 )
@@ -249,7 +295,7 @@ private fun ScoresPageContent(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 items(
-                    items = activeSuite.categories,
+                    items = displaySuite.categories,
                     key = { it.id.value }
                 ) { category ->
                     val servingCount = dailyServings?.getServings(category.id) ?: 0
