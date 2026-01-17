@@ -360,114 +360,100 @@ data class DayTotals(
 
 ### Implementation Phases
 
-#### Phase 1: Database Setup (SQLDelight)
-- [ ] Add SQLDelight dependency to `mobile/composeApp/build.gradle.kts`
-- [ ] Create `src/commonMain/sqldelight/` directory structure
-- [ ] Create `FoodScoring.sq` schema file with tables
-- [ ] Generate Kotlin code from SQL schema
-- [ ] Create database drivers for Android/iOS
+#### Phase 1: Database Setup (SQLDelight) ✅
+- [x] Add SQLDelight dependency to `mobile/composeApp/build.gradle.kts`
+- [x] Create `src/commonMain/sqldelight/` directory structure
+- [x] Create `WayOfTheGoatDatabase.sq` schema file with tables
+- [x] Generate Kotlin code from SQL schema
+- [x] Create database drivers for Android/iOS
 
-**Files to Create**:
-- `commonMain/sqldelight/co/theportman/way_of_the_goat/FoodScoring.sq`
+**Files Created**:
+- `commonMain/sqldelight/co/theportman/way_of_the_goat/data/database/WayOfTheGoatDatabase.sq`
+- `commonMain/kotlin/.../data/database/DatabaseDriverFactory.kt` (expect)
+- `androidMain/kotlin/.../data/database/DatabaseDriverFactory.kt` (actual)
+- `iosMain/kotlin/.../data/database/DatabaseDriverFactory.kt` (actual)
 
-#### Phase 2: Core Data Models
-- [ ] Create `domain/models/` package structure
-- [ ] Define `ScoringRule`, `FoodCategory`, `ScoringSuite` data classes
-- [ ] Define `DayTotals` for calculated scores
-- [ ] Create database entity models matching SQLDelight schema
+#### Phase 2: Core Data Models ✅
+- [x] Create `data/scoring/model/` package structure
+- [x] Define `ScoringRule`, `FoodCategory`, `ScoringSuite` data classes
+- [x] Define `DailyServings` with score calculation
+- [x] Create type-safe value classes (`SuiteId`, `CategoryId`)
 
-**Files to Create**:
-- `domain/models/ScoringRule.kt`
-- `domain/models/FoodCategory.kt`
-- `domain/models/ScoringSuite.kt`
-- `domain/models/DayTotals.kt`
+**Files Created**:
+- `data/scoring/model/FoodCategory.kt` (includes ScoringRule)
+- `data/scoring/model/ScoringSuite.kt`
+- `data/scoring/model/DailyServings.kt`
 
-#### Phase 3: Scoring Suite Configuration
-- [ ] Create `data/config/ScoringRulesFactory.kt`
-- [ ] Implement `racingWeightSuite()` with 13 categories from `references/core/constants.ts`
-- [ ] Implement `ketogenicSuite()` with low-carb categories
-- [ ] Implement `coeliacSuite()` with gluten-free categories
-- [ ] Implement `endurance45Suite()` with age-adjusted categories
-- [ ] Add `getAllSuites()`, `getSuiteById()` helper methods
+#### Phase 3: Scoring Suite Configuration ✅
+- [x] Create `data/scoring/SuiteDefinitions.kt`
+- [x] Implement `RACING_WEIGHT` suite (original from book)
+- [x] Implement `BALANCED` suite (default recommendation)
+- [x] Implement `BODY_COMPOSITION` suite (weight loss focus)
+- [x] Implement `HIGH_LOAD` suite (high training volume)
+- [x] Add `allSuites` list and `getSuiteById()` helper
 
-**Files to Create**:
-- `data/config/ScoringRulesFactory.kt`
+**Files Created**:
+- `data/scoring/SuiteDefinitions.kt`
 
-**Reference**: Port scoring arrays exactly from `references/core/constants.ts`
+**Note**: Suite definitions evolved from original plan - see `SCORINGSUITES.md` for details
 
-#### Phase 4: Repository Layer
-- [ ] Create `data/repository/FoodScoringRepository.kt`
-- [ ] Implement following `IntervalsRepository` pattern (suspend functions, `Result<T>`)
-- [ ] Methods:
-  - `getDayRecord(date): DayRecord?`
-  - `createDayRecord(date, suiteId): DayRecord`
-  - `getServingsForDay(date): List<DayServing>`
-  - `upsertServing(date, categoryId, servings): Result<Unit>`
-  - `canChangeSuite(date): Boolean`
-  - `changeSuite(date, newSuiteId): Result<Unit>`
-  - `calculateDayScore(date): DayTotals`
-  - `deleteDayRecord(date): Result<Unit>`
+#### Phase 4: Repository Layer ✅
+- [x] Create `data/repository/ServingsRepository.kt`
+- [x] Implement repository pattern with Result wrapper
+- [x] Methods implemented:
+  - `getServingsForDate()`, `getServingsForRange()`
+  - `saveServings()`, `updateCategoryServings()`
+  - `setActiveSuite()`, `calculateScoreForDate()`
+  - `deleteServingsForDate()`
+- [x] Create `data/scoring/ScoreCalculator.kt` for score calculations
 
-**Files to Create**:
-- `data/repository/FoodScoringRepository.kt`
+**Files Created**:
+- `data/repository/ServingsRepository.kt`
+- `data/scoring/ScoreCalculator.kt`
 
-**Pattern Reference**: `data/repository/IntervalsRepository.kt`
+#### Phase 5: Cache Layer ✅
+- [x] Create `data/cache/ServingsDataManager.kt` singleton
+- [x] Follow `ActivityDataManager` pattern with `StateFlow`
+- [x] Implement lazy loading with smart date range tracking
+- [x] Expose `servingsFlow: StateFlow<Map<LocalDate, DailyServings>>`
+- [x] Methods implemented:
+  - `loadInitialData()`, `ensureDateLoaded()`
+  - `incrementServings()`, `decrementServings()`
+  - `calculateScoreForDate()`
 
-#### Phase 5: Cache Layer
-- [ ] Create `data/cache/FoodDataManager.kt` singleton
-- [ ] Follow `ActivityDataManager` pattern with `StateFlow`
-- [ ] Implement lazy loading for date ranges
-- [ ] Expose `StateFlow<List<DayRecord>>` for reactive updates
-- [ ] Methods:
-  - `loadInitialData(aroundDate, bufferDays)`
-  - `ensureDateLoaded(date, bufferDays)`
-  - `refreshDay(date)`
-  - `getDayScore(date): DayTotals`
+**Files Created**:
+- `data/cache/ServingsDataManager.kt`
 
-**Files to Create**:
-- `data/cache/FoodDataManager.kt`
+#### Phase 6: ViewModel Updates ✅
+- [x] Update `ScoresViewModel` for food scoring
+- [x] Create `ScoresUiState` sealed class (Loading, Success, Error)
+- [x] Expose `activeSuite` and `servingsFlow` from data manager
+- [x] Implement `incrementServings()`, `decrementServings()`
+- [x] Implement date preloading on scroll
 
-**Pattern Reference**: `data/cache/ActivityDataManager.kt`
-
-#### Phase 6: ViewModel Updates
-- [ ] Update `ScoresViewModel` to support dual view modes
-- [ ] Add `TodayViewMode.NUTRITION` enum value
-- [ ] Create state classes for food scoring UI:
-  - `FoodScoringUiState` (Loading, Success, Error)
-  - Current suite, can change suite flag
-  - List of servings for current day
-- [ ] Wire up `FoodDataManager` StateFlow collection
-- [ ] Implement serving add/remove operations
-- [ ] Implement suite switching with validation
-
-**Files to Modify**:
+**Files Modified**:
 - `screens/ScoresViewModel.kt`
 
-**Pattern Reference**: Current `ScoresViewModel` structure with `StateFlow` and sealed classes
+#### Phase 7: UI Implementation ✅
+- [x] Update `ScoresScreen.kt` with HorizontalPager for date navigation
+- [x] Display active suite name with info icon
+- [x] Create `FoodCategoryRow` composable with serving cells
+- [x] Create `ServingCell` with color-coded backgrounds (+2/+1/0/-1/-2)
+- [x] Implement tap to increment, long-press to decrement
+- [x] Create `ScoreSummary` with total/healthy/unhealthy breakdown
+- [x] Style with Material3 components
 
-#### Phase 7: UI Implementation
-- [ ] Update `ScoresScreen.kt` to show nutrition view mode
-- [ ] Create suite selection dialog composable
-- [ ] Create food category list UI with 6-dot scoring indicators
-- [ ] Implement tap/long-press for add/remove servings
-- [ ] Display daily totals (healthy/unhealthy/total scores)
-- [ ] Add view mode toggle button (Activities ↔ Nutrition)
-- [ ] Style with Material3 components
-
-**Files to Modify**:
+**Files Modified/Created**:
 - `screens/ScoresScreen.kt`
+- `screens/components/FoodScoringComponents.kt`
 
-**UI Reference**:
-- `references/features/scores/components/Score.tsx` - Category row with serving dots
-- `references/features/scores/components/ScoreServing.tsx` - Individual dot indicator
-
-#### Phase 8: Migration & Testing
-- [ ] Test suite switching validation (locked after scoring)
-- [ ] Verify score calculations against reference app formulas
-- [ ] Test date navigation with lazy loading
-- [ ] Test pull-to-refresh on nutrition view
-- [ ] Verify half-serving support (if implemented)
-- [ ] Migration strategy for existing users (default to Racing Weight suite)
+#### Phase 8: Integration & Testing ✅
+- [x] Database initialization in Android `MainActivity`
+- [x] Date navigation with lazy loading working
+- [x] Pull-to-refresh on scores view
+- [x] Default suite: Balanced (configurable)
+- [ ] Suite switching UI (pending - currently uses default suite)
+- [ ] Half-serving support (deferred to future phase)
 
 ### Integration with Existing Architecture
 
