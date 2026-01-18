@@ -55,6 +55,8 @@ class ServingsRepository(
 
     /**
      * Switch to a different scoring suite.
+     * Note: This only updates the user's default preference.
+     * Use recordProfileChange() to also record in profile history.
      */
     suspend fun setActiveSuite(suiteId: SuiteId): Result<Unit> {
         return try {
@@ -69,6 +71,41 @@ class ServingsRepository(
 
             _activeSuite.value = suite
             Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Record a profile change in the history table.
+     * This tracks when a profile became active for a specific date,
+     * allowing empty days to display the correct historical profile.
+     */
+    suspend fun recordProfileChange(suiteId: SuiteId, effectiveDate: LocalDate): Result<Unit> {
+        return try {
+            val now = Clock.System.now().toEpochMilliseconds()
+            queries.insertProfileHistory(
+                suite_id = suiteId.value,
+                effective_date = effectiveDate.toString(),
+                created_at = now
+            )
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Get the profile that was active for a specific date.
+     * Queries the profile_history table for the most recent change
+     * on or before the given date.
+     * Returns null if no history exists (fallback to current activeSuite).
+     */
+    suspend fun getProfileForDate(date: LocalDate): Result<SuiteId?> {
+        return try {
+            val suiteIdStr = queries.getProfileForDate(date.toString()).executeAsOneOrNull()
+            val suiteId = suiteIdStr?.let { SuiteId(it) }
+            Result.success(suiteId)
         } catch (e: Exception) {
             Result.failure(e)
         }

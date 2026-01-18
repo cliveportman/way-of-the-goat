@@ -54,6 +54,14 @@ class ServingsDataManager private constructor() {
     private val _servingsFlow = MutableStateFlow<Map<LocalDate, DailyServings>>(emptyMap())
     val servingsFlow: StateFlow<Map<LocalDate, DailyServings>> = _servingsFlow.asStateFlow()
 
+    // Cache for profile history (date -> suiteId)
+    // This tracks what profile was active for each date
+    private val cachedProfileHistory = mutableMapOf<LocalDate, SuiteId>()
+
+    // Flow to notify UI of profile history changes
+    private val _profileHistoryFlow = MutableStateFlow<Map<LocalDate, SuiteId>>(emptyMap())
+    val profileHistoryFlow: StateFlow<Map<LocalDate, SuiteId>> = _profileHistoryFlow.asStateFlow()
+
     // Initialization state
     private val _isInitialized = MutableStateFlow(false)
     val isInitialized: StateFlow<Boolean> = _isInitialized.asStateFlow()
@@ -259,7 +267,8 @@ class ServingsDataManager private constructor() {
     }
 
     /**
-     * Switch active suite.
+     * Switch active suite (updates user's default preference only).
+     * Does NOT record in profile history - use setActiveSuiteForDate for that.
      */
     suspend fun setActiveSuite(suiteId: SuiteId): Result<Unit> {
         val repo = repository ?: return Result.failure(IllegalStateException("Not initialized"))
@@ -270,6 +279,83 @@ class ServingsDataManager private constructor() {
                 _activeSuite.value = suite
             }
         }
+    }
+
+    /**
+     * Switch active suite for a specific date and record in profile history.
+     *
+     * @param suiteId The new suite to activate
+     * @param effectiveDate The date from which this profile becomes active
+     * @param updateDefault If true, also updates user_preferences (the default for future days)
+     */
+    suspend fun setActiveSuiteForDate(
+        suiteId: SuiteId,
+        effectiveDate: LocalDate,
+        updateDefault: Boolean
+    ): Result<Unit> {
+        val repo = repository ?: return Result.failure(IllegalStateException("Not initialized"))
+
+        return try {
+            // Always record in profile history
+            repo.recordProfileChange(suiteId, effectiveDate).fold(
+                onSuccess = {
+                    // Update cache and invalidate stale entries
+                    // When we record a change for date X, cached entries for dates >= X
+                    // could be stale (they may have been resolved against old history)
+                    mutex.withLock {
+                        // Remove all cached entries for dates >= effectiveDate
+                        // (they need to be re-queried from DB to get correct results)
+                        val staleDates = cachedProfileHistory.keys.filter { it >= effectiveDate }
+                        staleDates.forEach { cachedProfileHistory.remove(it) }
+
+                        // Add the new entry for the effective date
+                        cachedProfileHistory[effectiveDate] = suiteId
+                        _profileHistoryFlow.value = cachedProfileHistory.toMap()
+                    }
+                },
+                onFailure = { return Result.failure(it) }
+            )
+
+            // Optionally update the default preference
+            if (updateDefault) {
+                repo.setActiveSuite(suiteId).fold(
+                    onSuccess = {
+                        val suite = SuiteDefinitions.getSuiteById(suiteId) ?: SuiteDefinitions.defaultSuite
+                        _activeSuite.value = suite
+                    },
+                    onFailure = { return Result.failure(it) }
+                )
+            }
+
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Get the historical profile for a specific date.
+     * Queries profile_history for the most recent change on or before the date.
+     * Returns null if no history exists (caller should fall back to activeSuite).
+     */
+    suspend fun getHistoricalProfileForDate(date: LocalDate): SuiteId? {
+        // Check cache first
+        cachedProfileHistory[date]?.let { return it }
+
+        val repo = repository ?: return null
+
+        return repo.getProfileForDate(date).fold(
+            onSuccess = { suiteId ->
+                suiteId?.also {
+                    // Cache the result
+                    mutex.withLock {
+                        cachedProfileHistory[date] = it
+                        _profileHistoryFlow.value = cachedProfileHistory.toMap()
+                    }
+                }
+            },
+            onFailure = { null }
+        )
     }
 
     /**
@@ -344,10 +430,12 @@ class ServingsDataManager private constructor() {
      */
     fun clearCache() {
         cachedServings.clear()
+        cachedProfileHistory.clear()
         oldestLoadedDate = null
         newestLoadedDate = null
         loadingRanges.clear()
         _servingsFlow.value = emptyMap()
+        _profileHistoryFlow.value = emptyMap()
     }
 
     /**
