@@ -28,12 +28,18 @@ data class ProfileSwitcherState(
     val selectedSuiteId: SuiteId? = null,
     val useFutureChecked: Boolean = true,
     val showConfirmationDialog: Boolean = false,
-    val targetDate: LocalDate? = null
+    val targetDate: LocalDate? = null,
+    val lastUsedSuiteId: SuiteId? = null,  // For "Last used: X" hint on empty days
+    val isEmptyPastDay: Boolean = false    // True if target day has no profile selected
 ) {
     /**
      * Whether the selected profile differs from the current active profile.
+     * For empty past days, any selection is considered "new" since there's no current profile.
      */
     fun isNewProfileSelected(currentSuiteId: SuiteId): Boolean {
+        if (isEmptyPastDay) {
+            return selectedSuiteId != null  // Any selection is valid for empty past days
+        }
         return selectedSuiteId != null && selectedSuiteId != currentSuiteId
     }
 }
@@ -65,9 +71,6 @@ class ScoresViewModel : ViewModel() {
 
     // Expose servings flow for reactive UI updates
     val servingsFlow: StateFlow<Map<LocalDate, DailyServings>> = servingsDataManager.servingsFlow
-
-    // Expose profile history flow for reactive UI updates
-    val profileHistoryFlow: StateFlow<Map<LocalDate, SuiteId>> = servingsDataManager.profileHistoryFlow
 
     // Track last viewed date for scroll direction detection
     private var lastViewedDate: LocalDate? = null
@@ -110,9 +113,8 @@ class ScoresViewModel : ViewModel() {
     }
 
     /**
-     * Ensure data is loaded around the given date
-     * Detects scroll direction and preloads accordingly
-     * Also preloads profile history for the date
+     * Ensure data is loaded around the given date.
+     * Detects scroll direction and preloads accordingly.
      */
     fun ensureDateLoaded(currentDate: LocalDate) {
         viewModelScope.launch {
@@ -126,9 +128,6 @@ class ScoresViewModel : ViewModel() {
                     servingsDataManager.ensureDateLoaded(currentDate, bufferDays = 30)
                 }
             }
-
-            // Preload profile history for this date (if not already cached)
-            servingsDataManager.getHistoricalProfileForDate(currentDate)
 
             lastViewedDate = currentDate
         }
@@ -249,15 +248,32 @@ class ScoresViewModel : ViewModel() {
 
     /**
      * Open the profile switcher sheet for a specific date.
+     * For empty past days, fetches the "last used" profile as a hint.
      */
     fun openProfileSwitcher(date: LocalDate) {
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val hasData = hasExistingData(date)
+        val isEmptyPastDay = !hasData && date < today
+
         _profileSwitcherState.value = ProfileSwitcherState(
             isSheetOpen = true,
             selectedSuiteId = activeSuite.value.id,
             useFutureChecked = true,
             showConfirmationDialog = false,
-            targetDate = date
+            targetDate = date,
+            lastUsedSuiteId = null,  // Will be populated async for empty past days
+            isEmptyPastDay = isEmptyPastDay
         )
+
+        // For empty past days, fetch the last used profile as a hint
+        if (isEmptyPastDay) {
+            viewModelScope.launch {
+                val lastUsed = servingsDataManager.getLastUsedProfile(date)
+                _profileSwitcherState.value = _profileSwitcherState.value.copy(
+                    lastUsedSuiteId = lastUsed
+                )
+            }
+        }
     }
 
     /**
@@ -318,12 +334,11 @@ class ScoresViewModel : ViewModel() {
 
     /**
      * Confirm profile switch (after data loss warning).
-     * Deletes existing data and switches to the new profile.
+     * Deletes existing data for the target date.
      *
-     * Profile history is always recorded for the target date.
      * For TODAY: If "Continue using this profile in future" is checked,
      *            the user's default preference is also updated.
-     * For PAST DAYS: Never update default preference (to protect today).
+     * For PAST DAYS: Creates an empty daily record with the selected profile.
      */
     fun confirmProfileSwitch() {
         val state = _profileSwitcherState.value
@@ -343,20 +358,26 @@ class ScoresViewModel : ViewModel() {
                 )
             }
 
-            // Set the active suite for this date and record in profile history
-            // For TODAY: checkbox determines whether to update default preference
-            // For PAST DAYS: never update default (to protect today)
-            val shouldUpdateDefault = isToday && state.useFutureChecked
-            servingsDataManager.setActiveSuiteForDate(
-                suiteId = selectedId,
-                effectiveDate = date,
-                updateDefault = shouldUpdateDefault
-            ).fold(
-                onSuccess = { /* Suite changed and history recorded */ },
-                onFailure = { error ->
-                    println("Error setting active suite: ${error.message}")
+            if (isToday) {
+                // For TODAY with "Continue using" checked: update default preference
+                if (state.useFutureChecked) {
+                    servingsDataManager.setActiveSuite(selectedId).fold(
+                        onSuccess = { /* Default preference updated */ },
+                        onFailure = { error ->
+                            println("Error setting active suite: ${error.message}")
+                        }
+                    )
                 }
-            )
+            } else {
+                // For PAST DAYS: create an empty daily record with the selected profile
+                // This establishes which profile the day uses
+                servingsDataManager.createEmptyDayWithSuite(date, selectedId).fold(
+                    onSuccess = { /* Empty record created */ },
+                    onFailure = { error ->
+                        println("Error creating empty day record: ${error.message}")
+                    }
+                )
+            }
 
             // Close the sheet
             closeProfileSwitcher()

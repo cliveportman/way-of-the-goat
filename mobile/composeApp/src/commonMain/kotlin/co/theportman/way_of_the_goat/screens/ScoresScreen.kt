@@ -78,9 +78,6 @@ fun ScoresScreen(
     // Collect servings flow for reactive updates
     val servingsMap by viewModel.servingsFlow.collectAsState()
 
-    // Collect profile history flow for reactive updates
-    val profileHistoryMap by viewModel.profileHistoryFlow.collectAsState()
-
     // Collect profile switcher state
     val profileSwitcherState by viewModel.profileSwitcherState.collectAsState()
 
@@ -154,25 +151,20 @@ fun ScoresScreen(
 
             // Derive suite reactively with the following priority:
             // 1. If day has servings data → use stored suite_id
-            // 2. If day is TODAY → always use current activeSuite (protected from history changes)
-            // 3. If past day with no data → look up profile history, then fall back to activeSuite
-            val pageSuite = when {
+            // 2. If day is TODAY → always use current activeSuite
+            // 3. If past day with no data → null (show "No profile selected")
+            val pageSuite: ScoringSuite? = when {
                 // Day has data - use the stored suite
                 dailyServings != null -> {
                     SuiteDefinitions.getSuiteById(dailyServings.suiteId) ?: activeSuite
                 }
-                // Today is protected - always use current activeSuite
+                // Today - always use current activeSuite
                 isToday -> {
                     activeSuite
                 }
-                // Past day with no data - check profile history
+                // Past day with no data - no profile selected
                 else -> {
-                    val historicalSuiteId = profileHistoryMap[pageDate]
-                    if (historicalSuiteId != null) {
-                        SuiteDefinitions.getSuiteById(historicalSuiteId) ?: activeSuite
-                    } else {
-                        activeSuite
-                    }
+                    null
                 }
             }
 
@@ -201,7 +193,9 @@ fun ScoresScreen(
             onUseFutureChanged = { viewModel.toggleFutureProfileCheckbox(it) },
             hasExistingData = profileSwitcherState.targetDate?.let { viewModel.hasExistingData(it) } ?: false,
             onSwitchProfile = { viewModel.initiateProfileSwitch() },
-            onCancel = { viewModel.closeProfileSwitcher() }
+            onCancel = { viewModel.closeProfileSwitcher() },
+            lastUsedSuiteId = profileSwitcherState.lastUsedSuiteId,
+            isEmptyPastDay = profileSwitcherState.isEmptyPastDay
         )
 
         // Data Loss Confirmation Dialog
@@ -223,7 +217,7 @@ private fun ScoresPageContent(
     viewModel: ScoresViewModel,
     uiState: ScoresUiState,
     isDateLoaded: Boolean,
-    displaySuite: ScoringSuite,
+    displaySuite: ScoringSuite?,
     dailyServings: DailyServings?,
     onProfileClick: () -> Unit
 ) {
@@ -254,9 +248,6 @@ private fun ScoresPageContent(
         return
     }
 
-    // Get totals for display using the reactive servings and suite
-    val totals = viewModel.getTotalsForDisplay(dailyServings, displaySuite)
-
     PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = { viewModel.refreshCurrentDate(date) },
@@ -280,64 +271,116 @@ private fun ScoresPageContent(
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Score profile name (clickable to open switcher)
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .clickable { onProfileClick() }
-                    .padding(vertical = 4.dp)
-            ) {
-                Text(
-                    text = displaySuite.name,
-                    color = GoatColors.Slate400,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = if (displaySuite.id == SuiteDefinitions.RACING_WEIGHT_ID) FontStyle.Italic else FontStyle.Normal
-                )
-                Text(
-                    text = " profile",
-                    color = GoatColors.Slate400,
-                    fontSize = 16.sp
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Icon(
-                    imageVector = Icons.Filled.Info,
-                    contentDescription = "Change profile",
-                    tint = GoatColors.Slate400,
-                    modifier = Modifier.size(18.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            // Food categories list
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                items(
-                    items = displaySuite.categories,
-                    key = { it.id.value }
-                ) { category ->
-                    val servingCount = dailyServings?.getServings(category.id) ?: 0
-
-                    FoodCategoryRow(
-                        category = category,
-                        servingCount = servingCount,
-                        onIncrement = {
-                            viewModel.incrementServings(date, category.id)
-                        },
-                        onDecrement = {
-                            viewModel.decrementServings(date, category.id)
-                        }
+            // Profile display - either selected profile or "No profile selected"
+            if (displaySuite != null) {
+                // Score profile name (clickable to open switcher)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable { onProfileClick() }
+                        .padding(vertical = 4.dp)
+                ) {
+                    Text(
+                        text = displaySuite.name,
+                        color = GoatColors.Slate400,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontStyle = if (displaySuite.id == SuiteDefinitions.RACING_WEIGHT_ID) FontStyle.Italic else FontStyle.Normal
+                    )
+                    Text(
+                        text = " profile",
+                        color = GoatColors.Slate400,
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Icon(
+                        imageVector = Icons.Filled.Info,
+                        contentDescription = "Change profile",
+                        tint = GoatColors.Slate400,
+                        modifier = Modifier.size(18.dp)
                     )
                 }
-            }
 
-            // Score summary at bottom
-            ScoreSummary(totals = totals)
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Food categories list
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    items(
+                        items = displaySuite.categories,
+                        key = { it.id.value }
+                    ) { category ->
+                        val servingCount = dailyServings?.getServings(category.id) ?: 0
+
+                        FoodCategoryRow(
+                            category = category,
+                            servingCount = servingCount,
+                            onIncrement = {
+                                viewModel.incrementServings(date, category.id)
+                            },
+                            onDecrement = {
+                                viewModel.decrementServings(date, category.id)
+                            }
+                        )
+                    }
+                }
+
+                // Score summary at bottom
+                val totals = viewModel.getTotalsForDisplay(dailyServings, displaySuite)
+                ScoreSummary(totals = totals)
+            } else {
+                // No profile selected state (empty past day)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable { onProfileClick() }
+                        .padding(vertical = 4.dp)
+                ) {
+                    Text(
+                        text = "No profile selected",
+                        color = GoatColors.Slate400,
+                        fontSize = 16.sp,
+                        fontStyle = FontStyle.Italic
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Icon(
+                        imageVector = Icons.Filled.Info,
+                        contentDescription = "Select profile",
+                        tint = GoatColors.Slate400,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Empty state message
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Tap above to select a profile",
+                            color = GoatColors.Slate400,
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = "and start tracking",
+                            color = GoatColors.Slate400,
+                            fontSize = 16.sp
+                        )
+                    }
+                }
+            }
         }
     }
 }

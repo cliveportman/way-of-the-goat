@@ -69,6 +69,7 @@ private val WarningBackground = Color(0xFF451a03)   // amber-950
  * @param hasExistingData Whether the current day has existing servings data
  * @param onSwitchProfile Called when the "Switch profile" button is tapped
  * @param onCancel Called when "Cancel" is tapped
+ * @param lastUsedSuiteId For empty past days, the last used profile (for hint display)
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,11 +86,14 @@ fun ProfileSwitcherSheet(
     hasExistingData: Boolean,
     onSwitchProfile: () -> Unit,
     onCancel: () -> Unit,
+    lastUsedSuiteId: SuiteId? = null,
+    isEmptyPastDay: Boolean = false,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 ) {
     if (!isOpen) return
 
-    val isNewProfileSelected = selectedProfileId != currentProfileId
+    // For empty past days, any selection is valid (there's no current profile)
+    val isNewProfileSelected = if (isEmptyPastDay) true else selectedProfileId != currentProfileId
     val showWarning = hasExistingData && isNewProfileSelected
 
     ModalBottomSheet(
@@ -116,6 +120,19 @@ fun ProfileSwitcherSheet(
                 color = TextSecondary,
                 fontSize = 14.sp
             )
+
+            // "Last used" hint for empty past days
+            if (lastUsedSuiteId != null) {
+                val lastUsedName = profiles.find { it.id == lastUsedSuiteId }?.name
+                if (lastUsedName != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Last used: $lastUsedName",
+                        color = SelectedGreen,
+                        fontSize = 13.sp
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 

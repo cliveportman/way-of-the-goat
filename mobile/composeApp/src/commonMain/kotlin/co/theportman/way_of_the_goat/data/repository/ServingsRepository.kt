@@ -55,8 +55,7 @@ class ServingsRepository(
 
     /**
      * Switch to a different scoring suite.
-     * Note: This only updates the user's default preference.
-     * Use recordProfileChange() to also record in profile history.
+     * Updates the user's default preference used for TODAY.
      */
     suspend fun setActiveSuite(suiteId: SuiteId): Result<Unit> {
         return try {
@@ -77,35 +76,32 @@ class ServingsRepository(
     }
 
     /**
-     * Record a profile change in the history table.
-     * This tracks when a profile became active for a specific date,
-     * allowing empty days to display the correct historical profile.
+     * Get the most recent servings record before a given date.
+     * Used to show "Last used: [profile]" hint when selecting profile for empty day.
      */
-    suspend fun recordProfileChange(suiteId: SuiteId, effectiveDate: LocalDate): Result<Unit> {
+    suspend fun getLastServingsBeforeDate(date: LocalDate): Result<DailyServings?> {
         return try {
-            val now = Clock.System.now().toEpochMilliseconds()
-            queries.insertProfileHistory(
-                suite_id = suiteId.value,
-                effective_date = effectiveDate.toString(),
-                created_at = now
-            )
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
+            val row = queries.getLastServingsBeforeDate(date.toString()).executeAsOneOrNull()
+            if (row == null) {
+                Result.success(null)
+            } else {
+                // Get the category servings for this record
+                val categoryRows = queries.getCategoryServingsForDaily(row.id).executeAsList()
+                val servingsMap = categoryRows.associate {
+                    CategoryId(it.category_id) to it.serving_count.toInt()
+                }
 
-    /**
-     * Get the profile that was active for a specific date.
-     * Queries the profile_history table for the most recent change
-     * on or before the given date.
-     * Returns null if no history exists (fallback to current activeSuite).
-     */
-    suspend fun getProfileForDate(date: LocalDate): Result<SuiteId?> {
-        return try {
-            val suiteIdStr = queries.getProfileForDate(date.toString()).executeAsOneOrNull()
-            val suiteId = suiteIdStr?.let { SuiteId(it) }
-            Result.success(suiteId)
+                Result.success(
+                    DailyServings(
+                        id = row.id,
+                        date = LocalDate.parse(row.date),
+                        suiteId = SuiteId(row.suite_id),
+                        servings = servingsMap,
+                        createdAt = row.created_at,
+                        updatedAt = row.updated_at
+                    )
+                )
+            }
         } catch (e: Exception) {
             Result.failure(e)
         }
