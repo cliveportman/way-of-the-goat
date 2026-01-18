@@ -66,6 +66,9 @@ class ScoresViewModel : ViewModel() {
     // Expose servings flow for reactive UI updates
     val servingsFlow: StateFlow<Map<LocalDate, DailyServings>> = servingsDataManager.servingsFlow
 
+    // Expose profile history flow for reactive UI updates
+    val profileHistoryFlow: StateFlow<Map<LocalDate, SuiteId>> = servingsDataManager.profileHistoryFlow
+
     // Track last viewed date for scroll direction detection
     private var lastViewedDate: LocalDate? = null
 
@@ -109,6 +112,7 @@ class ScoresViewModel : ViewModel() {
     /**
      * Ensure data is loaded around the given date
      * Detects scroll direction and preloads accordingly
+     * Also preloads profile history for the date
      */
     fun ensureDateLoaded(currentDate: LocalDate) {
         viewModelScope.launch {
@@ -122,6 +126,9 @@ class ScoresViewModel : ViewModel() {
                     servingsDataManager.ensureDateLoaded(currentDate, bufferDays = 30)
                 }
             }
+
+            // Preload profile history for this date (if not already cached)
+            servingsDataManager.getHistoricalProfileForDate(currentDate)
 
             lastViewedDate = currentDate
         }
@@ -313,16 +320,17 @@ class ScoresViewModel : ViewModel() {
      * Confirm profile switch (after data loss warning).
      * Deletes existing data and switches to the new profile.
      *
-     * Note: We always set the active suite when switching profiles because
-     * the UI depends on activeSuite to display the correct categories.
-     * The checkbox "Continue using this profile in future" currently has
-     * the same effect either way since we don't have a per-day override
-     * mechanism yet.
+     * Profile history is always recorded for the target date.
+     * For TODAY: If "Continue using this profile in future" is checked,
+     *            the user's default preference is also updated.
+     * For PAST DAYS: Never update default preference (to protect today).
      */
     fun confirmProfileSwitch() {
         val state = _profileSwitcherState.value
         val date = state.targetDate ?: return
         val selectedId = state.selectedSuiteId ?: return
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val isToday = date == today
 
         viewModelScope.launch {
             // Delete existing servings for this date if any
@@ -335,11 +343,16 @@ class ScoresViewModel : ViewModel() {
                 )
             }
 
-            // Always set the active suite so the UI displays correct categories
-            // The checkbox "Continue using this profile in future" is noted but
-            // currently has the same effect since we don't have per-day overrides
-            servingsDataManager.setActiveSuite(selectedId).fold(
-                onSuccess = { /* Suite changed */ },
+            // Set the active suite for this date and record in profile history
+            // For TODAY: checkbox determines whether to update default preference
+            // For PAST DAYS: never update default (to protect today)
+            val shouldUpdateDefault = isToday && state.useFutureChecked
+            servingsDataManager.setActiveSuiteForDate(
+                suiteId = selectedId,
+                effectiveDate = date,
+                updateDefault = shouldUpdateDefault
+            ).fold(
+                onSuccess = { /* Suite changed and history recorded */ },
                 onFailure = { error ->
                     println("Error setting active suite: ${error.message}")
                 }

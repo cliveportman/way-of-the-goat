@@ -164,3 +164,40 @@ SELECT date FROM daily_servings ORDER BY date DESC LIMIT 1;
 -- Get oldest tracking date
 getOldestDate:
 SELECT date FROM daily_servings ORDER BY date ASC LIMIT 1;
+
+-- =============================================================================
+-- Profile History Queries
+-- =============================================================================
+
+-- Profile history table tracks when profile changes were made
+-- This allows empty past days to show the profile that was active on that date
+CREATE TABLE profile_history (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    suite_id TEXT NOT NULL,
+    effective_date TEXT NOT NULL,  -- YYYY-MM-DD format, the date this profile became active
+    created_at INTEGER NOT NULL    -- Epoch millis when the change was recorded
+);
+
+-- Index for efficient date lookups
+CREATE INDEX idx_profile_history_date ON profile_history(effective_date);
+
+-- Record a profile change
+insertProfileHistory:
+INSERT INTO profile_history (suite_id, effective_date, created_at)
+VALUES (?, ?, ?);
+
+-- Get the most recent profile change on or before a given date
+-- Returns the profile that was active on that date
+getProfileForDate:
+SELECT suite_id FROM profile_history
+WHERE effective_date <= ?
+ORDER BY effective_date DESC, created_at DESC
+LIMIT 1;
+
+-- Get all profile history (for debugging/display)
+getAllProfileHistory:
+SELECT * FROM profile_history ORDER BY effective_date DESC, created_at DESC;
+
+-- Delete profile history for a specific date (if needed for cleanup)
+deleteProfileHistoryForDate:
+DELETE FROM profile_history WHERE effective_date = ?;

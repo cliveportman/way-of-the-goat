@@ -42,6 +42,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
+import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import co.theportman.way_of_the_goat.screens.components.DataLossConfirmationDialog
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
 import co.theportman.way_of_the_goat.screens.components.ProfileSwitcherSheet
@@ -76,6 +77,9 @@ fun ScoresScreen(
 
     // Collect servings flow for reactive updates
     val servingsMap by viewModel.servingsFlow.collectAsState()
+
+    // Collect profile history flow for reactive updates
+    val profileHistoryMap by viewModel.profileHistoryFlow.collectAsState()
 
     // Collect profile switcher state
     val profileSwitcherState by viewModel.profileSwitcherState.collectAsState()
@@ -145,12 +149,31 @@ fun ScoresScreen(
             // Get servings for this date from the flow
             val dailyServings = servingsMap[pageDate]
 
-            // Derive suite reactively from servingsMap data
-            // If day has data, use its stored suite; otherwise use global activeSuite
-            val pageSuite = if (dailyServings != null) {
-                SuiteDefinitions.getSuiteById(dailyServings.suiteId) ?: activeSuite
-            } else {
-                activeSuite
+            // Check if this is today
+            val isToday = pageDate == today
+
+            // Derive suite reactively with the following priority:
+            // 1. If day has servings data → use stored suite_id
+            // 2. If day is TODAY → always use current activeSuite (protected from history changes)
+            // 3. If past day with no data → look up profile history, then fall back to activeSuite
+            val pageSuite = when {
+                // Day has data - use the stored suite
+                dailyServings != null -> {
+                    SuiteDefinitions.getSuiteById(dailyServings.suiteId) ?: activeSuite
+                }
+                // Today is protected - always use current activeSuite
+                isToday -> {
+                    activeSuite
+                }
+                // Past day with no data - check profile history
+                else -> {
+                    val historicalSuiteId = profileHistoryMap[pageDate]
+                    if (historicalSuiteId != null) {
+                        SuiteDefinitions.getSuiteById(historicalSuiteId) ?: activeSuite
+                    } else {
+                        activeSuite
+                    }
+                }
             }
 
             ScoresPageContent(
