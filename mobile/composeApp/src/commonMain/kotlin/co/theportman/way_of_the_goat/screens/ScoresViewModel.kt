@@ -11,8 +11,11 @@ import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
@@ -62,6 +65,10 @@ class ScoresViewModel : ViewModel() {
     // Profile switcher state
     private val _profileSwitcherState = MutableStateFlow(ProfileSwitcherState())
     val profileSwitcherState: StateFlow<ProfileSwitcherState> = _profileSwitcherState.asStateFlow()
+
+    // One-shot error events for snackbar display
+    private val _errorEvent = MutableSharedFlow<String>()
+    val errorEvent: SharedFlow<String> = _errorEvent.asSharedFlow()
 
     // Expose active suite for UI
     val activeSuite: StateFlow<ScoringSuite> = servingsDataManager.activeSuite
@@ -269,9 +276,13 @@ class ScoresViewModel : ViewModel() {
         if (isEmptyPastDay) {
             viewModelScope.launch {
                 val lastUsed = servingsDataManager.getLastUsedProfile(date)
-                _profileSwitcherState.value = _profileSwitcherState.value.copy(
-                    lastUsedSuiteId = lastUsed
-                )
+                val currentState = _profileSwitcherState.value
+                // Only update if sheet is still open for the same date
+                if (currentState.isSheetOpen && currentState.targetDate == date) {
+                    _profileSwitcherState.value = currentState.copy(
+                        lastUsedSuiteId = lastUsed
+                    )
+                }
             }
         }
     }
@@ -348,15 +359,21 @@ class ScoresViewModel : ViewModel() {
         val isToday = date == today
 
         viewModelScope.launch {
+            var hasError = false
+
             // Delete existing servings for this date if any
             if (hasExistingData(date)) {
                 servingsDataManager.deleteServingsForDate(date).fold(
                     onSuccess = { /* Data deleted */ },
                     onFailure = { error ->
+                        hasError = true
+                        _errorEvent.emit("Failed to delete existing data. Please try again.")
                         println("Error deleting servings: ${error.message}")
                     }
                 )
             }
+
+            if (hasError) return@launch
 
             if (isToday) {
                 // For TODAY with "Continue using" checked: update default preference
@@ -364,6 +381,8 @@ class ScoresViewModel : ViewModel() {
                     servingsDataManager.setActiveSuite(selectedId).fold(
                         onSuccess = { /* Default preference updated */ },
                         onFailure = { error ->
+                            hasError = true
+                            _errorEvent.emit("Failed to switch profile. Please try again.")
                             println("Error setting active suite: ${error.message}")
                         }
                     )
@@ -374,13 +393,17 @@ class ScoresViewModel : ViewModel() {
                 servingsDataManager.createEmptyDayWithSuite(date, selectedId).fold(
                     onSuccess = { /* Empty record created */ },
                     onFailure = { error ->
+                        hasError = true
+                        _errorEvent.emit("Failed to set profile for this day. Please try again.")
                         println("Error creating empty day record: ${error.message}")
                     }
                 )
             }
 
-            // Close the sheet
-            closeProfileSwitcher()
+            // Only close the sheet if there were no errors
+            if (!hasError) {
+                closeProfileSwitcher()
+            }
         }
     }
 
