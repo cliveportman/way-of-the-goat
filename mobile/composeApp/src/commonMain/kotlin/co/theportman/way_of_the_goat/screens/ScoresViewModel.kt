@@ -29,6 +29,7 @@ import kotlinx.datetime.todayIn
 data class ProfileSwitcherState(
     val isSheetOpen: Boolean = false,
     val selectedSuiteId: SuiteId? = null,
+    val currentSuiteId: SuiteId? = null,   // The suite originally stored for this day (for comparison)
     val useFutureChecked: Boolean = true,
     val showConfirmationDialog: Boolean = false,
     val targetDate: LocalDate? = null,
@@ -267,6 +268,7 @@ class ScoresViewModel : ViewModel() {
         _profileSwitcherState.value = ProfileSwitcherState(
             isSheetOpen = true,
             selectedSuiteId = initialSuiteId,
+            currentSuiteId = initialSuiteId,
             useFutureChecked = true,
             showConfirmationDialog = false,
             targetDate = date,
