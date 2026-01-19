@@ -259,12 +259,14 @@ class ScoresViewModel : ViewModel() {
      */
     fun openProfileSwitcher(date: LocalDate) {
         val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
-        val hasData = hasExistingData(date)
+        val dailyServings = servingsDataManager.getServingsForDate(date)
+        val hasData = dailyServings != null
         val isEmptyPastDay = !hasData && date < today
+        val initialSuiteId = dailyServings?.suiteId ?: activeSuite.value.id
 
         _profileSwitcherState.value = ProfileSwitcherState(
             isSheetOpen = true,
-            selectedSuiteId = activeSuite.value.id,
+            selectedSuiteId = initialSuiteId,
             useFutureChecked = true,
             showConfirmationDialog = false,
             targetDate = date,
@@ -327,8 +329,10 @@ class ScoresViewModel : ViewModel() {
         val date = state.targetDate ?: return
         val selectedId = state.selectedSuiteId ?: return
 
-        // Check if this is actually a different profile
-        if (selectedId == activeSuite.value.id) {
+        // Check if this is actually a different profile from what's stored for this date
+        val currentSuiteId = servingsDataManager.getServingsForDate(date)?.suiteId
+            ?: activeSuite.value.id
+        if (!state.isNewProfileSelected(currentSuiteId)) {
             closeProfileSwitcher()
             return
         }
@@ -376,13 +380,23 @@ class ScoresViewModel : ViewModel() {
             if (hasError) return@launch
 
             if (isToday) {
-                // For TODAY with "Continue using" checked: update default preference
-                if (state.useFutureChecked) {
+                // For TODAY: always create per-day record
+                servingsDataManager.createEmptyDayWithSuite(date, selectedId).fold(
+                    onSuccess = { /* Empty record created */ },
+                    onFailure = { error ->
+                        hasError = true
+                        _errorEvent.emit("Failed to switch profile. Please try again.")
+                        println("Error creating empty day record: ${error.message}")
+                    }
+                )
+
+                // Optionally update default preference for future days
+                if (!hasError && state.useFutureChecked) {
                     servingsDataManager.setActiveSuite(selectedId).fold(
                         onSuccess = { /* Default preference updated */ },
                         onFailure = { error ->
                             hasError = true
-                            _errorEvent.emit("Failed to switch profile. Please try again.")
+                            _errorEvent.emit("Failed to update default profile. Please try again.")
                             println("Error setting active suite: ${error.message}")
                         }
                     )

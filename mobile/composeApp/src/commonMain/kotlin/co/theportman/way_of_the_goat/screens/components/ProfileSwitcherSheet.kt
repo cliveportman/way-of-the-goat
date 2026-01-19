@@ -70,6 +70,7 @@ private val WarningBackground = Color(0xFF451a03)   // amber-950
  * @param onSwitchProfile Called when the "Switch profile" button is tapped
  * @param onCancel Called when "Cancel" is tapped
  * @param lastUsedSuiteId For empty past days, the last used profile (for hint display)
+ * @param isEmptyPastDay True if the target day is in the past and has no profile selected yet
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -322,7 +323,7 @@ private fun WarningBanner(
             .clip(RoundedCornerShape(8.dp))
             .background(WarningBackground)
             .semantics(mergeDescendants = true) {
-                contentDescription = "Warning: Data will be lost. Switching to $profileName will reset today's data."
+                contentDescription = "Warning: Data will be lost. Switching to $profileName will reset this day's data."
             }
             .padding(12.dp),
         verticalAlignment = Alignment.Top
@@ -343,7 +344,7 @@ private fun WarningBanner(
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = "Switching to $profileName will reset today's data.",
+                text = "Switching to $profileName will reset this day's data.",
                 color = TextPrimary,
                 fontSize = 13.sp,
                 lineHeight = 18.sp
