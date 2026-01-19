@@ -202,7 +202,7 @@ fun ProfileSwitcherSheet(
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text = "Switch profile",
+                    text = if (isEmptyPastDay) "Select profile" else "Switch profile",
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
