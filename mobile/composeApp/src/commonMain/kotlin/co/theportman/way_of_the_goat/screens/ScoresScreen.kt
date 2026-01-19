@@ -202,7 +202,7 @@ fun ScoresScreen(
                 isOpen = profileSwitcherState.isSheetOpen,
                 onDismiss = { viewModel.closeProfileSwitcher() },
                 profiles = viewModel.allProfiles,
-                currentProfileId = activeSuite.id,
+                currentProfileId = profileSwitcherState.currentSuiteId ?: activeSuite.id,
                 selectedProfileId = profileSwitcherState.selectedSuiteId ?: activeSuite.id,
                 onProfileSelected = { viewModel.selectProfileInSheet(it) },
                 isToday = profileSwitcherState.targetDate == today,
