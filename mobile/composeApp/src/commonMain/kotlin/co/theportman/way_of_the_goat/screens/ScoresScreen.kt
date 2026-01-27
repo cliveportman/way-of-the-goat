@@ -22,7 +22,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -137,90 +136,91 @@ fun ScoresScreen(
         viewModel.ensureDateLoaded(currentDate.value)
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = BackgroundColor
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ) { page ->
-                // Calculate date for this page
-                val daysAgo = numberOfDays - 1 - page
-                val pageDate = today.minus(daysAgo, DateTimeUnit.DAY)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundColor)
+    ) {
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            // Calculate date for this page
+            val daysAgo = numberOfDays - 1 - page
+            val pageDate = today.minus(daysAgo, DateTimeUnit.DAY)
 
-                // Check if this date's data is loaded
-                val isDateLoaded = viewModel.isDateLoaded(pageDate)
+            // Check if this date's data is loaded
+            val isDateLoaded = viewModel.isDateLoaded(pageDate)
 
-                // Get servings for this date from the flow
-                val dailyServings = servingsMap[pageDate]
+            // Get servings for this date from the flow
+            val dailyServings = servingsMap[pageDate]
 
-                // Check if this is today
-                val isToday = pageDate == today
+            // Check if this is today
+            val isToday = pageDate == today
 
-                // Derive suite reactively with the following priority:
-                // 1. If day has servings data → use stored suite_id
-                // 2. If day is TODAY → always use current activeSuite
-                // 3. If past day with no data → null (show "No profile selected")
-                val pageSuite: ScoringSuite? = when {
-                    // Day has data - use the stored suite
-                    dailyServings != null -> {
-                        SuiteDefinitions.getSuiteById(dailyServings.suiteId) ?: activeSuite
-                    }
-                    // Today - always use current activeSuite
-                    isToday -> {
-                        activeSuite
-                    }
-                    // Past day with no data - no profile selected
-                    else -> {
-                        null
-                    }
+            // Derive suite reactively with the following priority:
+            // 1. If day has servings data → use stored suite_id
+            // 2. If day is TODAY → always use current activeSuite
+            // 3. If past day with no data → null (show "No profile selected")
+            val pageSuite: ScoringSuite? = when {
+                // Day has data - use the stored suite
+                dailyServings != null -> {
+                    SuiteDefinitions.getSuiteById(dailyServings.suiteId) ?: activeSuite
                 }
-
-                ScoresPageContent(
-                    date = pageDate,
-                    today = today,
-                    viewModel = viewModel,
-                    uiState = uiState,
-                    isDateLoaded = isDateLoaded,
-                    displaySuite = pageSuite,
-                    dailyServings = dailyServings,
-                    onProfileClick = { viewModel.openProfileSwitcher(pageDate) }
-                )
+                // Today - always use current activeSuite
+                isToday -> {
+                    activeSuite
+                }
+                // Past day with no data - no profile selected
+                else -> {
+                    null
+                }
             }
 
-            // Profile Switcher Bottom Sheet
-            ProfileSwitcherSheet(
-                isOpen = profileSwitcherState.isSheetOpen,
-                onDismiss = { viewModel.closeProfileSwitcher() },
-                profiles = viewModel.allProfiles,
-                currentProfileId = profileSwitcherState.currentSuiteId ?: activeSuite.id,
-                selectedProfileId = profileSwitcherState.selectedSuiteId ?: activeSuite.id,
-                onProfileSelected = { viewModel.selectProfileInSheet(it) },
-                isToday = profileSwitcherState.targetDate == today,
-                useFutureChecked = profileSwitcherState.useFutureChecked,
-                onUseFutureChanged = { viewModel.toggleFutureProfileCheckbox(it) },
-                hasExistingData = profileSwitcherState.targetDate?.let { viewModel.hasExistingData(it) } ?: false,
-                onSwitchProfile = { viewModel.initiateProfileSwitch() },
-                onCancel = { viewModel.closeProfileSwitcher() },
-                lastUsedSuiteId = profileSwitcherState.lastUsedSuiteId,
-                isEmptyPastDay = profileSwitcherState.isEmptyPastDay
-            )
-
-            // Data Loss Confirmation Dialog
-            DataLossConfirmationDialog(
-                isOpen = profileSwitcherState.showConfirmationDialog,
-                onDismiss = { viewModel.cancelConfirmation() },
-                profileName = viewModel.allProfiles.find { it.id == profileSwitcherState.selectedSuiteId }?.name ?: "",
-                onSwitchAnyway = { viewModel.confirmProfileSwitch() },
-                onKeepCurrent = { viewModel.cancelConfirmation() }
+            ScoresPageContent(
+                date = pageDate,
+                today = today,
+                viewModel = viewModel,
+                uiState = uiState,
+                isDateLoaded = isDateLoaded,
+                displaySuite = pageSuite,
+                dailyServings = dailyServings,
+                onProfileClick = { viewModel.openProfileSwitcher(pageDate) }
             )
         }
+
+        // Snackbar host for error messages
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+
+        // Profile Switcher Bottom Sheet
+        ProfileSwitcherSheet(
+            isOpen = profileSwitcherState.isSheetOpen,
+            onDismiss = { viewModel.closeProfileSwitcher() },
+            profiles = viewModel.allProfiles,
+            currentProfileId = profileSwitcherState.currentSuiteId ?: activeSuite.id,
+            selectedProfileId = profileSwitcherState.selectedSuiteId ?: activeSuite.id,
+            onProfileSelected = { viewModel.selectProfileInSheet(it) },
+            isToday = profileSwitcherState.targetDate == today,
+            useFutureChecked = profileSwitcherState.useFutureChecked,
+            onUseFutureChanged = { viewModel.toggleFutureProfileCheckbox(it) },
+            hasExistingData = profileSwitcherState.targetDate?.let { viewModel.hasExistingData(it) } ?: false,
+            onSwitchProfile = { viewModel.initiateProfileSwitch() },
+            onCancel = { viewModel.closeProfileSwitcher() },
+            lastUsedSuiteId = profileSwitcherState.lastUsedSuiteId,
+            isEmptyPastDay = profileSwitcherState.isEmptyPastDay
+        )
+
+        // Data Loss Confirmation Dialog
+        DataLossConfirmationDialog(
+            isOpen = profileSwitcherState.showConfirmationDialog,
+            onDismiss = { viewModel.cancelConfirmation() },
+            profileName = viewModel.allProfiles.find { it.id == profileSwitcherState.selectedSuiteId }?.name ?: "",
+            onSwitchAnyway = { viewModel.confirmProfileSwitch() },
+            onKeepCurrent = { viewModel.cancelConfirmation() }
+        )
     }
 }
 
@@ -275,6 +275,7 @@ private fun ScoresPageContent(
                 .fillMaxSize()
                 .padding(horizontal = 10.dp)
         ) {
+            Spacer(modifier = Modifier.height(16.dp))
             // Date heading
             Text(
                 text = formatDate(date),

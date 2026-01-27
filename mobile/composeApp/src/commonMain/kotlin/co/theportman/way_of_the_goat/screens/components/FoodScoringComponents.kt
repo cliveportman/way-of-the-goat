@@ -171,7 +171,7 @@ fun ScoreSummary(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 16.dp)
+            .padding(horizontal = 8.dp, vertical = 16.dp)
     ) {
         // Center: Total score and portions
         Column(
@@ -181,13 +181,13 @@ fun ScoreSummary(
             Text(
                 text = totals.total,
                 color = TextColor,
-                fontSize = 40.sp,
+                fontSize = 36.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = "${totals.portions} portions",
                 color = TextColor,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
         }
