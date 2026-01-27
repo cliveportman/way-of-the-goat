@@ -143,17 +143,6 @@ object SuiteDefinitions {
                     targetServings = 0,
                     scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
                 )
-            ),
-            FoodCategory(
-                id = CategoryId("alcohol"),
-                name = "Alcohol",
-                shortName = "Alcohol",
-                icon = null,
-                displayOrder = 11,
-                scoringRule = ScoringRule(
-                    targetServings = 0,
-                    scorePerServing = listOf(0, -1, -2, -2, -2, -2)
-                )
             )
         )
     )
@@ -406,17 +395,6 @@ object SuiteDefinitions {
                     targetServings = 0,
                     scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
                 )
-            ),
-            FoodCategory(
-                id = CategoryId("alcohol"),
-                name = "Alcohol",
-                shortName = "Alcohol",
-                icon = null,
-                displayOrder = 11,
-                scoringRule = ScoringRule(
-                    targetServings = 0,
-                    scorePerServing = listOf(0, -2, -2, -2, -2, -2)
-                )
             )
         )
     )
@@ -542,17 +520,6 @@ object SuiteDefinitions {
                 scoringRule = ScoringRule(
                     targetServings = 0,
                     scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
-                )
-            ),
-            FoodCategory(
-                id = CategoryId("alcohol"),
-                name = "Alcohol",
-                shortName = "Alcohol",
-                icon = null,
-                displayOrder = 11,
-                scoringRule = ScoringRule(
-                    targetServings = 0,
-                    scorePerServing = listOf(0, -2, -2, -2, -2, -2)
                 )
             )
         )
