@@ -12,13 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +43,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
-import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import co.theportman.way_of_the_goat.screens.components.DataLossConfirmationDialog
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
 import co.theportman.way_of_the_goat.screens.components.ProfileSwitcherSheet
@@ -279,7 +276,6 @@ private fun ScoresPageContent(
                 .padding(horizontal = 10.dp)
         ) {
             // Date heading
-            Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = formatDate(date),
                 color = TextColor,
@@ -287,40 +283,17 @@ private fun ScoresPageContent(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Profile display - either selected profile or "No profile selected"
+            // Profile switch card
+            ProfileSwitchCard(
+                profileName = displaySuite?.name,
+                onClick = onProfileClick
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             if (displaySuite != null) {
-                // Score profile name (clickable to open switcher)
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable { onProfileClick() }
-                        .padding(vertical = 4.dp)
-                ) {
-                    Text(
-                        text = displaySuite.name,
-                        color = GoatColors.Slate400,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontStyle = if (displaySuite.id == SuiteDefinitions.RACING_WEIGHT_ID) FontStyle.Italic else FontStyle.Normal
-                    )
-                    Text(
-                        text = " profile",
-                        color = GoatColors.Slate400,
-                        fontSize = 16.sp
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Icon(
-                        imageVector = Icons.Filled.Info,
-                        contentDescription = "Change profile",
-                        tint = GoatColors.Slate400,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(30.dp))
-
                 // Food categories list
                 LazyColumn(
                     modifier = Modifier
@@ -351,30 +324,6 @@ private fun ScoresPageContent(
                 val totals = viewModel.getTotalsForDisplay(dailyServings, displaySuite)
                 ScoreSummary(totals = totals)
             } else {
-                // No profile selected state (empty past day)
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable { onProfileClick() }
-                        .padding(vertical = 4.dp)
-                ) {
-                    Text(
-                        text = "No profile selected",
-                        color = GoatColors.Slate400,
-                        fontSize = 16.sp,
-                        fontStyle = FontStyle.Italic
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Icon(
-                        imageVector = Icons.Filled.Info,
-                        contentDescription = "Select profile",
-                        tint = GoatColors.Slate400,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(30.dp))
-
                 // Empty state message
                 Box(
                     modifier = Modifier
@@ -382,22 +331,62 @@ private fun ScoresPageContent(
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = "Tap above to select a profile",
-                            color = GoatColors.Slate400,
-                            fontSize = 16.sp
-                        )
-                        Text(
-                            text = "and start tracking",
-                            color = GoatColors.Slate400,
-                            fontSize = 16.sp
-                        )
-                    }
+                    Text(
+                        text = "Select a profile above to start tracking",
+                        color = GoatColors.Slate400,
+                        fontSize = 16.sp
+                    )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileSwitchCard(
+    profileName: String?,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(GoatColors.Navy800)
+            .clickable { onClick() }
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(
+                    text = "ACTIVE PROFILE",
+                    color = GoatColors.Slate400,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    text = profileName ?: "No profile selected",
+                    color = if (profileName != null) GoatColors.Slate50 else GoatColors.Slate400,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Change",
+                    color = GoatColors.Slate400,
+                    fontSize = 14.sp
+                )
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "Change profile",
+                    tint = GoatColors.Slate400,
+                    modifier = Modifier.size(20.dp)
+                )
             }
         }
     }
