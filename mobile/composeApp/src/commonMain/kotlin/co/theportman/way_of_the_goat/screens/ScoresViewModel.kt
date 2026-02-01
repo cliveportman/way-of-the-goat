@@ -352,7 +352,7 @@ class ScoresViewModel : ViewModel() {
 
     /**
      * Confirm profile switch (after data loss warning).
-     * Deletes existing data for the target date.
+     * Replaces existing data atomically via transactional upsert.
      *
      * For TODAY: If "Continue using this profile in future" is checked,
      *            the user's default preference is also updated.
@@ -368,51 +368,26 @@ class ScoresViewModel : ViewModel() {
         viewModelScope.launch {
             var hasError = false
 
-            // Delete existing servings for this date if any
-            if (hasExistingData(date)) {
-                servingsDataManager.deleteServingsForDate(date).fold(
-                    onSuccess = { /* Data deleted */ },
-                    onFailure = { error ->
-                        hasError = true
-                        _errorEvent.emit("Failed to delete existing data. Please try again.")
-                        println("Error deleting servings: ${error.message}")
-                    }
-                )
-            }
-
-            if (hasError) return@launch
-
-            if (isToday) {
-                // For TODAY: always create per-day record
-                servingsDataManager.createEmptyDayWithSuite(date, selectedId).fold(
-                    onSuccess = { /* Empty record created */ },
-                    onFailure = { error ->
-                        hasError = true
-                        _errorEvent.emit("Failed to switch profile. Please try again.")
-                        println("Error creating empty day record: ${error.message}")
-                    }
-                )
-
-                // Optionally update default preference for future days
-                if (!hasError && state.useFutureChecked) {
-                    servingsDataManager.setActiveSuite(selectedId).fold(
-                        onSuccess = { /* Default preference updated */ },
-                        onFailure = { error ->
-                            hasError = true
-                            _errorEvent.emit("Failed to update default profile. Please try again.")
-                            println("Error setting active suite: ${error.message}")
-                        }
-                    )
+            // createEmptyDayWithSuite uses saveServings which does a transactional
+            // upsert: if a record exists it updates the suite_id and clears all
+            // category servings atomically. No separate delete needed.
+            servingsDataManager.createEmptyDayWithSuite(date, selectedId).fold(
+                onSuccess = { /* Record created/replaced */ },
+                onFailure = { error ->
+                    hasError = true
+                    _errorEvent.emit("Failed to switch profile. Please try again.")
+                    println("Error switching profile: ${error.message}")
                 }
-            } else {
-                // For PAST DAYS: create an empty daily record with the selected profile
-                // This establishes which profile the day uses
-                servingsDataManager.createEmptyDayWithSuite(date, selectedId).fold(
-                    onSuccess = { /* Empty record created */ },
+            )
+
+            // For TODAY: optionally update default preference for future days
+            if (!hasError && isToday && state.useFutureChecked) {
+                servingsDataManager.setActiveSuite(selectedId).fold(
+                    onSuccess = { /* Default preference updated */ },
                     onFailure = { error ->
                         hasError = true
-                        _errorEvent.emit("Failed to set profile for this day. Please try again.")
-                        println("Error creating empty day record: ${error.message}")
+                        _errorEvent.emit("Failed to update default profile. Please try again.")
+                        println("Error setting active suite: ${error.message}")
                     }
                 )
             }
