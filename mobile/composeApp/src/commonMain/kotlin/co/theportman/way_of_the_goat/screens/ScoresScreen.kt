@@ -319,11 +319,13 @@ private fun ScoresPageContent(
                             }
                         )
                     }
-                }
 
-                // Score summary at bottom
-                val totals = viewModel.getTotalsForDisplay(dailyServings, displaySuite)
-                ScoreSummary(totals = totals)
+                    // Score summary as last item in the list
+                    item {
+                        val totals = viewModel.getTotalsForDisplay(dailyServings, displaySuite)
+                        ScoreSummary(totals = totals)
+                    }
+                }
             } else {
                 // Empty state message
                 Box(
@@ -351,14 +353,13 @@ private fun ProfileSwitchCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(GoatColors.Navy800)
             .clickable { onClick() }
-            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .padding(vertical = 8.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top
         ) {
             Column {
                 Text(
@@ -378,7 +379,7 @@ private fun ProfileSwitchCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Change",
+                    text = "Change profile",
                     color = GoatColors.Slate400,
                     fontSize = 14.sp
                 )
