@@ -49,8 +49,8 @@ class SuiteDefinitionsTest {
 
     @Test
     fun balancedSuite_hasCorrectCategoryCount() {
-        // Balanced: 6 healthy + 5 unhealthy = 11 categories
-        assertEquals(11, SuiteDefinitions.BALANCED.categories.size)
+        // Balanced: 6 healthy + 4 unhealthy = 10 categories
+        assertEquals(10, SuiteDefinitions.BALANCED.categories.size)
     }
 
     @Test
@@ -72,14 +72,13 @@ class SuiteDefinitionsTest {
     fun balancedSuite_hasCorrectUnhealthyCategories() {
         val unhealthyCategories = SuiteDefinitions.BALANCED.unhealthyCategories
 
-        assertEquals(5, unhealthyCategories.size)
+        assertEquals(4, unhealthyCategories.size)
 
         val unhealthyNames = unhealthyCategories.map { it.name }
         assertTrue(unhealthyNames.contains("Fatty meats"))
         assertTrue(unhealthyNames.contains("Refined grains"))
         assertTrue(unhealthyNames.contains("Sweets"))
         assertTrue(unhealthyNames.contains("Junk foods"))
-        assertTrue(unhealthyNames.contains("Alcohol"))
     }
 
     @Test
