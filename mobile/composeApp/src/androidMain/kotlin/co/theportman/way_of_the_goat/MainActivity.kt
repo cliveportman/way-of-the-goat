@@ -6,9 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import co.theportman.way_of_the_goat.data.cache.ServingsDataManager
 import co.theportman.way_of_the_goat.data.database.DatabaseDriverFactory
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,8 +19,11 @@ class MainActivity : ComponentActivity() {
 
         // Initialize ServingsDataManager with Android context
         val driverFactory = DatabaseDriverFactory(applicationContext)
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             ServingsDataManager.instance.initialize(driverFactory)
+                .onFailure { error ->
+                    println("ServingsDataManager initialization failed: ${error.message}")
+                }
         }
 
         setContent {
