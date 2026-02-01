@@ -226,7 +226,8 @@ class ScoresViewModel : ViewModel() {
      */
     fun incrementServings(date: LocalDate, categoryId: CategoryId) {
         viewModelScope.launch {
-            val category = activeSuite.value.getCategoryById(categoryId)
+            val suite = getSuiteForDate(date)
+            val category = suite.getCategoryById(categoryId)
             val maxServings = category?.scoringRule?.maxTrackedServings ?: 6
 
             servingsDataManager.incrementServings(date, categoryId, maxServings).fold(
