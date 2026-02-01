@@ -20,7 +20,7 @@ Whole grains
 +2,+2,+1,0,0,-1
 
 Dairy
-+1,+1,+1,0,-1.-2
++1,+1,+1,0,-1,-2
 
 Refined grains
 -1,-1,-2,-2,-2,-2
@@ -32,7 +32,7 @@ Fried foods
 -2,-2,-2,-2,-2,-2
 
 Fatty proteins
--1,-1,-2,-2,-2,2
+-1,-1,-2,-2,-2,-2
 
 ## Body composition
 
