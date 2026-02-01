@@ -5,6 +5,7 @@ import co.theportman.way_of_the_goat.data.remote.HttpClientFactory
 import co.theportman.way_of_the_goat.data.remote.IntervalsApiClient
 import co.theportman.way_of_the_goat.data.remote.models.Activity
 import co.theportman.way_of_the_goat.data.remote.models.WellnessData
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * Repository for intervals.icu data
@@ -24,6 +25,8 @@ class IntervalsRepository {
         return try {
             val data = apiClient.getWellness(oldest, newest)
             Result.success(data)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -36,6 +39,8 @@ class IntervalsRepository {
         return try {
             val data = apiClient.getActivities(oldest, newest)
             Result.success(data)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -48,6 +53,8 @@ class IntervalsRepository {
         return try {
             val data = apiClient.getTodaysWellness()
             Result.success(data)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -60,6 +67,8 @@ class IntervalsRepository {
         return try {
             val data = apiClient.getRecentActivities()
             Result.success(data)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }

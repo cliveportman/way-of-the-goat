@@ -49,6 +49,8 @@ class ServingsRepository(
                 )
             }
             Result.success(Unit)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -71,6 +73,8 @@ class ServingsRepository(
 
             _activeSuite.value = suite
             Result.success(Unit)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -136,6 +140,8 @@ class ServingsRepository(
                     )
                 )
             }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -174,6 +180,8 @@ class ServingsRepository(
             }.sortedByDescending { it.date }
 
             Result.success(dailyServingsList)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -229,6 +237,8 @@ class ServingsRepository(
             }
 
             Result.success(Unit)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -289,6 +299,8 @@ class ServingsRepository(
             }
 
             Result.success(Unit)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -301,6 +313,8 @@ class ServingsRepository(
         return try {
             queries.deleteDailyServingsByDate(date.toString())
             Result.success(Unit)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -338,6 +352,8 @@ class ServingsRepository(
         return try {
             val count = queries.countDaysTracked().executeAsOne()
             Result.success(count)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -351,6 +367,8 @@ class ServingsRepository(
             val dates = queries.getAllDatesWithRecords().executeAsList()
                 .map { LocalDate.parse(it) }
             Result.success(dates)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }
