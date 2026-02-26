@@ -20,6 +20,7 @@ object GoatColors {
     val ScoreZero = Color(0xFF7bf1a8)    // green-300 (teal)
     val ScoreMinus1 = Color(0xFFffb86a)  // orange-300
     val ScoreMinus2 = Color(0xFFff8904)  // orange-400
+    val ScoreMinus3 = Color(0xFFFB2C36) // red-500
 
     // Semantic colours
     val DestructiveRed = Color(0xFFef4444)    // red-500 - for destructive actions

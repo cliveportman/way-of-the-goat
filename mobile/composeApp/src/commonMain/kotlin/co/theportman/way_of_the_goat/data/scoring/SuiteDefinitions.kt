@@ -292,7 +292,7 @@ object SuiteDefinitions {
                 displayOrder = 1,
                 scoringRule = ScoringRule(
                     targetServings = 4,
-                    scorePerServing = listOf(2, 2, 2, 1, 0, 0)
+                    scorePerServing = listOf(2, 2, 1, 1, 0, 0)
                 )
             ),
             FoodCategory(
@@ -347,7 +347,7 @@ object SuiteDefinitions {
                 displayOrder = 6,
                 scoringRule = ScoringRule(
                     targetServings = 1,
-                    scorePerServing = listOf(2, 0, -2, -2, -2, -2)
+                    scorePerServing = listOf(2, 1, 0, -1, -2, -2)
                 )
             ),
 
@@ -371,7 +371,7 @@ object SuiteDefinitions {
                 displayOrder = 8,
                 scoringRule = ScoringRule(
                     targetServings = 0,
-                    scorePerServing = listOf(-1, -1, -2, -2, -2, -2)
+                    scorePerServing = listOf(-1, -1, -2, -2, -3, -3)
                 )
             ),
             FoodCategory(
@@ -382,7 +382,7 @@ object SuiteDefinitions {
                 displayOrder = 9,
                 scoringRule = ScoringRule(
                     targetServings = 0,
-                    scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
+                    scorePerServing = listOf(-3, -3, -3, -3, -3, -3)
                 )
             ),
             FoodCategory(
@@ -393,7 +393,7 @@ object SuiteDefinitions {
                 displayOrder = 10,
                 scoringRule = ScoringRule(
                     targetServings = 0,
-                    scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
+                    scorePerServing = listOf(-3, -3, -3, -3, -3, -3)
                 )
             )
         )
@@ -508,7 +508,7 @@ object SuiteDefinitions {
                 displayOrder = 9,
                 scoringRule = ScoringRule(
                     targetServings = 0,
-                    scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
+                    scorePerServing = listOf(-2, -2, -3, -3, -3, -3)
                 )
             ),
             FoodCategory(
@@ -519,7 +519,7 @@ object SuiteDefinitions {
                 displayOrder = 10,
                 scoringRule = ScoringRule(
                     targetServings = 0,
-                    scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
+                    scorePerServing = listOf(-3, -3, -3, -3, -3, -3)
                 )
             )
         )
