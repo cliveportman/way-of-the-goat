@@ -66,7 +66,7 @@ Sweets
 -2,-2,-2,-2,-2,-2
 
 Junk foods (chips, donuts, fried snacks, candy bars, ultra-processed foods)
--2,-2,-2,-2,-2,-2
+-3,-3,-3,-3,-3,-3
 
 Alcohol
 0,-2,-2,-2,-2,-2
