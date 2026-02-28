@@ -41,6 +41,7 @@ private fun getScoreColor(score: Int): Color = when (score) {
     0 -> GoatColors.ScoreZero
     -1 -> GoatColors.ScoreMinus1
     -2 -> GoatColors.ScoreMinus2
+    -3 -> GoatColors.ScoreMinus3
     else -> GoatColors.ScoreZero // fallback
 }
 
