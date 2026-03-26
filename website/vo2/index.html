@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VO2 Max Calculator</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #e8e8e8;
+    --muted: #888;
+    --accent: #4ade80;
+    --accent2: #60a5fa;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --card-r: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .header-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #4ade80, #22d3ee);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+  .header p { font-size: 13px; color: var(--muted); margin-top: 1px; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+
+  /* Upload section */
+  .upload-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--card-r);
+    padding: 48px 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--surface);
+    position: relative;
+  }
+  .upload-area:hover, .upload-area.drag-over {
+    border-color: var(--accent);
+    background: #0f1f14;
+  }
+  .upload-area input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-icon { font-size: 40px; margin-bottom: 12px; }
+  .upload-area h2 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .upload-area p { color: var(--muted); font-size: 13px; }
+
+  .file-selected {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 16px;
+  }
+  .file-selected.visible { display: flex; }
+  .file-name { font-size: 14px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-size { font-size: 12px; color: var(--muted); }
+
+  /* Inputs */
+  .inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .input-wrap:focus-within { border-color: var(--accent2); }
+  .input-wrap input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 16px;
+    padding: 10px 14px;
+    width: 100%;
+    font-weight: 500;
+  }
+  .input-unit {
+    padding: 10px 14px;
+    color: var(--muted);
+    font-size: 13px;
+    border-left: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .input-hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+  .analyze-btn {
+    margin-top: 24px;
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: #000;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .analyze-btn:hover { opacity: 0.9; }
+  .analyze-btn:active { transform: scale(0.99); }
+  .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* Status */
+  .status {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .status.visible { display: flex; }
+  .status.loading { background: #1a1a2e; border: 1px solid #2d2d5e; color: var(--accent2); }
+  .status.error { background: #1f0a0a; border: 1px solid #4b1717; color: var(--danger); }
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Results */
+  #results { display: none; margin-top: 40px; }
+  #results.visible { display: block; }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 14px;
+    margin-top: 32px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* Stat cards */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 16px;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+  .stat-value { font-size: 26px; font-weight: 700; margin-top: 4px; line-height: 1; }
+  .stat-unit { font-size: 13px; color: var(--muted); font-weight: 400; margin-left: 3px; }
+
+  /* VO2 estimates */
+  .estimate-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+  .estimate-method { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .estimate-notes { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .estimate-right { text-align: right; }
+  .estimate-value {
+    font-size: 32px; font-weight: 800; line-height: 1;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .estimate-unit { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+  }
+  .badge-bar-track {
+    width: 40px; height: 4px;
+    background: #333;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .badge-bar-fill { height: 100%; border-radius: 2px; }
+
+  /* Fitness category */
+  .fitness-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .fitness-cat-name {
+    font-size: 22px; font-weight: 800;
+    background: linear-gradient(90deg, var(--accent), #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .fitness-cat-desc { font-size: 14px; color: var(--muted); margin-top: 2px; }
+
+  /* VO2 scale bar */
+  .vo2-scale {
+    flex: 1;
+    position: relative;
+    height: 8px;
+    background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6);
+    border-radius: 4px;
+    overflow: visible;
+  }
+  .vo2-scale-marker {
+    position: absolute;
+    top: -4px;
+    width: 16px; height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    transform: translateX(-50%);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  /* Charts */
+  .chart-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .chart-title { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 14px; }
+  canvas { display: block; width: 100%; }
+
+  .legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .legend-dot { width: 10px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+
+  /* No data notice */
+  .notice {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 600px) {
+    .inputs { grid-template-columns: 1fr; }
+    .header { padding: 16px 20px; }
+    .container { padding: 24px 16px; }
+    .estimate-card { grid-template-columns: 1fr; }
+    .estimate-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🫀</div>
+  <div>
+    <h1>VO2 Max Calculator</h1>
+    <p>Upload a GPX file from any GPS device or app</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Upload -->
+  <div class="upload-area" id="dropZone">
+    <input type="file" id="fileInput" accept=".gpx">
+    <div class="upload-icon">📁</div>
+    <h2>Drop your GPX file here</h2>
+    <p>or click to browse — supports Garmin, Polar, Apple Watch, Strava, etc.</p>
+  </div>
+
+  <div class="file-selected" id="fileInfo">
+    <span style="font-size:20px">✅</span>
+    <span class="file-name" id="fileName"></span>
+    <span class="file-size" id="fileSize"></span>
+  </div>
+
+  <!-- Inputs -->
+  <div class="inputs">
+    <div class="input-group">
+      <label>Body Weight</label>
+      <div class="input-wrap">
+        <input type="number" id="weightInput" placeholder="70" min="20" max="300" value="">
+        <span class="input-unit">kg</span>
+      </div>
+      <p class="input-hint">Used to calculate absolute VO2 capacity</p>
+    </div>
+    <div class="input-group">
+      <label>Max Heart Rate</label>
+      <div class="input-wrap">
+        <input type="number" id="maxHrInput" placeholder="185" min="100" max="220" value="">
+        <span class="input-unit">bpm</span>
+      </div>
+      <p class="input-hint">Leave blank to estimate from recorded data</p>
+    </div>
+  </div>
+
+  <button class="analyze-btn" id="analyzeBtn" disabled>
+    Analyze GPX File
+  </button>
+
+  <div class="status loading" id="status">
+    <div class="spinner"></div>
+    <span id="statusText">Analyzing…</span>
+  </div>
+
+  <!-- Results -->
+  <div id="results">
+
+    <div class="section-title">Activity Summary</div>
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="section-title" id="vo2Title" style="display:none">VO2 Max Estimates</div>
+    <div id="estimatesContainer"></div>
+
+    <div id="fitnessSection"></div>
+
+    <div class="section-title" id="peak1kmTitle" style="display:none">Peak 1 km</div>
+    <div id="peak1kmSection"></div>
+
+    <div class="section-title" id="chartsTitle" style="display:none">Charts</div>
+    <div id="chartsContainer"></div>
+
+  </div>
+</div>
+
+<script type="module">
+// ----------------------------------------------------------------
+// Load WASM
+// ----------------------------------------------------------------
+import init, { analyze_gpx } from './pkg/vo2.js';
+
+let wasmReady = false;
+let pendingFile = null;
+
+(async () => {
+  try {
+    await init();
+    wasmReady = true;
+    updateBtn();
+    console.log('WASM loaded');
+  } catch (e) {
+    console.error('WASM load failed:', e);
+    showStatus('error', 'Failed to load WASM module. See console for details.');
+  }
+})();
+
+// ----------------------------------------------------------------
+// File handling
+// ----------------------------------------------------------------
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const analyzeBtn = document.getElementById('analyzeBtn');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => {
+  if (fileInput.files[0]) handleFile(fileInput.files[0]);
+});
+
+function handleFile(f) {
+  pendingFile = f;
+  document.getElementById('fileName').textContent = f.name;
+  document.getElementById('fileSize').textContent = formatBytes(f.size);
+  document.getElementById('fileInfo').classList.add('visible');
+  hideStatus();
+  document.getElementById('results').classList.remove('visible');
+  updateBtn();
+}
+
+function updateBtn() {
+  analyzeBtn.disabled = !(wasmReady && pendingFile);
+}
+
+function formatBytes(n) {
+  if (n < 1024) return n + ' B';
+  if (n < 1048576) return (n / 1024).toFixed(1) + ' KB';
+  return (n / 1048576).toFixed(1) + ' MB';
+}
+
+// ----------------------------------------------------------------
+// Analyze
+// ----------------------------------------------------------------
+analyzeBtn.addEventListener('click', async () => {
+  if (!pendingFile || !wasmReady) return;
+
+  analyzeBtn.disabled = true;
+  showStatus('loading', 'Parsing GPX and calculating VO2 max…');
+  document.getElementById('results').classList.remove('visible');
+
+  try {
+    const text = await pendingFile.text();
+    const weightKg = parseFloat(document.getElementById('weightInput').value) || 0;
+    const maxHr = parseInt(document.getElementById('maxHrInput').value, 10) || 0;
+
+    // Run in a microtask so the loading UI renders
+    await new Promise(r => setTimeout(r, 10));
+
+    const json = analyze_gpx(text, weightKg, maxHr);
+    const data = JSON.parse(json);
+
+    if (data.error) {
+      showStatus('error', data.error);
+    } else {
+      hideStatus();
+      renderResults(data, weightKg);
+    }
+  } catch (e) {
+    showStatus('error', 'Unexpected error: ' + e.message);
+    console.error(e);
+  } finally {
+    analyzeBtn.disabled = false;
+  }
+});
+
+// ----------------------------------------------------------------
+// Render
+// ----------------------------------------------------------------
+function renderResults(d, weightKg) {
+  const results = document.getElementById('results');
+  results.classList.add('visible');
+
+  // ---- Stats ----
+  const grid = document.getElementById('statGrid');
+  grid.innerHTML = '';
+
+  const paceStr = fmtPace(d.avg_pace_min_per_km);
+  const durationStr = fmtDuration(d.total_duration_min);
+
+  const stats = [
+    { label: 'Distance', value: d.total_distance_km.toFixed(2), unit: 'km' },
+    { label: 'Duration', value: durationStr, unit: '' },
+    { label: 'Avg Pace', value: paceStr, unit: '/km' },
+    { label: 'Elev Gain', value: d.elevation_gain_m, unit: 'm', hidden: !d.has_elevation_data },
+    { label: 'Points', value: d.point_count.toLocaleString(), unit: '' },
+    { label: 'Avg HR', value: d.avg_hr ? Math.round(d.avg_hr) : '–', unit: d.avg_hr ? 'bpm' : '', hidden: !d.has_hr_data },
+    { label: 'Max HR', value: d.max_hr_recorded ?? '–', unit: d.max_hr_recorded ? 'bpm' : '', hidden: !d.has_hr_data },
+  ];
+
+  for (const s of stats) {
+    if (s.hidden) continue;
+    const card = document.createElement('div');
+    card.className = 'stat-card';
+    card.innerHTML = `
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value">${s.value}<span class="stat-unit">${s.unit}</span></div>
+    `;
+    grid.appendChild(card);
+  }
+
+  // Data availability notices
+  const noticesEl = document.createElement('div');
+  noticesEl.style.marginTop = '10px';
+  if (!d.has_hr_data) {
+    noticesEl.innerHTML += `<div class="notice">⚠️ No heart rate data found in this GPX file. Add a HR monitor for the most accurate VO2 max estimate.</div>`;
+  }
+  if (!d.has_time_data) {
+    noticesEl.innerHTML += `<div class="notice">⚠️ No timestamps in GPX file — pace and time-based analysis unavailable.</div>`;
+  }
+  grid.after(noticesEl);
+
+  // ---- Estimates ----
+  const vo2Title = document.getElementById('vo2Title');
+  const estimatesEl = document.getElementById('estimatesContainer');
+  estimatesEl.innerHTML = '';
+
+  if (d.estimates.length > 0) {
+    vo2Title.style.display = '';
+    for (const e of d.estimates) {
+      const card = document.createElement('div');
+      card.className = 'estimate-card';
+      const pct = e.confidence_pct;
+      const barColor = pct >= 70 ? '#4ade80' : pct >= 45 ? '#fbbf24' : '#666';
+      const textColor = pct >= 70 ? '#4ade80' : pct >= 45 ? '#fbbf24' : '#888';
+      card.innerHTML = `
+        <div>
+          <div class="estimate-method">${e.method}</div>
+          <div class="estimate-notes">${e.notes}</div>
+        </div>
+        <div class="estimate-right">
+          <div class="estimate-value">${e.value}</div>
+          <div class="estimate-unit">mL/kg/min</div>
+          <div>
+            <span class="badge" style="color:${textColor};background:${barColor}18;border:1px solid ${barColor}44">
+              <span class="badge-bar-track"><span class="badge-bar-fill" style="width:${pct}%;background:${barColor}"></span></span>
+              ${pct}% confidence
+            </span>
+          </div>
+          ${weightKg > 0 ? `<div class="estimate-unit" style="margin-top:6px">${(e.value * weightKg / 1000).toFixed(2)} L/min absolute</div>` : ''}
+        </div>
+      `;
+      estimatesEl.appendChild(card);
+    }
+  } else {
+    vo2Title.style.display = '';
+    estimatesEl.innerHTML = `<div class="notice">Could not calculate VO2 max — need either HR data or time data in the GPX file.</div>`;
+  }
+
+  // ---- Fitness category ----
+  const fitSection = document.getElementById('fitnessSection');
+  fitSection.innerHTML = '';
+  if (d.fitness_category) {
+    const bestEstimate = d.estimates.length
+      ? d.estimates.reduce((a, b) => b.confidence_pct > a.confidence_pct ? b : a)
+      : null;
+    const vo2val = bestEstimate ? bestEstimate.value : 0;
+    const pct = Math.min(100, Math.max(0, (vo2val - 20) / (85 - 20) * 100));
+
+    fitSection.innerHTML = `
+      <div class="section-title">Fitness Category</div>
+      <div class="fitness-banner">
+        <div>
+          <div class="fitness-cat-name">${d.fitness_category}</div>
+          <div class="fitness-cat-desc">${d.fitness_description}</div>
+          ${bestEstimate ? `<div class="fitness-cat-desc" style="margin-top:4px;font-size:12px;">Based on <strong style="color:var(--text)">${bestEstimate.method}</strong> &mdash; ${bestEstimate.confidence_pct}% confidence</div>` : ''}
+        </div>
+        <div class="vo2-scale" style="min-width:120px; max-width:240px;">
+          <div class="vo2-scale-marker" style="left:${pct}%"></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px;padding:0 2px;">
+        <span>20 (Poor)</span><span>40 (Fair)</span><span>60 (Superior)</span><span>85+ (Elite)</span>
+      </div>
+    `;
+  }
+
+  // ---- Peak 1 km ----
+  const peak1kmTitle = document.getElementById('peak1kmTitle');
+  const peak1kmEl = document.getElementById('peak1kmSection');
+  peak1kmEl.innerHTML = '';
+  if (d.peak_1km) {
+    peak1kmTitle.style.display = '';
+    const p = d.peak_1km;
+    const paceMin = Math.floor(p.pace_min_per_km);
+    const paceSec = Math.round((p.pace_min_per_km - paceMin) * 60).toString().padStart(2, '0');
+    const gradeStr = p.avg_grade_pct >= 0
+      ? `+${p.avg_grade_pct.toFixed(1)}%`
+      : `${p.avg_grade_pct.toFixed(1)}%`;
+    const gradeColor = p.avg_grade_pct > 2 ? 'var(--warn)' : p.avg_grade_pct < -2 ? '#60a5fa' : 'var(--muted)';
+
+    peak1kmEl.innerHTML = `
+      <div class="estimate-card">
+        <div style="flex:1">
+          <div class="estimate-method">Highest-intensity kilometre</div>
+          <div class="estimate-notes" style="margin-top:6px;display:flex;gap:18px;flex-wrap:wrap">
+            <span>📍 Starting at <strong style="color:var(--text)">${p.start_distance_km} km</strong></span>
+            <span>⚡ Pace <strong style="color:var(--text)">${paceMin}:${paceSec} /km</strong></span>
+            <span>⛰ Gradient <strong style="color:${gradeColor}">${gradeStr}</strong></span>
+            ${p.avg_hr ? `<span>♥ Avg HR <strong style="color:var(--text)">${p.avg_hr} bpm</strong></span>` : ''}
+          </div>
+          <div class="estimate-notes" style="margin-top:8px">
+            VO2 expressed is the oxygen cost of running that kilometre — not your VO2 max, but the
+            highest metabolic demand you placed on yourself during this activity.
+            ${p.vo2max_est ? `The implied VO2 max extrapolates your HR during that km to your entered HRmax.` : ''}
+          </div>
+        </div>
+        <div class="estimate-right">
+          <div class="estimate-value">${p.vo2_expressed}</div>
+          <div class="estimate-unit">mL/kg/min expressed</div>
+          ${p.vo2max_est ? `
+            <div style="margin-top:10px">
+              <div style="font-size:22px;font-weight:700;color:#a78bfa">${p.vo2max_est}</div>
+              <div class="estimate-unit">mL/kg/min implied max</div>
+            </div>` : ''}
+        </div>
+      </div>`;
+  }
+
+  // ---- Charts ----
+  const chartsTitle = document.getElementById('chartsTitle');
+  const chartsEl = document.getElementById('chartsContainer');
+  chartsEl.innerHTML = '';
+
+  if (d.chart_points && d.chart_points.length > 1) {
+    chartsTitle.style.display = '';
+
+    // Pace + HR chart
+    const paceData = d.chart_points.map(p => p.pace_min_per_km).filter(v => v != null && v > 0);
+    const hrData = d.chart_points.filter(p => p.hr != null);
+
+    if (paceData.length > 0 || hrData.length > 0) {
+      const c = createChartContainer('Pace & Heart Rate');
+      chartsEl.appendChild(c.wrapper);
+      const legend = document.createElement('div');
+      legend.className = 'legend';
+      if (paceData.length > 0) legend.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Pace (min/km)</div>`;
+      if (hrData.length > 0) legend.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Heart Rate (bpm)</div>`;
+      c.wrapper.appendChild(legend);
+      drawPaceHrChart(c.canvas, d.chart_points);
+    }
+
+    // Elevation chart
+    const eleData = d.chart_points.filter(p => p.elevation_m != null);
+    if (eleData.length > 10) {
+      const c = createChartContainer('Elevation Profile');
+      chartsEl.appendChild(c.wrapper);
+      drawElevationChart(c.canvas, d.chart_points);
+    }
+  }
+}
+
+function createChartContainer(title) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'chart-container';
+  const titleEl = document.createElement('div');
+  titleEl.className = 'chart-title';
+  titleEl.textContent = title;
+  const canvas = document.createElement('canvas');
+  canvas.height = 200;
+  wrapper.appendChild(titleEl);
+  wrapper.appendChild(canvas);
+  return { wrapper, canvas };
+}
+
+// ----------------------------------------------------------------
+// Chart drawing
+// ----------------------------------------------------------------
+function drawPaceHrChart(canvas, points) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 200;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 10, right: 60, bottom: 30, left: 55 };
+  const iw = W - pad.left - pad.right;
+  const ih = H - pad.top - pad.bottom;
+
+  const pacePoints = points.filter(p => p.pace_min_per_km != null && p.pace_min_per_km > 0 && p.pace_min_per_km < 30);
+  const hrPoints = points.filter(p => p.hr != null);
+  const maxDist = points[points.length - 1].distance_km || 1;
+
+  // Y scales — pace is inverted (lower = faster)
+  const paceMin = pacePoints.length ? Math.min(...pacePoints.map(p => p.pace_min_per_km)) * 0.95 : 3;
+  const paceMax = pacePoints.length ? Math.max(...pacePoints.map(p => p.pace_min_per_km)) * 1.02 : 10;
+  const hrMin = hrPoints.length ? Math.min(...hrPoints.map(p => p.hr)) * 0.97 : 60;
+  const hrMax = hrPoints.length ? Math.max(...hrPoints.map(p => p.hr)) * 1.02 : 200;
+
+  const xScale = d => pad.left + (d / maxDist) * iw;
+  const paceScale = v => pad.top + ((v - paceMin) / (paceMax - paceMin)) * ih;
+  const hrScale = v => pad.top + (1 - (v - hrMin) / (hrMax - hrMin)) * ih;
+
+  // Grid
+  ctx.strokeStyle = '#222';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (ih / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + iw, y); ctx.stroke();
+  }
+
+  // HR area fill
+  if (hrPoints.length > 1) {
+    ctx.beginPath();
+    ctx.moveTo(xScale(hrPoints[0].distance_km), hrScale(hrPoints[0].hr));
+    for (const p of hrPoints) ctx.lineTo(xScale(p.distance_km), hrScale(p.hr));
+    ctx.lineTo(xScale(hrPoints[hrPoints.length - 1].distance_km), pad.top + ih);
+    ctx.lineTo(xScale(hrPoints[0].distance_km), pad.top + ih);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(248,113,113,0.10)';
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(xScale(hrPoints[0].distance_km), hrScale(hrPoints[0].hr));
+    for (const p of hrPoints) ctx.lineTo(xScale(p.distance_km), hrScale(p.hr));
+    ctx.strokeStyle = '#f87171';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+
+  // Pace line (smoothed with small window)
+  if (pacePoints.length > 1) {
+    const smoothed = smoothArray(pacePoints.map(p => p.pace_min_per_km), 5);
+    ctx.beginPath();
+    ctx.moveTo(xScale(pacePoints[0].distance_km), paceScale(smoothed[0]));
+    for (let i = 1; i < pacePoints.length; i++) {
+      ctx.lineTo(xScale(pacePoints[i].distance_km), paceScale(smoothed[i]));
+    }
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  // Axes labels
+  ctx.fillStyle = '#666';
+  ctx.font = '11px -apple-system, sans-serif';
+
+  // X axis (distance)
+  const distStep = maxDist <= 5 ? 1 : maxDist <= 15 ? 2 : maxDist <= 25 ? 5 : 10;
+  for (let d = 0; d <= maxDist; d += distStep) {
+    const x = xScale(d);
+    ctx.textAlign = 'center';
+    ctx.fillText(d + 'km', x, H - 6);
+  }
+
+  // Left Y axis (pace)
+  if (pacePoints.length > 0) {
+    ctx.fillStyle = '#4ade80';
+    const paceSteps = 4;
+    for (let i = 0; i <= paceSteps; i++) {
+      const v = paceMin + (paceMax - paceMin) * (i / paceSteps);
+      const y = paceScale(v);
+      ctx.textAlign = 'right';
+      ctx.fillText(fmtPace(v), pad.left - 6, y + 4);
+    }
+  }
+
+  // Right Y axis (HR)
+  if (hrPoints.length > 0) {
+    ctx.fillStyle = '#f87171';
+    const hrSteps = 4;
+    for (let i = 0; i <= hrSteps; i++) {
+      const v = hrMin + (hrMax - hrMin) * (i / hrSteps);
+      const y = hrScale(v);
+      ctx.textAlign = 'left';
+      ctx.fillText(Math.round(v), pad.left + iw + 6, y + 4);
+    }
+  }
+}
+
+function drawElevationChart(canvas, points) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 130;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 10, right: 20, bottom: 24, left: 55 };
+  const iw = W - pad.left - pad.right;
+  const ih = H - pad.top - pad.bottom;
+
+  const elePts = points.filter(p => p.elevation_m != null);
+  if (elePts.length < 2) return;
+
+  const maxDist = points[points.length - 1].distance_km || 1;
+  const eleMin = Math.min(...elePts.map(p => p.elevation_m)) - 5;
+  const eleMax = Math.max(...elePts.map(p => p.elevation_m)) + 5;
+
+  const xScale = d => pad.left + (d / maxDist) * iw;
+  const yScale = v => pad.top + (1 - (v - eleMin) / (eleMax - eleMin)) * ih;
+
+  // Filled area
+  ctx.beginPath();
+  ctx.moveTo(xScale(elePts[0].distance_km), yScale(elePts[0].elevation_m));
+  for (const p of elePts) ctx.lineTo(xScale(p.distance_km), yScale(p.elevation_m));
+  ctx.lineTo(xScale(elePts[elePts.length - 1].distance_km), pad.top + ih);
+  ctx.lineTo(xScale(elePts[0].distance_km), pad.top + ih);
+  ctx.closePath();
+
+  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ih);
+  grad.addColorStop(0, 'rgba(96,165,250,0.35)');
+  grad.addColorStop(1, 'rgba(96,165,250,0.04)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(xScale(elePts[0].distance_km), yScale(elePts[0].elevation_m));
+  for (const p of elePts) ctx.lineTo(xScale(p.distance_km), yScale(p.elevation_m));
+  ctx.strokeStyle = '#60a5fa';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Labels
+  ctx.fillStyle = '#666';
+  ctx.font = '11px -apple-system, sans-serif';
+  const eleSteps = 3;
+  for (let i = 0; i <= eleSteps; i++) {
+    const v = eleMin + (eleMax - eleMin) * (i / eleSteps);
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(v) + 'm', pad.left - 6, yScale(v) + 4);
+  }
+
+  const distStep = maxDist <= 5 ? 1 : maxDist <= 15 ? 2 : maxDist <= 25 ? 5 : 10;
+  for (let d = 0; d <= maxDist; d += distStep) {
+    ctx.textAlign = 'center';
+    ctx.fillText(d + 'km', xScale(d), H - 5);
+  }
+}
+
+// ----------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------
+function fmtPace(minPerKm) {
+  if (!minPerKm || minPerKm <= 0 || minPerKm > 30) return '–';
+  const m = Math.floor(minPerKm);
+  const s = Math.round((minPerKm - m) * 60);
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function fmtDuration(totalMin) {
+  const h = Math.floor(totalMin / 60);
+  const m = Math.floor(totalMin % 60);
+  const s = Math.round((totalMin * 60) % 60);
+  if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function smoothArray(arr, window) {
+  const half = Math.floor(window / 2);
+  return arr.map((_, i) => {
+    const start = Math.max(0, i - half);
+    const end = Math.min(arr.length - 1, i + half);
+    let sum = 0;
+    for (let j = start; j <= end; j++) sum += arr[j];
+    return sum / (end - start + 1);
+  });
+}
+
+function showStatus(type, msg) {
+  const el = document.getElementById('status');
+  el.className = 'status visible ' + type;
+  el.innerHTML = type === 'loading'
+    ? `<div class="spinner"></div><span>${msg}</span>`
+    : `<span>⚠️ ${msg}</span>`;
+}
+
+function hideStatus() {
+  document.getElementById('status').classList.remove('visible');
+}
+</script>
+</body>
+</html>
