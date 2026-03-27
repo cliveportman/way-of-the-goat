@@ -119,7 +119,7 @@ composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/
 │   ├── repository/    # DB access layer
 │   ├── database/      # SQLDelight expect declarations
 │   └── remote/        # Ktor API clients
-└── ui/theme/          # Material3 theme, typography
+└── ui/theme/          # Material3 theme, typography, design tokens
 ```
 
 **SQLDelight schema:** `composeApp/src/commonMain/sqldelight/.../WayOfTheGoatDatabase.sq`
@@ -132,6 +132,60 @@ composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/
 - **State:** ViewModel + StateFlow/SharedFlow
 - **Date/Time:** kotlinx.datetime (use `LocalDate`, not `java.time`)
 - **Testing:** kotlin-test, kotlinx-coroutines-test, Turbine
+
+## Design Tokens
+
+Design tokens are sourced from Figma (`wotg - core library`) and committed at `/design-tokens/tokens.json` (repo root). The Kotlin representation lives in `ui/theme/`:
+
+| File | Contents |
+|---|---|
+| `Color.kt` | `GoatPalette` (all primitives) · `GoatColorScheme` data class · `GoatDarkColorScheme` · `GoatLightColorScheme` |
+| `Spacing.kt` | `GoatSpacing` · `GoatSizing` (inc. `Icon`, `Touch`) · `GoatRadius` · `GoatStroke` |
+| `Typography.kt` | `GoatTypography` — all 15 M3 slots mapped 1:1 from Figma text styles |
+| `Theme.kt` | `WayOfTheGoatTheme` · `LocalGoatColors` · `MaterialTheme.goatColors` extension |
+
+### Usage rules
+
+**Always use tokens — never hardcode colours, spacing, or type sizes.**
+
+```kotlin
+// ✅ Semantic colour via goatColors extension
+MaterialTheme.goatColors.scorePlus2
+MaterialTheme.goatColors.surface
+
+// ✅ M3 colour (picked up automatically by Material components)
+MaterialTheme.colorScheme.primary
+
+// ✅ Spacing
+GoatSpacing.s16
+GoatSizing.Touch.default
+GoatRadius.md
+GoatStroke.emphasis
+
+// ✅ Typography (via MaterialTheme — GoatTypography is wired in)
+MaterialTheme.typography.bodyMedium
+
+// ❌ Never do this
+Color(0xFF9AE600)
+16.dp   // as a magic number — use GoatSpacing.s16
+```
+
+**`title/small` is uppercase in Figma.** Apply `.uppercase()` on the string at the call site — `TextStyle` has no `textTransform`.
+
+### Dark / light theme
+
+`WayOfTheGoatTheme` defaults to `darkTheme = true`. In `App.kt` it is driven by `isSystemInDarkTheme()`. Both `GoatDarkColorScheme` and `GoatLightColorScheme` are defined; `MaterialTheme.goatColors` always reflects the active scheme.
+
+### Design token preview screen
+
+A scrollable preview of all tokens (colours, typography, spacing, sizing, radius, stroke) is available in debug builds via **Help → Design tokens**. Use it to verify tokens resolve correctly on device.
+
+### Updating tokens
+
+When the Figma file changes:
+1. Re-export `tokens.json` and `textStyles` from Figma and update `/design-tokens/tokens.json`
+2. Update the relevant `Color.kt` / `Spacing.kt` / `Typography.kt` constants to match
+3. Run `./gradlew :composeApp:assembleDebug` to verify the build
 
 ## Conventions
 
