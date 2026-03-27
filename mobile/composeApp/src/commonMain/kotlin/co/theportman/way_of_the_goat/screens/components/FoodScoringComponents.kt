@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
 import co.theportman.way_of_the_goat.data.scoring.model.FoodCategory
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
+import co.theportman.way_of_the_goat.ui.theme.GoatPalette
 
 // Figma colors
 private val BackgroundColor = Color(0xFF020618)        // slate-950
@@ -36,13 +36,13 @@ private val CategoryLabelBg = Color(0xFF1D293D)        // slate-800
  * Get the background colour for a score cell based on its point value.
  */
 private fun getScoreColor(score: Int): Color = when (score) {
-    2 -> GoatColors.ScorePlus2
-    1 -> GoatColors.ScorePlus1
-    0 -> GoatColors.ScoreZero
-    -1 -> GoatColors.ScoreMinus1
-    -2 -> GoatColors.ScoreMinus2
-    -3 -> GoatColors.ScoreMinus3
-    else -> GoatColors.ScoreZero // fallback
+    2 -> GoatPalette.Lime400
+    1 -> GoatPalette.Lime300
+    0 -> GoatPalette.Green300
+    -1 -> GoatPalette.Orange300
+    -2 -> GoatPalette.Orange400
+    -3 -> GoatPalette.Red500
+    else -> GoatPalette.Green300 // fallback
 }
 
 /**
@@ -152,7 +152,7 @@ fun ServingCell(
         if (isFilled) {
             Text(
                 text = formatPointValue(pointValue),
-                color = GoatColors.Navy950,
+                color = GoatPalette.Slate950,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center

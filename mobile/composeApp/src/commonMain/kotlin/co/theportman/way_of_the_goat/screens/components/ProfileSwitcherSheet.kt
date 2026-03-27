@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
 
 // Colors for the profile switcher
 private val SheetBackground = Color(0xFF0f172b)      // slate-900

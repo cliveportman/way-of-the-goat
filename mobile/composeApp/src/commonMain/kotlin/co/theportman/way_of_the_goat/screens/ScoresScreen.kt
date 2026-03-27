@@ -46,7 +46,7 @@ import co.theportman.way_of_the_goat.screens.components.DataLossConfirmationDial
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
 import co.theportman.way_of_the_goat.screens.components.ProfileSwitcherSheet
 import co.theportman.way_of_the_goat.screens.components.ScoreSummary
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
+import co.theportman.way_of_the_goat.ui.theme.GoatPalette
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -336,7 +336,7 @@ private fun ScoresPageContent(
                 ) {
                     Text(
                         text = "Select a profile above to start tracking",
-                        color = GoatColors.Slate400,
+                        color = GoatPalette.Slate400,
                         fontSize = 16.sp
                     )
                 }
@@ -364,13 +364,13 @@ private fun ProfileSwitchCard(
             Column {
                 Text(
                     text = "ACTIVE PROFILE",
-                    color = GoatColors.Slate400,
+                    color = GoatPalette.Slate400,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = profileName ?: "No profile selected",
-                    color = if (profileName != null) GoatColors.Slate50 else GoatColors.Slate400,
+                    color = if (profileName != null) GoatPalette.Slate50 else GoatPalette.Slate400,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -380,13 +380,13 @@ private fun ProfileSwitchCard(
             ) {
                 Text(
                     text = "Change profile",
-                    color = GoatColors.Slate400,
+                    color = GoatPalette.Slate400,
                     fontSize = 14.sp
                 )
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = "Change profile",
-                    tint = GoatColors.Slate400,
+                    tint = GoatPalette.Slate400,
                     modifier = Modifier.size(20.dp)
                 )
             }

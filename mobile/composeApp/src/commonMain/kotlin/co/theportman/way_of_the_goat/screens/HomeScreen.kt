@@ -26,14 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.ui.components.ContinueButton
 import co.theportman.way_of_the_goat.ui.icons.GoatMoon
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
+import co.theportman.way_of_the_goat.ui.theme.GoatPalette
 
 @Composable
 fun HomeScreen(onContinueClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(GoatColors.Navy950),
+            .background(GoatPalette.Slate950),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -65,7 +65,7 @@ fun HomeScreen(onContinueClick: () -> Unit) {
                 Text(
                     text = "Way of the Goat",
                     style = MaterialTheme.typography.headlineLarge,
-                    color = GoatColors.Slate50,
+                    color = GoatPalette.Slate50,
                     textAlign = TextAlign.Center
                 )
 
@@ -77,7 +77,7 @@ fun HomeScreen(onContinueClick: () -> Unit) {
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.SemiBold
                     ),
-                    color = GoatColors.Slate400,
+                    color = GoatPalette.Slate400,
                     textAlign = TextAlign.Center
                 )
 
@@ -112,7 +112,7 @@ fun HomeScreen(onContinueClick: () -> Unit) {
                         }
                     },
                     style = MaterialTheme.typography.bodyLarge,
-                    color = GoatColors.Slate50,
+                    color = GoatPalette.Slate50,
                     textAlign = TextAlign.Center,
                     lineHeight = 22.sp
                 )

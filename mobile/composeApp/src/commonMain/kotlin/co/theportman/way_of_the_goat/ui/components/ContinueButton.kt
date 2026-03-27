@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
+import co.theportman.way_of_the_goat.ui.theme.GoatPalette
 
 /**
  * Circular continue button used in splash and intro screens
@@ -25,16 +25,16 @@ fun ContinueButton(
         onClick = onClick,
         modifier = modifier
             .size(120.dp)
-            .background(GoatColors.Navy900, CircleShape),
+            .background(GoatPalette.Slate900, CircleShape),
         shape = CircleShape,
-        border = BorderStroke(1.dp, GoatColors.Navy800)
+        border = BorderStroke(1.dp, GoatPalette.Slate800)
     ) {
         Text(
             text = "Continue",
             style = MaterialTheme.typography.labelLarge.copy(
                 fontSize = 14.sp
             ),
-            color = GoatColors.Slate50
+            color = GoatPalette.Slate50
         )
     }
 }
