@@ -26,11 +26,7 @@ import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
 import co.theportman.way_of_the_goat.data.scoring.model.FoodCategory
 import co.theportman.way_of_the_goat.ui.theme.GoatPalette
-
-// Figma colors
-private val BackgroundColor = Color(0xFF020618)        // slate-950
-private val TextColor = Color(0xFFF1F5F9)              // slate-100
-private val CategoryLabelBg = Color(0xFF1D293D)        // slate-800
+import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
  * Get the background colour for a score cell based on its point value.
@@ -73,12 +69,12 @@ fun FoodCategoryRow(
             modifier = Modifier
                 .weight(1f)
                 .height(38.dp)
-                .background(CategoryLabelBg),
+                .background(MaterialTheme.goatColors.surfaceContainerHigh),
             contentAlignment = Alignment.CenterStart
         ) {
             Text(
                 text = category.name,
-                color = TextColor,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 16.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -152,7 +148,7 @@ fun ServingCell(
         if (isFilled) {
             Text(
                 text = formatPointValue(pointValue),
-                color = GoatPalette.Slate950,
+                color = MaterialTheme.goatColors.onPrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -181,13 +177,13 @@ fun ScoreSummary(
         ) {
             Text(
                 text = totals.total,
-                color = TextColor,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = "${totals.portions} portions",
-                color = TextColor,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -200,13 +196,13 @@ fun ScoreSummary(
         ) {
             Text(
                 text = totals.healthy,
-                color = TextColor,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = totals.unhealthy?.let { if (it >= 0) "+$it" else "$it" } ?: "---",
-                color = TextColor,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
