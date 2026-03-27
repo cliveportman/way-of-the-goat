@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import co.theportman.way_of_the_goat.screens.ActivityScreen
+import co.theportman.way_of_the_goat.screens.DesignTokensScreen
 import co.theportman.way_of_the_goat.screens.HelpScreen
 import co.theportman.way_of_the_goat.screens.HomeScreen
 import co.theportman.way_of_the_goat.screens.IntroFlowScreen
@@ -126,7 +127,14 @@ fun App() {
                     )
                 }
                 composable(Screen.Help.route) {
-                    HelpScreen()
+                    HelpScreen(
+                        onNavigateToDesignTokens = {
+                            navController.navigate(Screen.DesignTokens.route)
+                        }
+                    )
+                }
+                composable(Screen.DesignTokens.route) {
+                    DesignTokensScreen()
                 }
             }
         }
