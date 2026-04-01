@@ -18,7 +18,7 @@ Read `.claude/skills/claude-review-criteria/SKILL.md` for the full review checkl
 This is the **Way of the Goat** repository — a Kotlin Multiplatform nutrition tracking app. Key facts relevant to your review:
 
 - Agents: `jake-wharton` (KMP implementation, opus), `nick-butcher` (KMP review, read-only), `rubber-duck` (brainstorming, no code), `claude-reviewer` (this agent)
-- Commands: `/commit`, `/pr-create`, `/app-review`, `/retro`, `/design-to-code`, `/claude-review`
+- Commands: `/commit`, `/pr-create`, `/app-review`, `/retro`, `/design-to-code`, `/claude-review`, `/claude-update`
 - Skills: `kmp-conventions`, `design-specs`, `kmp-review-criteria`, `docs-conventions`, `mermaid`, `claude-review-criteria`
 - Hooks: `skill-hook.sh`, `task-hook.sh`, `read-hook.sh` (all log to `.claude/activity.log`)
 - Sub-project CLAUDE.md: `mobile/CLAUDE.md`

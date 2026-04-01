@@ -29,7 +29,7 @@ These steps are performed by the main session before dispatching the Nick Butche
 1. Fetch the PR details from GitHub to get the branch name.
 2. Run `git fetch origin <branch>` to ensure the latest remote state is available. Do NOT rely on a local branch which may be out of date.
 3. Call the `EnterWorktree` tool (with a name like `app-review-<number>`) — this switches the session into an isolated worktree.
-4. Inside the worktree, run `git reset --hard origin/<branch>` to switch to the PR branch.
+4. Inside the worktree, run `git reset --hard origin/<branch>` to switch to the PR branch. (Safe — the worktree is isolated and will be removed on `ExitWorktree`.)
 5. Dispatch the Nick Butcher agent (see Agent Routing below) to perform the review inside the worktree.
 
 ---

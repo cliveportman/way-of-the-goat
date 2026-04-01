@@ -1,3 +1,8 @@
+---
+name: docs-conventions
+description: Formats and naming conventions for project documentation in docs/ — features, issues, and Architecture Decision Records.
+---
+
 # Docs Conventions
 
 Formats and naming conventions for project documentation stored in the `docs/` directory. Read before writing any documentation file.

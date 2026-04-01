@@ -1,6 +1,7 @@
 ---
 name: nick-butcher
-description: Reviews Kotlin Multiplatform and Compose Multiplatform code for correctness, performance, accessibility, and best practices. Read-only — does not modify code.
+description: Reviews Kotlin Multiplatform and Compose Multiplatform code for correctness, performance, accessibility, and best practices. Use when reviewing a PR or changed KMP files. Read-only — does not modify code.
+model: inherits
 tools: Read, Glob, Grep
 ---
 

@@ -2,6 +2,10 @@
 model: haiku
 ---
 
+# Commit Changes
+
+Stage and commit all changes with a semantic prefix and contributor emoji.
+
 ADD all modified and new files to git. If you think there are files that should not be in version control, ask the user. If you see changes that should be bundled into separate commits (e.g. a design spec change and a Kotlin implementation change), ask the user.
 
 THEN commit with a clear and concise one-line commit message using semantic commit notation:

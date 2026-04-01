@@ -1,3 +1,8 @@
+---
+name: kmp-review-criteria
+description: Checklist for reviewing KMP and Compose Multiplatform code — architecture, design tokens, state management, testing, and accessibility.
+---
+
 # KMP Review Criteria
 
 Checklist for reviewing Kotlin Multiplatform and Compose Multiplatform code in the Way of the Goat mobile app. Used by `nick-butcher` (reviewer) and `jake-wharton` (implementer).

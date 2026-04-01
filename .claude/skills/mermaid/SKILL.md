@@ -1,3 +1,8 @@
+---
+name: mermaid
+description: Conventions for generating Mermaid flow diagrams in design specs — node styling, colour scheme, and layout patterns.
+---
+
 # Mermaid Diagrams
 
 Conventions for generating Mermaid flow diagrams used in design specs. These are tech-stack agnostic — they document user flows regardless of whether the implementation is KMP, Go, or anything else.

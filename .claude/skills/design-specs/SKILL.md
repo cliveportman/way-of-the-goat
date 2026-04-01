@@ -1,3 +1,8 @@
+---
+name: design-specs
+description: Formats for design spec files (component, screen, flow) and Figma token to Compose mapping. Read before creating or implementing any spec.
+---
+
 # Design Specs Skill
 
 Reference for creating and consuming design specs — the markdown files that bridge Figma designs and Compose implementation. Read before generating or implementing any spec.

@@ -10,7 +10,7 @@ Write a post-merge retrospective for a feature or issue.
 
    - If `docs/features/$ARGUMENTS/plan.md` exists → this is a feature retro
      - Output path: `docs/features/$ARGUMENTS/retro.md`
-   - Else if `docs/issues/$ARGUMENTS/plan.md` or `docs/issues/$ARGUMENTS/fix-plan.md` exists → this is an issue retro
+   - Else if `docs/issues/$ARGUMENTS/fix-plan.md` exists → this is an issue retro
      - Output path: `docs/issues/$ARGUMENTS/retro.md`
    - Else → tell the user no plan was found for `$ARGUMENTS` and list available features/issues under `docs/`
 

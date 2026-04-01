@@ -1,3 +1,8 @@
+---
+name: kmp-conventions
+description: Architecture, state management, file naming, error handling, and testing patterns for Kotlin Multiplatform and Compose Multiplatform code in Way of the Goat.
+---
+
 # KMP Conventions
 
 Reference for Kotlin Multiplatform and Compose Multiplatform patterns used in Way of the Goat. Read before writing or reviewing any mobile code.

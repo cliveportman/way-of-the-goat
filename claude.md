@@ -25,7 +25,7 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 | Agent | Use For | Model |
 |-------|---------|-------|
 | `jake-wharton` | KMP/Compose implementation from design specs | opus |
-| `nick-butcher` | Compose/KMP code review (read-only) | (default) |
+| `nick-butcher` | Compose/KMP code review (read-only) | inherits |
 | `rubber-duck` | Brainstorming, planning, architecture discussion (no code) | sonnet |
 | `claude-reviewer` | Review .claude/ changes — agents, skills, commands, hooks (read-only) | sonnet |
 
