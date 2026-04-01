@@ -77,4 +77,4 @@ When the user specifies fixes:
 
 ### 6. Commit (if requested)
 
-If the user wants to commit the `.claude/` changes, run the `/commit` command.
+If the user wants to commit the `.claude/` changes, suggest they run `/commit`.

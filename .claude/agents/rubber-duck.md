@@ -2,6 +2,7 @@
 name: rubber-duck
 description: Brainstorming partner and technical advisor for Way of the Goat. Use for thinking through design decisions, architecture, feature planning, and technical challenges — without making code changes. Helps create plans, explore approaches, and document decisions.
 model: sonnet
+tools: Read, Glob, Grep, Write, Edit
 skills: docs-conventions
 ---
 

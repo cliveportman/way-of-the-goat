@@ -1,6 +1,8 @@
 # KMP Review Criteria
 
-Review standards for Kotlin Multiplatform and Compose Multiplatform code in the Way of the Goat mobile app. Used by the `nick-butcher` reviewer agent and as a coding target for the `jake-wharton` implementer agent.
+Checklist for reviewing Kotlin Multiplatform and Compose Multiplatform code in the Way of the Goat mobile app. Used by `nick-butcher` (reviewer) and `jake-wharton` (implementer).
+
+For code examples, patterns, and detailed conventions, see [`kmp-conventions`](../kmp-conventions/SKILL.md).
 
 ---
 
@@ -30,28 +32,12 @@ Review standards for Kotlin Multiplatform and Compose Multiplatform code in the 
 
 ## Design Tokens — No Hardcoding
 
-Flag any hardcoded value that should be a design token:
+Flag any hardcoded colour, spacing, radius, or type size. All values must come from the design token system in `ui/theme/`. See `kmp-conventions` for the full token reference table and usage examples.
 
-```kotlin
-// ❌ Flag these
-Color(0xFF9AE600)
-Color.Red
-16.dp                          // bare magic number — use GoatSpacing.s16
-RoundedCornerShape(8.dp)       // use GoatRadius.md
-fontSize = 14.sp               // use MaterialTheme.typography.*
-fontWeight = FontWeight.Bold   // should come from the typography token
-```
-
-```kotlin
-// ✅ Correct usage
-MaterialTheme.goatColors.scorePlus2
-MaterialTheme.colorScheme.surface
-GoatSpacing.s16
-GoatSizing.Touch.default
-GoatRadius.md
-GoatStroke.emphasis
-MaterialTheme.typography.bodyMedium
-```
+- [ ] No `Color(0x...)` or `Color.Red` — use `MaterialTheme.goatColors.*` or `MaterialTheme.colorScheme.*`
+- [ ] No bare `.dp` literals for spacing — use `GoatSpacing.*`
+- [ ] No `RoundedCornerShape(n.dp)` — use `GoatRadius.*`
+- [ ] No `fontSize = n.sp` or `fontWeight = ...` — use `MaterialTheme.typography.*`
 
 ---
 

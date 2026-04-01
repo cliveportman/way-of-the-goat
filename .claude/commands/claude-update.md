@@ -99,5 +99,4 @@ If the self-check finds a problem, report it and ask whether to fix it.
 
 ### 8. Commit (if requested)
 
-If the user wants to commit the update, use `/commit` with a message like:
-`docs: refresh claude-review-criteria with [brief description of main change]`
+If the user wants to commit the update, suggest they run `/commit`.

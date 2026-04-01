@@ -22,13 +22,15 @@ Determine the mode from `$ARGUMENTS`:
 
 ---
 
-## Worktree Setup
+## Worktree Setup (main session)
+
+These steps are performed by the main session before dispatching the Nick Butcher agent:
 
 1. Fetch the PR details from GitHub to get the branch name.
 2. Run `git fetch origin <branch>` to ensure the latest remote state is available. Do NOT rely on a local branch which may be out of date.
 3. Call the `EnterWorktree` tool (with a name like `app-review-<number>`) — this switches the session into an isolated worktree.
 4. Inside the worktree, run `git reset --hard origin/<branch>` to switch to the PR branch.
-5. Perform all file operations from within the worktree. Do not switch back to the original directory until the review is complete.
+5. Dispatch the Nick Butcher agent (see Agent Routing below) to perform the review inside the worktree.
 
 ---
 
@@ -293,6 +295,6 @@ Use the `get_me` GitHub MCP tool to retrieve your authenticated GitHub username.
 
 ---
 
-## Cleanup
+## Cleanup (main session)
 
-After the review is posted, call `ExitWorktree` with `action: "remove"` to delete the worktree and return to the original working directory.
+After the agent completes and the review is posted, call `ExitWorktree` with `action: "remove"` to delete the worktree and return to the original working directory.

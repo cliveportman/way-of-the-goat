@@ -10,7 +10,7 @@ branch=$(git -C "$cwd" branch --show-current 2>/dev/null | tr -d '\r\n')
 
 if echo "$file" | grep -q '/.claude/skills/'; then
   skill=$(echo "$file" | sed 's|.*/.claude/skills/||;s|/.*||')
-  printf '%s [%s] 📚 SKILL  %s\n' "$ts" "$branch" "$skill" >> "$log"
+  printf '%s [%s] 🎯 SKILL  %s\n' "$ts" "$branch" "$skill" >> "$log"
 
 elif echo "$file" | grep -q '/.claude/commands/'; then
   cmd=$(echo "$file" | sed 's|.*/.claude/commands/||;s|\.md$||')

@@ -25,7 +25,7 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 | Agent | Use For | Model |
 |-------|---------|-------|
 | `jake-wharton` | KMP/Compose implementation from design specs | opus |
-| `nick-butcher` | Compose/KMP code review (read-only) | inherits |
+| `nick-butcher` | Compose/KMP code review (read-only) | (default) |
 | `rubber-duck` | Brainstorming, planning, architecture discussion (no code) | sonnet |
 | `claude-reviewer` | Review .claude/ changes — agents, skills, commands, hooks (read-only) | sonnet |
 
@@ -34,7 +34,7 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 | Command | Use For |
 |---------|---------|
 | `/commit` | Stage and commit changes with semantic prefix and contributor emoji |
-| `/pr-create` | Create a draft PR, generate a test plan, and update the Notion PR Link |
+| `/pr-create` | Create a draft PR and generate a test plan |
 | `/app-review <pr-number>` | Full KMP/Compose code review of a PR via Nick Butcher agent |
 | `/app-review <pr-number> --recheck` | Re-review changed files only, with follow-up on previous issues |
 | `/retro <feature-or-issue-name>` | Write a post-merge retrospective to `docs/` |

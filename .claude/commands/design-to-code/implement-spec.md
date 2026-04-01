@@ -62,7 +62,7 @@ Before generating anything, inspect the target project:
    ```
    ## Dependency Check
 
-   ✅ score-card — implemented at screens/components/ScoreCard.kt
+   ✅ score-card — implemented at screens/ScoreCard.kt
    ⚠️ food-category-item — spec exists but not yet implemented
    ❌ weekly-summary — no spec found
 

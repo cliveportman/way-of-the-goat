@@ -227,7 +227,7 @@ Generate all files. **Screen specs first** (flow spec references them), then the
 
 For each unique screen, `design-specs/screens/<screen-name>.md`:
 
-```markdown
+````markdown
 # {Screen Name}
 
 **Type:** Screen
@@ -285,13 +285,13 @@ For each unique screen, `design-specs/screens/<screen-name>.md`:
 - **Data source:** {ViewModel + StateFlow}
 - **Navigation:** {route to this screen}
 - **Accessibility:** {focus management}
-```
+````
 
 #### Flow Spec Template
 
 `design-specs/flows/<flow-name>.md`:
 
-```markdown
+````markdown
 # {Flow Name}
 
 **Type:** Flow
@@ -350,7 +350,7 @@ For each unique screen, `design-specs/screens/<screen-name>.md`:
 - **State management:** {Shared ViewModel, route params, or DataManager}
 - **Back behaviour:** {what happens when user presses system back at each step}
 - **Deep linking:** {can users navigate directly to a step?}
-```
+````
 
 ---
 
