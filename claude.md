@@ -32,6 +32,9 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 
 | Command | Use For |
 |---------|---------|
+| `/commit` | Stage and commit changes with semantic prefix and contributor emoji |
+| `/app-review <pr-number>` | Full KMP/Compose code review of a PR via Nick Butcher agent |
+| `/app-review <pr-number> --recheck` | Re-review changed files only, with follow-up on previous issues |
 | `/design-to-code` | Full pipeline: Figma design → spec curation → Compose implementation |
 | `/design-to-code --edit <spec-path>` | Update specs and code when a design changes |
 
