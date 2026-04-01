@@ -27,6 +27,7 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 | `jake-wharton` | KMP/Compose implementation from design specs | opus |
 | `nick-butcher` | Compose/KMP code review (read-only) | inherits |
 | `rubber-duck` | Brainstorming, planning, architecture discussion (no code) | sonnet |
+| `claude-reviewer` | Review .claude/ changes — agents, skills, commands, hooks (read-only) | sonnet |
 
 ## Commands
 
@@ -39,6 +40,10 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 | `/retro <feature-or-issue-name>` | Write a post-merge retrospective to `docs/` |
 | `/design-to-code` | Full pipeline: Figma design → spec curation → Compose implementation |
 | `/design-to-code --edit <spec-path>` | Update specs and code when a design changes |
+| `/claude-review` | Review .claude/ changes on current branch via claude-reviewer agent |
+| `/claude-review --audit` | Full review of the entire .claude/ directory |
+| `/claude-review --file <path>` | Review a specific .claude/ file |
+| `/claude-update` | Fetch new Anthropic/competitor knowledge and propose updates to claude-review-criteria skill |
 
 ### Design-to-Code Sub-commands
 
@@ -63,6 +68,7 @@ Skills are in `.claude/skills/`. Agents read these before working:
 | `kmp-review-criteria` | Review checklist for KMP/Compose code |
 | `docs-conventions` | Documentation formats for `docs/` — features, issues, ADRs |
 | `mermaid` | Mermaid flowchart conventions and colour scheme |
+| `claude-review-criteria` | Review checklist for .claude/ changes — best practices, anti-patterns, competitor awareness |
 
 ## Documentation
 
