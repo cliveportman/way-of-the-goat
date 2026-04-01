@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -33,16 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-
-// Colors for the confirmation dialog
-private val DialogBackground = Color(0xFF0f172b)     // slate-900
-private val TextPrimary = Color(0xFFf8fafc)          // slate-50
-private val TextSecondary = Color(0xFF94a3b8)        // slate-400
-private val WarningYellow = Color(0xFFfbbf24)        // amber-400
-private val DestructiveRed = Color(0xFFef4444)       // red-500
-private val DestructiveRedDark = Color(0xFF7f1d1d)  // red-900
-private val DestructiveRedBorder = Color(0xFFdc2626) // red-600
-private val SecondaryButton = Color(0xFF334155)      // slate-700
+import co.theportman.way_of_the_goat.ui.theme.GoatPalette
+import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
  * Confirmation dialog shown when switching profiles would delete existing data.
@@ -79,16 +72,16 @@ fun DataLossConfirmationDialog(
                 .fillMaxWidth(0.9f)
                 .shadow(
                     elevation = 24.dp,
-                    spotColor = DestructiveRed.copy(alpha = 0.3f),
+                    spotColor = MaterialTheme.goatColors.error.copy(alpha = 0.3f),
                     shape = RoundedCornerShape(16.dp)
                 )
                 .border(
                     width = 1.dp,
-                    color = DestructiveRedBorder.copy(alpha = 0.5f),
+                    color = GoatPalette.Red600.copy(alpha = 0.5f),
                     shape = RoundedCornerShape(16.dp)
                 ),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = DialogBackground)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.goatColors.surfaceContainer)
         ) {
             Column(
                 modifier = Modifier
@@ -100,7 +93,7 @@ fun DataLossConfirmationDialog(
                 Icon(
                     imageVector = Icons.Filled.Warning,
                     contentDescription = null, // Dialog title provides context
-                    tint = WarningYellow,
+                    tint = GoatPalette.Amber400,
                     modifier = Modifier.size(48.dp)
                 )
 
@@ -109,7 +102,7 @@ fun DataLossConfirmationDialog(
                 // Title
                 Text(
                     text = "Data will be lost",
-                    color = TextPrimary,
+                    color = MaterialTheme.goatColors.onSurface,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -120,7 +113,7 @@ fun DataLossConfirmationDialog(
                 // Dynamic text
                 Text(
                     text = "Switching to $profileName will reset today's data.",
-                    color = TextSecondary,
+                    color = MaterialTheme.goatColors.onSurfaceVariant,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
                     lineHeight = 20.sp
@@ -133,10 +126,10 @@ fun DataLossConfirmationDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(8.dp))
-                        .background(DestructiveRedDark.copy(alpha = 0.4f))
+                        .background(GoatPalette.Red900.copy(alpha = 0.4f))
                         .border(
                             width = 1.dp,
-                            color = DestructiveRedBorder.copy(alpha = 0.6f),
+                            color = GoatPalette.Red600.copy(alpha = 0.6f),
                             shape = RoundedCornerShape(8.dp)
                         )
                         .semantics {
@@ -147,7 +140,7 @@ fun DataLossConfirmationDialog(
                 ) {
                     Text(
                         text = "This action cannot be undone. Consider completing today's profile before switching tomorrow.",
-                        color = TextPrimary,
+                        color = MaterialTheme.goatColors.onSurface,
                         fontSize = 13.sp,
                         lineHeight = 18.sp
                     )
@@ -165,7 +158,7 @@ fun DataLossConfirmationDialog(
                         onClick = onSwitchAnyway,
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = DestructiveRed,
+                            containerColor = MaterialTheme.goatColors.error,
                             contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(8.dp)
@@ -184,7 +177,7 @@ fun DataLossConfirmationDialog(
                         onClick = onKeepCurrent,
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = TextSecondary
+                            contentColor = MaterialTheme.goatColors.onSurfaceVariant
                         ),
                         border = null,
                         shape = RoundedCornerShape(8.dp)

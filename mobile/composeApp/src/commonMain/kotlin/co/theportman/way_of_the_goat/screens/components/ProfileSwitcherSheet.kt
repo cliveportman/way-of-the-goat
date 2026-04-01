@@ -24,6 +24,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
@@ -41,18 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
-
-// Colors for the profile switcher
-private val SheetBackground = Color(0xFF0f172b)      // slate-900
-private val CardBackground = Color(0xFF1e293b)       // slate-800
-private val TextPrimary = Color(0xFFf8fafc)          // slate-50
-private val TextSecondary = Color(0xFF94a3b8)        // slate-400
-private val SelectedGreen = Color(0xFF84cc16)        // lime-500
-private val SelectedBorder = Color(0xFF84cc16)       // lime-500
-private val UnselectedBorder = Color(0xFF334155)     // slate-700
-private val WarningYellow = Color(0xFFfbbf24)        // amber-400
-private val WarningBackground = Color(0xFF451a03)   // amber-950
+import co.theportman.way_of_the_goat.ui.theme.GoatPalette
+import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
  * Bottom sheet modal for selecting a scoring profile.
@@ -100,7 +91,7 @@ fun ProfileSwitcherSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = SheetBackground,
+        containerColor = MaterialTheme.goatColors.surfaceContainer,
         dragHandle = null
     ) {
         Column(
@@ -111,14 +102,14 @@ fun ProfileSwitcherSheet(
             // Header
             Text(
                 text = "Select Profile",
-                color = TextPrimary,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Choose a scoring profile that matches your goals",
-                color = TextSecondary,
+                color = MaterialTheme.goatColors.onSurfaceVariant,
                 fontSize = 14.sp
             )
 
@@ -129,7 +120,7 @@ fun ProfileSwitcherSheet(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Last used: $lastUsedName",
-                        color = SelectedGreen,
+                        color = MaterialTheme.goatColors.primary,
                         fontSize = 13.sp
                     )
                 }
@@ -164,15 +155,15 @@ fun ProfileSwitcherSheet(
                         checked = useFutureChecked,
                         onCheckedChange = onUseFutureChanged,
                         colors = CheckboxDefaults.colors(
-                            checkedColor = SelectedGreen,
-                            uncheckedColor = TextSecondary,
-                            checkmarkColor = SheetBackground
+                            checkedColor = MaterialTheme.goatColors.primary,
+                            uncheckedColor = MaterialTheme.goatColors.onSurfaceVariant,
+                            checkmarkColor = MaterialTheme.goatColors.surfaceContainer
                         )
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "Continue using this profile in future",
-                        color = TextPrimary,
+                        color = MaterialTheme.goatColors.onSurface,
                         fontSize = 14.sp
                     )
                 }
@@ -194,10 +185,10 @@ fun ProfileSwitcherSheet(
                 enabled = isNewProfileSelected,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = SelectedGreen,
-                    contentColor = SheetBackground,
-                    disabledContainerColor = CardBackground,
-                    disabledContentColor = TextSecondary
+                    containerColor = MaterialTheme.goatColors.primary,
+                    contentColor = MaterialTheme.goatColors.surfaceContainer,
+                    disabledContainerColor = MaterialTheme.goatColors.surfaceContainerHigh,
+                    disabledContentColor = MaterialTheme.goatColors.onSurfaceVariant
                 ),
                 shape = RoundedCornerShape(8.dp)
             ) {
@@ -217,7 +208,7 @@ fun ProfileSwitcherSheet(
             ) {
                 Text(
                     text = "Cancel",
-                    color = TextSecondary,
+                    color = MaterialTheme.goatColors.onSurfaceVariant,
                     fontSize = 14.sp,
                     modifier = Modifier
                         .clickable(
@@ -244,7 +235,7 @@ private fun ProfileCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val borderColor = if (isSelected) SelectedBorder else UnselectedBorder
+    val borderColor = if (isSelected) MaterialTheme.goatColors.primary else MaterialTheme.goatColors.outline
     val borderWidth = if (isSelected) 2.dp else 1.dp
     val selectionState = if (isSelected) "Selected" else "Not selected"
 
@@ -252,7 +243,7 @@ private fun ProfileCard(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(CardBackground)
+            .background(MaterialTheme.goatColors.surfaceContainerHigh)
             .border(borderWidth, borderColor, RoundedCornerShape(12.dp))
             .selectable(
                 selected = isSelected,
@@ -270,10 +261,10 @@ private fun ProfileCard(
             modifier = Modifier
                 .size(24.dp)
                 .clip(CircleShape)
-                .background(if (isSelected) SelectedGreen else Color.Transparent)
+                .background(if (isSelected) MaterialTheme.goatColors.primary else Color.Transparent)
                 .border(
                     width = if (isSelected) 0.dp else 2.dp,
-                    color = if (isSelected) Color.Transparent else UnselectedBorder,
+                    color = if (isSelected) Color.Transparent else MaterialTheme.goatColors.outline,
                     shape = CircleShape
                 ),
             contentAlignment = Alignment.Center
@@ -282,7 +273,7 @@ private fun ProfileCard(
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = null, // Handled by parent semantics
-                    tint = SheetBackground,
+                    tint = MaterialTheme.goatColors.surfaceContainer,
                     modifier = Modifier.size(16.dp)
                 )
             }
@@ -294,14 +285,14 @@ private fun ProfileCard(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = profile.name,
-                color = if (isSelected) SelectedGreen else TextPrimary,
+                color = if (isSelected) MaterialTheme.goatColors.primary else MaterialTheme.goatColors.onSurface,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = profile.description,
-                color = TextSecondary,
+                color = MaterialTheme.goatColors.onSurfaceVariant,
                 fontSize = 13.sp,
                 lineHeight = 18.sp
             )
@@ -321,7 +312,7 @@ private fun WarningBanner(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(WarningBackground)
+            .background(GoatPalette.Amber950)
             .semantics(mergeDescendants = true) {
                 contentDescription = "Warning: Data will be lost. Switching to $profileName will reset this day's data."
             }
@@ -331,21 +322,21 @@ private fun WarningBanner(
         Icon(
             imageVector = Icons.Filled.Warning,
             contentDescription = null, // Handled by parent semantics
-            tint = WarningYellow,
+            tint = GoatPalette.Amber400,
             modifier = Modifier.size(20.dp)
         )
         Spacer(modifier = Modifier.width(12.dp))
         Column {
             Text(
                 text = "Data will be lost",
-                color = WarningYellow,
+                color = GoatPalette.Amber400,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = "Switching to $profileName will reset this day's data.",
-                color = TextPrimary,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 13.sp,
                 lineHeight = 18.sp
             )

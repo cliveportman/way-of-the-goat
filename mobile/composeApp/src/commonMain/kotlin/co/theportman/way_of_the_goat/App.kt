@@ -1,5 +1,6 @@
 package co.theportman.way_of_the_goat
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import co.theportman.way_of_the_goat.screens.ActivityScreen
+import co.theportman.way_of_the_goat.screens.DesignTokensScreen
 import co.theportman.way_of_the_goat.screens.HelpScreen
 import co.theportman.way_of_the_goat.screens.HomeScreen
 import co.theportman.way_of_the_goat.screens.IntroFlowScreen
@@ -27,7 +29,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    WayOfTheGoatTheme {
+    WayOfTheGoatTheme(darkTheme = isSystemInDarkTheme()) {
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -126,7 +128,14 @@ fun App() {
                     )
                 }
                 composable(Screen.Help.route) {
-                    HelpScreen()
+                    HelpScreen(
+                        onNavigateToDesignTokens = {
+                            navController.navigate(Screen.DesignTokens.route)
+                        }
+                    )
+                }
+                composable(Screen.DesignTokens.route) {
+                    DesignTokensScreen()
                 }
             }
         }

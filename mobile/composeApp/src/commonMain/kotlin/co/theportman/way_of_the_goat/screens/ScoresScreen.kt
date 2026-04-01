@@ -34,7 +34,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,7 +45,7 @@ import co.theportman.way_of_the_goat.screens.components.DataLossConfirmationDial
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
 import co.theportman.way_of_the_goat.screens.components.ProfileSwitcherSheet
 import co.theportman.way_of_the_goat.screens.components.ScoreSummary
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
+import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -54,10 +53,6 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.todayIn
-
-// Figma colors
-private val BackgroundColor = Color(0xFF020618)  // slate-950
-private val TextColor = Color(0xFFF1F5F9)        // slate-100
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -139,7 +134,7 @@ fun ScoresScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BackgroundColor)
+            .background(MaterialTheme.goatColors.surface)
     ) {
         HorizontalPager(
             state = pagerState,
@@ -244,7 +239,7 @@ private fun ScoresPageContent(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(BackgroundColor)
+                .background(MaterialTheme.goatColors.surface)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -252,10 +247,10 @@ private fun ScoresPageContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                CircularProgressIndicator(color = TextColor)
+                CircularProgressIndicator(color = MaterialTheme.goatColors.onSurface)
                 Text(
                     text = "Loading day data...",
-                    color = TextColor.copy(alpha = 0.7f),
+                    color = MaterialTheme.goatColors.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -268,7 +263,7 @@ private fun ScoresPageContent(
         onRefresh = { viewModel.refreshCurrentDate(date) },
         modifier = Modifier
             .fillMaxSize()
-            .background(BackgroundColor)
+            .background(MaterialTheme.goatColors.surface)
     ) {
         Column(
             modifier = Modifier
@@ -279,7 +274,7 @@ private fun ScoresPageContent(
             // Date heading
             Text(
                 text = formatDate(date),
-                color = TextColor,
+                color = MaterialTheme.goatColors.onSurface,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth()
@@ -336,7 +331,7 @@ private fun ScoresPageContent(
                 ) {
                     Text(
                         text = "Select a profile above to start tracking",
-                        color = GoatColors.Slate400,
+                        color = MaterialTheme.goatColors.onSurfaceVariant,
                         fontSize = 16.sp
                     )
                 }
@@ -364,13 +359,13 @@ private fun ProfileSwitchCard(
             Column {
                 Text(
                     text = "ACTIVE PROFILE",
-                    color = GoatColors.Slate400,
+                    color = MaterialTheme.goatColors.onSurfaceVariant,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = profileName ?: "No profile selected",
-                    color = if (profileName != null) GoatColors.Slate50 else GoatColors.Slate400,
+                    color = if (profileName != null) MaterialTheme.goatColors.onSurface else MaterialTheme.goatColors.onSurfaceVariant,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -380,13 +375,13 @@ private fun ProfileSwitchCard(
             ) {
                 Text(
                     text = "Change profile",
-                    color = GoatColors.Slate400,
+                    color = MaterialTheme.goatColors.onSurfaceVariant,
                     fontSize = 14.sp
                 )
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = "Change profile",
-                    tint = GoatColors.Slate400,
+                    tint = MaterialTheme.goatColors.onSurfaceVariant,
                     modifier = Modifier.size(20.dp)
                 )
             }

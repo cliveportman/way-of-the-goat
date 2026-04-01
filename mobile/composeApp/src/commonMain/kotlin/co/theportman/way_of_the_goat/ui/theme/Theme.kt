@@ -2,53 +2,68 @@ package co.theportman.way_of_the_goat.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
 
-// Design tokens from Figma
-object GoatColors {
-    val Navy950 = Color(0xFF020618)      // Background
-    val Navy900 = Color(0xFF0f172b)      // Button background
-    val Navy800 = Color(0xFF1d293d)      // Button border
-    val Slate50 = Color(0xFFf8fafc)      // Primary text
-    val Slate100 = Color(0xFFf1f5f9)     // Logo color
-    val Slate400 = Color(0xFF90a1b9)     // Subtitle text
+private val LocalGoatColors = staticCompositionLocalOf { GoatDarkColorScheme }
 
-    // Score colours (from Figma design)
-    val ScorePlus2 = Color(0xFF9ae600)   // lime-400
-    val ScorePlus1 = Color(0xFFbbf451)   // lime-300
-    val ScoreZero = Color(0xFF7bf1a8)    // green-300 (teal)
-    val ScoreMinus1 = Color(0xFFffb86a)  // orange-300
-    val ScoreMinus2 = Color(0xFFff8904)  // orange-400
-    val ScoreMinus3 = Color(0xFFFB2C36) // red-500
+val MaterialTheme.goatColors: GoatColorScheme
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalGoatColors.current
 
-    // Semantic colours
-    val DestructiveRed = Color(0xFFef4444)    // red-500 - for destructive actions
-    val WarningYellow = Color(0xFFfbbf24)     // amber-400 - for warnings
-    val SelectedGreen = Color(0xFF84cc16)     // lime-500 - for selected states
-}
+private val M3DarkColorScheme = darkColorScheme(
+    primary = GoatPalette.Lime400,
+    onPrimary = GoatPalette.Slate950,
+    primaryContainer = GoatPalette.Slate900,
+    onPrimaryContainer = GoatPalette.Slate50,
+    secondary = GoatPalette.Slate400,
+    onSecondary = GoatPalette.Slate950,
+    background = GoatPalette.Slate950,
+    onBackground = GoatPalette.Slate50,
+    surface = GoatPalette.Slate900,
+    onSurface = GoatPalette.Slate50,
+    surfaceVariant = GoatPalette.Slate800,
+    onSurfaceVariant = GoatPalette.Slate400,
+    outline = GoatPalette.Slate400,
+    error = GoatPalette.Red500,
+    onError = GoatPalette.Slate50,
+)
 
-private val DarkColorScheme = darkColorScheme(
-    primary = GoatColors.Slate50,
-    onPrimary = GoatColors.Navy950,
-    primaryContainer = GoatColors.Navy900,
-    onPrimaryContainer = GoatColors.Slate50,
-    secondary = GoatColors.Slate400,
-    onSecondary = GoatColors.Navy950,
-    background = GoatColors.Navy950,
-    onBackground = GoatColors.Slate50,
-    surface = GoatColors.Navy900,
-    onSurface = GoatColors.Slate50,
-    outline = GoatColors.Navy800
+private val M3LightColorScheme = lightColorScheme(
+    primary = GoatPalette.Lime400,
+    onPrimary = GoatPalette.Slate950,
+    primaryContainer = GoatPalette.Slate100,
+    onPrimaryContainer = GoatPalette.Slate950,
+    secondary = GoatPalette.Slate500,
+    onSecondary = GoatPalette.Slate50,
+    background = GoatPalette.Slate50,
+    onBackground = GoatPalette.Slate950,
+    surface = GoatPalette.Slate100,
+    onSurface = GoatPalette.Slate950,
+    surfaceVariant = GoatPalette.Slate200,
+    onSurfaceVariant = GoatPalette.Slate500,
+    outline = GoatPalette.Slate500,
+    error = GoatPalette.Red500,
+    onError = GoatPalette.Slate50,
 )
 
 @Composable
 fun WayOfTheGoatTheme(
+    darkTheme: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    MaterialTheme(
-        colorScheme = DarkColorScheme,
-        typography = GoatTypography,
-        content = content
-    )
+    val goatColors = if (darkTheme) GoatDarkColorScheme else GoatLightColorScheme
+    val m3ColorScheme = if (darkTheme) M3DarkColorScheme else M3LightColorScheme
+
+    CompositionLocalProvider(LocalGoatColors provides goatColors) {
+        MaterialTheme(
+            colorScheme = m3ColorScheme,
+            typography = GoatTypography,
+            content = content
+        )
+    }
 }

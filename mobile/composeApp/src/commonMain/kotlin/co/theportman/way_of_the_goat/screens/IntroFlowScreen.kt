@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.ui.components.ContinueButton
-import co.theportman.way_of_the_goat.ui.theme.GoatColors
+import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.coroutines.launch
 
 /**
@@ -76,7 +76,7 @@ fun IntroFlowScreen(onComplete: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(GoatColors.Navy950)
+            .background(MaterialTheme.goatColors.surface)
     ) {
         // Only the text content slides
         HorizontalPager(
@@ -131,7 +131,7 @@ private fun IntroPageContent(content: IntroContent) {
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold
             ),
-            color = GoatColors.Slate100
+            color = MaterialTheme.goatColors.onSurface
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -144,7 +144,7 @@ private fun IntroPageContent(content: IntroContent) {
                     fontSize = 16.sp,
                     lineHeight = 22.sp
                 ),
-                color = GoatColors.Slate50
+                color = MaterialTheme.goatColors.onSurface
             )
 
             if (index < content.bodyParagraphs.size - 1) {
@@ -170,7 +170,7 @@ private fun PageIndicators(
                 modifier = Modifier
                     .size(8.dp)
                     .background(
-                        color = if (index == currentPage) GoatColors.Slate50 else GoatColors.Navy800,
+                        color = if (index == currentPage) MaterialTheme.goatColors.onSurface else MaterialTheme.goatColors.surfaceContainerHigh,
                         shape = CircleShape
                     )
             )
