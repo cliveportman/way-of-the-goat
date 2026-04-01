@@ -9,11 +9,54 @@ Way of the Goat is a nutrition tracking app for endurance athletes, implementing
 **Repository Structure:**
 ```
 way-of-the-goat/
-├── mobile/          # Kotlin Multiplatform app (active development) - has its own CLAUDE.md
-├── references/      # Legacy React Native v1.4.3 (reference only)
-├── api/             # Go backend (planned)
-└── website/         # Marketing site (planned)
+├── .claude/          # Agents, commands, skills (see below)
+├── mobile/           # Kotlin Multiplatform app (active development) - has its own CLAUDE.md
+├── design-specs/     # Design specs and Figma JSON exports (shared across all sub-projects)
+├── design-tokens/    # Figma-sourced token JSON (tokens.json)
+├── references/       # Legacy React Native v1.4.3 (reference only)
+├── api/              # Go backend (planned)
+└── website/          # Marketing site (planned)
 ```
+
+## Agents
+
+All agents are in `.claude/agents/`. Use the appropriate agent for the task:
+
+| Agent | Use For | Model |
+|-------|---------|-------|
+| `jake-wharton` | KMP/Compose implementation from design specs | opus |
+| `nick-butcher` | Compose/KMP code review (read-only) | inherits |
+| `rubber-duck` | Brainstorming, planning, architecture discussion (no code) | sonnet |
+
+## Commands
+
+| Command | Use For |
+|---------|---------|
+| `/design-to-code` | Full pipeline: Figma design → spec curation → Compose implementation |
+| `/design-to-code --edit <spec-path>` | Update specs and code when a design changes |
+
+### Design-to-Code Sub-commands
+
+The `/design-to-code` command orchestrates these sub-commands internally:
+
+| Sub-command | Purpose |
+|-------------|---------|
+| `design-to-code/curate-component-spec` | Figma JSON → component spec |
+| `design-to-code/curate-screen-spec` | Conversation/JSON → screen spec |
+| `design-to-code/curate-flow-spec` | Screenshots/conversation → flow + screen specs |
+| `design-to-code/curate-flow-diagram` | Flow spec/screenshots → Mermaid diagram |
+| `design-to-code/implement-spec` | Spec → production Compose code |
+
+## Skills
+
+Skills are in `.claude/skills/`. Agents read these before working:
+
+| Skill | Contents |
+|-------|----------|
+| `kmp-conventions` | Architecture, state management, file naming, error handling, testing |
+| `design-specs` | Spec file formats, Figma token → Compose mapping |
+| `kmp-review-criteria` | Review checklist for KMP/Compose code |
+| `mermaid` | Mermaid flowchart conventions and colour scheme |
 
 ## Documentation
 
