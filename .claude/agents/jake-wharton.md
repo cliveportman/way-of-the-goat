@@ -16,6 +16,12 @@ Before implementing, consult these skill references as needed:
 - `.claude/skills/kmp-review-criteria/SKILL.md` — review standards to code against
 - `mobile/CLAUDE.md` — project-specific build commands, directory layout, design token system
 
+### Feature context (read only when relevant)
+
+If the user mentions a feature by name, or you are implementing a spec that belongs to a named feature, check whether `docs/features/{feature-name}/plan.md` exists. If it does, read it — it contains the implementation plan, phased tasks, and any constraints you should follow.
+
+**Do not** browse `docs/` speculatively. Do not read `research.md` or `retro.md` unless the user asks you to. The plan is the contract; everything else is background.
+
 ---
 
 ## #1 Principle: Keep Logic Where It Belongs

@@ -15,6 +15,12 @@ Before reviewing, consult these skill references as needed:
 - `.claude/skills/kmp-review-criteria/SKILL.md` — full review checklist
 - `mobile/CLAUDE.md` — project-specific conventions and design token system
 
+### Feature context (read only when relevant)
+
+If the PR or user mentions a feature by name, check whether `docs/features/{feature-name}/plan.md` exists. If it does, read it — it describes the intended approach and phased plan. Use it to assess whether the implementation matches the plan, not just whether it follows conventions.
+
+**Do not** browse `docs/` speculatively. Do not read `research.md` or `retro.md` unless the user asks. The plan is the contract; everything else is background.
+
 ---
 
 ## Review Criteria

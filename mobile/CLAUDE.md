@@ -4,71 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Documentation
 
-**Use Notion for project documentation.** Before starting work, search Notion for relevant context:
+Project documentation lives in `docs/` at the repo root. See `.claude/skills/docs-conventions/SKILL.md` for formats and conventions.
 
-- Use `mcp__notion__notion-search` to find design docs, requirements, and decisions
-- Use `mcp__notion__notion-fetch` to read full page content
-- Search for terms like "Way of the Goat", "WOTG", or specific feature names
+- **Features:** `docs/features/{name}/` — research.md, plan.md, retro.md
+- **Issues:** `docs/issues/{name}/` — investigation.md, fix-plan.md, retro.md
+- **Decisions:** `docs/decisions/NNN-short-title.md` (Architecture Decision Records)
 
-### Documentation Structure
-
-Way of the Goat project documentation is organized in Notion with a hierarchical structure under the main "Way of the Goat" page, split into Technical & Development and Business & Marketing sections.
-
-#### Technical & Development Databases
-
-**Features Database** - Tracks development of new capabilities and major enhancements
-- **Properties:** Feature (title), Priority, Complexity, Type, Status, Screen (multi-select), Target Date, Notes, PR Link, Related Issues (relation)
-- **Workflow:** Each feature page contains three sub-pages:
-    1. **Research & Design** - Requirements gathering, approach decisions, technical research, current implementation analysis, problem statement, data model changes
-    2. **Implementation Plan** - Detailed tasks, phased breakdown (Database → Repository → DataManager → ViewModel → UI), file-by-file changes with line references, testing checklist
-    3. **Retrospective** - What happened, what worked/didn't work, lessons learned, follow-up items, future enhancements
-- **Status flow:** Planned → In Progress → Merged → Released
-- **Use for:** Planning and building new features from scratch, major enhancements to existing functionality
-
-**Issues & Fixes Database** - Tracks bugs, code review findings, and technical debt requiring investigation
-- **Properties:** Issue (title), Severity, Source, Status, Screen (multi-select), Discovered Date, Resolved Date, Notes, PR Link, Related Feature (relation)
-- **Workflow:** Each issue page contains three sub-pages:
-    1. **Investigation** - Root cause analysis, reproduction steps, impact assessment, debugging findings
-    2. **Fix Plan** - Proposed solution, implementation notes, tasks, testing strategy, migration considerations
-    3. **Retrospective** - Resolution summary, lessons learned, prevention strategies, follow-up items
-- **Status flow:** Identified → Investigating → Fix Planned → Fixing → Verified → Closed
-- **Source types:** Testing (found during manual/automated testing), Code Review (found during PR review or static analysis), User Report (reported by users), Technical Debt (identified improvement needs), Refactoring (issues uncovered during refactoring)
-- **Use for:** Problems discovered during or after feature development, CodeRabbit or manual code review findings, bugs reported by users or found in testing, technical debt that requires investigation
-
-#### When to Use Each Database
-
-**Create a Feature when:**
-- Starting work on a new capability
-- Planning a major enhancement
-- Work is being planned from the beginning
-
-**Create an Issue when:**
-- Testing reveals problems in supposedly-complete features
-- Code review (CodeRabbit, peer review) identifies problems
-- Users report bugs
-- Technical debt surfaces that needs investigation
-- Refactoring uncovers issues
-
-**Quick decision rule:** If you're building something new → Feature. If you're fixing something that should already work → Issue.
-
-#### Database Integration
-
-**Two-way relationship:** The Features and Issues databases are related:
-- Issues can link to Related Feature (which feature spawned this issue)
-- Features display Related Issues (all issues spawned from this feature)
-- This enables tracking feature quality and understanding what problems emerged from each feature
-
-**PR tracking:** Both databases include a PR Link property (URL type) for linking to GitHub pull requests. Add this as soon as the PR is created, not just in the retrospective.
-
-**Large initiatives:** For complex projects like comprehensive code reviews that will spawn multiple issues:
-1. Create a parent project page under Technical & Development (e.g., "Comprehensive Code Review Project")
-2. Create sub-pages for each review phase or area (e.g., "Architecture Review", "Testing Coverage Review")
-3. Document findings in phase sub-pages
-4. Create individual issues in the Issues & Fixes database for each actionable finding
-5. Set Source = "Code Review" for all issues from this initiative
-6. Track progress using database views filtered by Source and grouped by Status or Severity
-
-**Additional Documentation:** There's a **Documentation Guide** page under Technical & Development that explains when to use each system with detailed scenario examples and decision trees.
+When implementing a named feature, read `docs/features/{name}/plan.md` if it exists — it describes the intended approach and phased tasks. Do not browse `docs/` speculatively.
 
 ## Build Commands
 ```bash

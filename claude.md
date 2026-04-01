@@ -33,8 +33,10 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 | Command | Use For |
 |---------|---------|
 | `/commit` | Stage and commit changes with semantic prefix and contributor emoji |
+| `/pr-create` | Create a draft PR, generate a test plan, and update the Notion PR Link |
 | `/app-review <pr-number>` | Full KMP/Compose code review of a PR via Nick Butcher agent |
 | `/app-review <pr-number> --recheck` | Re-review changed files only, with follow-up on previous issues |
+| `/retro <feature-or-issue-name>` | Write a post-merge retrospective to `docs/` |
 | `/design-to-code` | Full pipeline: Figma design → spec curation → Compose implementation |
 | `/design-to-code --edit <spec-path>` | Update specs and code when a design changes |
 
@@ -59,25 +61,23 @@ Skills are in `.claude/skills/`. Agents read these before working:
 | `kmp-conventions` | Architecture, state management, file naming, error handling, testing |
 | `design-specs` | Spec file formats, Figma token → Compose mapping |
 | `kmp-review-criteria` | Review checklist for KMP/Compose code |
+| `docs-conventions` | Documentation formats for `docs/` — features, issues, ADRs |
 | `mermaid` | Mermaid flowchart conventions and colour scheme |
 
 ## Documentation
 
-**Use Notion for all project documentation.** Before starting work, search Notion for context:
+Project documentation lives in the `docs/` directory:
 
-- `mcp__notion__notion-search` - Find docs, requirements, decisions
-- `mcp__notion__notion-fetch` - Read full page content
-- Search terms: "Way of the Goat", "WOTG", feature names
+```
+docs/
+├── features/{name}/     # research.md, plan.md, retro.md
+├── issues/{name}/       # investigation.md, fix-plan.md, retro.md
+└── decisions/           # NNN-short-title.md (Architecture Decision Records)
+```
 
-### Feature Documentation Structure
+See `.claude/skills/docs-conventions/SKILL.md` for formats, naming, and which agents write what.
 
-For each new feature, sub-feature, or bug fix, create a page in the "Way of the Goat - Features" database with three sub-pages:
-
-1. **Research & Design** - Current state, problem statement, design decisions
-2. **Implementation Plan** - Phased changes, file-by-file breakdown, testing checklist
-3. **Retrospective** - What went well, issues encountered, future improvements
-
-See "Past Day Profile Handling" in Notion as an example.
+**Key rule:** `jake-wharton` and `nick-butcher` do **not** browse `docs/` proactively. They only read `plan.md` (or `fix-plan.md`) when a feature or issue is mentioned by name. The `rubber-duck` agent is the primary author of documentation.
 
 ## References Directory
 
