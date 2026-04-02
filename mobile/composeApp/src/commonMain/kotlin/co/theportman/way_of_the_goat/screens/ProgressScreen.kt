@@ -425,7 +425,6 @@ private fun DayBar(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
-                        .clickable { onDateClick(date, co.theportman.way_of_the_goat.Screen.Activity) }
                         .background(
                             color = if (activitySummary.activityCount > 0) {
                                 MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
@@ -491,7 +490,6 @@ private fun DayBar(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight()
-                            .clickable { onDateClick(date, co.theportman.way_of_the_goat.Screen.Activity) }
                             .background(
                                 color = if (activitySummary.activityCount > 0) {
                                     MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)

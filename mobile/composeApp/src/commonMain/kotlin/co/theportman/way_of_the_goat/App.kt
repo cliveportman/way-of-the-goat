@@ -34,8 +34,7 @@ fun App() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        // State to hold the target dates for Activity and Scores screens
-        var targetActivityDateEpochDay by remember { mutableStateOf<Long?>(null) }
+        // State to hold the target date for the Scores screen
         var targetScoresDateEpochDay by remember { mutableStateOf<Long?>(null) }
 
         // Determine if bottom nav should be visible (hide on SecondPage and Home)
@@ -55,7 +54,6 @@ fun App() {
                         onScreenNavigate = { screen ->
                             when (screen) {
                                 Screen.Scores -> targetScoresDateEpochDay = null
-                                Screen.Activity -> targetActivityDateEpochDay = null
                                 else -> {}
                             }
                         }
@@ -90,20 +88,9 @@ fun App() {
                 composable(Screen.Progress.route) {
                     ProgressScreen(
                         onDateClick = { date, targetScreen ->
-                            val epochDay = date.toEpochDays().toLong()
                             when (targetScreen) {
-                                Screen.Activity -> {
-                                    targetActivityDateEpochDay = epochDay
-                                    navController.navigate(Screen.Activity.route) {
-                                        popUpTo(navController.graph.startDestinationId) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
                                 Screen.Scores -> {
-                                    targetScoresDateEpochDay = epochDay
+                                    targetScoresDateEpochDay = date.toEpochDays().toLong()
                                     navController.navigate(Screen.Scores.route) {
                                         popUpTo(navController.graph.startDestinationId) {
                                             saveState = true
