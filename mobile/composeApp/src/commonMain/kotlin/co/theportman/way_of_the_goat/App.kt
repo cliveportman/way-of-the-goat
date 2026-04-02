@@ -15,12 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import co.theportman.way_of_the_goat.screens.ActivityScreen
 import co.theportman.way_of_the_goat.screens.DesignTokensScreen
 import co.theportman.way_of_the_goat.screens.HelpScreen
 import co.theportman.way_of_the_goat.screens.HomeScreen
 import co.theportman.way_of_the_goat.screens.IntroFlowScreen
 import co.theportman.way_of_the_goat.screens.ProgressScreen
+import co.theportman.way_of_the_goat.screens.ScoresOverTimeScreen
 import co.theportman.way_of_the_goat.screens.ScoresScreen
 import co.theportman.way_of_the_goat.screens.SecondPage
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
@@ -123,9 +123,7 @@ fun App() {
                     )
                 }
                 composable(Screen.Activity.route) {
-                    ActivityScreen(
-                        targetDateEpochDay = targetActivityDateEpochDay
-                    )
+                    ScoresOverTimeScreen()
                 }
                 composable(Screen.Help.route) {
                     HelpScreen(
