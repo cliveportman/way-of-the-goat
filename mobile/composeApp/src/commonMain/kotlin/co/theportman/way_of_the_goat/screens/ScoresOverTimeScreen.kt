@@ -29,12 +29,14 @@ import co.theportman.way_of_the_goat.screens.components.WeekScoreData
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import co.theportman.way_of_the_goat.ui.theme.goatColors
+import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private val dayOfWeekLabels = listOf("M", "T", "W", "T", "F", "S", "S")
 
 @Composable
 fun ScoresOverTimeScreen(
+    onDateClick: (LocalDate) -> Unit = {},
     viewModel: ScoresOverTimeViewModel = viewModel { ScoresOverTimeViewModel() },
     modifier: Modifier = Modifier
 ) {
@@ -42,6 +44,7 @@ fun ScoresOverTimeScreen(
 
     ScoresOverTimeContent(
         uiState = uiState,
+        onDateClick = onDateClick,
         modifier = modifier
     )
 }
@@ -49,6 +52,7 @@ fun ScoresOverTimeScreen(
 @Composable
 private fun ScoresOverTimeContent(
     uiState: ScoresOverTimeUiState,
+    onDateClick: (LocalDate) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -100,7 +104,10 @@ private fun ScoresOverTimeContent(
                         items = uiState.weeks,
                         key = { it.dateRangeLabel }
                     ) { weekData ->
-                        ScoreWeekRow(weekData = weekData)
+                        ScoreWeekRow(
+                            weekData = weekData,
+                            onDateClick = onDateClick
+                        )
                     }
                 }
             }
@@ -212,11 +219,11 @@ private fun sampleWeeks(): List<WeekScoreData> = listOf(
     WeekScoreData(
         dateRangeLabel = "Mar 24-30",
         dailyScores = listOf(
-            DayScore("Monday", 22),
-            DayScore("Tuesday", 15),
-            DayScore("Wednesday", 8),
-            DayScore("Thursday", 25),
-            DayScore("Friday", 18),
+            DayScore(LocalDate(2026, 3, 24), "Monday", 22),
+            DayScore(LocalDate(2026, 3, 25), "Tuesday", 15),
+            DayScore(LocalDate(2026, 3, 26), "Wednesday", 8),
+            DayScore(LocalDate(2026, 3, 27), "Thursday", 25),
+            DayScore(LocalDate(2026, 3, 28), "Friday", 18),
             null,
             null
         ),
@@ -225,13 +232,13 @@ private fun sampleWeeks(): List<WeekScoreData> = listOf(
     WeekScoreData(
         dateRangeLabel = "Mar 17-23",
         dailyScores = listOf(
-            DayScore("Monday", 12),
-            DayScore("Tuesday", -4),
-            DayScore("Wednesday", 19),
-            DayScore("Thursday", 5),
-            DayScore("Friday", 22),
-            DayScore("Saturday", 16),
-            DayScore("Sunday", 11)
+            DayScore(LocalDate(2026, 3, 17), "Monday", 12),
+            DayScore(LocalDate(2026, 3, 18), "Tuesday", -4),
+            DayScore(LocalDate(2026, 3, 19), "Wednesday", 19),
+            DayScore(LocalDate(2026, 3, 20), "Thursday", 5),
+            DayScore(LocalDate(2026, 3, 21), "Friday", 22),
+            DayScore(LocalDate(2026, 3, 22), "Saturday", 16),
+            DayScore(LocalDate(2026, 3, 23), "Sunday", 11),
         ),
         weeklyTotal = 81
     ),
@@ -240,7 +247,7 @@ private fun sampleWeeks(): List<WeekScoreData> = listOf(
         dailyScores = listOf(
             null,
             null,
-            DayScore("Wednesday", 3),
+            DayScore(LocalDate(2026, 3, 12), "Wednesday", 3),
             null,
             null,
             null,

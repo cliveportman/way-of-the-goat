@@ -123,7 +123,18 @@ fun App() {
                     )
                 }
                 composable(Screen.Activity.route) {
-                    ScoresOverTimeScreen()
+                    ScoresOverTimeScreen(
+                        onDateClick = { date ->
+                            targetScoresDateEpochDay = date.toEpochDays().toLong()
+                            navController.navigate(Screen.Scores.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
                 }
                 composable(Screen.Help.route) {
                     HelpScreen(

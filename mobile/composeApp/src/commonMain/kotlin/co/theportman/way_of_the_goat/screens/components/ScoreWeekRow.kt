@@ -1,6 +1,7 @@
 package co.theportman.way_of_the_goat.screens.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,12 +21,14 @@ import co.theportman.way_of_the_goat.ui.theme.GoatSizing
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import co.theportman.way_of_the_goat.ui.theme.goatColors
+import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
  * A single day's score for display in a week row.
  */
 data class DayScore(
+    val date: LocalDate,
     val dayName: String,
     val score: Int
 )
@@ -48,6 +51,7 @@ data class WeekScoreData(
 @Composable
 fun ScoreWeekRow(
     weekData: WeekScoreData,
+    onDateClick: (LocalDate) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -95,6 +99,9 @@ fun ScoreWeekRow(
                 ScoreTile(
                     dayScore = dayScore,
                     contentDescription = description,
+                    onClick = if (dayScore != null) {
+                        { onDateClick(dayScore.date) }
+                    } else null,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -109,6 +116,7 @@ fun ScoreWeekRow(
 private fun ScoreTile(
     dayScore: DayScore?,
     contentDescription: String,
+    onClick: (() -> Unit)?,
     modifier: Modifier = Modifier
 ) {
     val backgroundColor = if (dayScore != null) {
@@ -121,6 +129,10 @@ private fun ScoreTile(
         modifier = modifier
             .height(GoatSizing.Touch.min)
             .background(backgroundColor)
+            .then(
+                if (onClick != null) Modifier.clickable(onClick = onClick)
+                else Modifier
+            )
             .semantics { this.contentDescription = contentDescription },
         contentAlignment = Alignment.Center
     ) {
@@ -168,19 +180,8 @@ private fun dayNameForIndex(index: Int): String {
 private fun ScoreWeekRowPreview() {
     WayOfTheGoatTheme {
         ScoreWeekRow(
-            weekData = WeekScoreData(
-                dateRangeLabel = "Feb 16-22",
-                dailyScores = listOf(
-                    DayScore("Monday", 22),
-                    DayScore("Tuesday", 15),
-                    DayScore("Wednesday", 8),
-                    DayScore("Thursday", -4),
-                    DayScore("Friday", 18),
-                    null,
-                    null
-                ),
-                weeklyTotal = 59
-            )
+            weekData = previewWeekData(),
+            onDateClick = {}
         )
     }
 }
@@ -190,19 +191,8 @@ private fun ScoreWeekRowPreview() {
 private fun ScoreWeekRowPreviewLight() {
     WayOfTheGoatTheme(darkTheme = false) {
         ScoreWeekRow(
-            weekData = WeekScoreData(
-                dateRangeLabel = "Feb 16-22",
-                dailyScores = listOf(
-                    DayScore("Monday", 22),
-                    DayScore("Tuesday", 15),
-                    DayScore("Wednesday", 8),
-                    DayScore("Thursday", -4),
-                    DayScore("Friday", 18),
-                    null,
-                    null
-                ),
-                weeklyTotal = 59
-            )
+            weekData = previewWeekData(),
+            onDateClick = {}
         )
     }
 }
@@ -216,7 +206,22 @@ private fun ScoreWeekRowPreviewAllBlank() {
                 dateRangeLabel = "Jan 5-11",
                 dailyScores = listOf(null, null, null, null, null, null, null),
                 weeklyTotal = 0
-            )
+            ),
+            onDateClick = {}
         )
     }
 }
+
+private fun previewWeekData() = WeekScoreData(
+    dateRangeLabel = "Feb 16-22",
+    dailyScores = listOf(
+        DayScore(LocalDate(2026, 2, 16), "Monday", 22),
+        DayScore(LocalDate(2026, 2, 17), "Tuesday", 15),
+        DayScore(LocalDate(2026, 2, 18), "Wednesday", 8),
+        DayScore(LocalDate(2026, 2, 19), "Thursday", -4),
+        DayScore(LocalDate(2026, 2, 20), "Friday", 18),
+        null,
+        null
+    ),
+    weeklyTotal = 59
+)

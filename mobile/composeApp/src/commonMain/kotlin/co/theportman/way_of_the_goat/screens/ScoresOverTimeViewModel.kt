@@ -138,6 +138,7 @@ class ScoresOverTimeViewModel : ViewModel() {
                     ScoreCalculator.calculateDailyScore(servings) ?: 0
                 }
                 DayScore(
+                    date = date,
                     dayName = dayNameForDayOfWeek(date.dayOfWeek),
                     score = score
                 )
