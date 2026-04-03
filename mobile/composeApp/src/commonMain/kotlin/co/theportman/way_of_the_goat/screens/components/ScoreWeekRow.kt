@@ -79,13 +79,13 @@ fun ScoreWeekRow(
             )
         }
 
-        Spacer(modifier = Modifier.height(GoatSpacing.s8))
+        Spacer(modifier = Modifier.height(GoatSpacing.s4))
 
         // Tiles row: 7 score tiles
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(GoatSizing.Touch.min),
+                .height(GoatSizing.Touch.default),
             horizontalArrangement = Arrangement.spacedBy(GoatSpacing.s4)
         ) {
             weekData.dailyScores.forEachIndexed { index, dayScore ->
@@ -127,7 +127,7 @@ private fun ScoreTile(
 
     Box(
         modifier = modifier
-            .height(GoatSizing.Touch.min)
+            .height(GoatSizing.Touch.default)
             .background(backgroundColor)
             .then(
                 if (onClick != null) Modifier.clickable(onClick = onClick)

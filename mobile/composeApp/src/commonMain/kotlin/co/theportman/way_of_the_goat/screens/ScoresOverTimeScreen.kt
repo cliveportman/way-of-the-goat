@@ -59,7 +59,7 @@ private fun ScoresOverTimeContent(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.goatColors.surface)
-            .padding(horizontal = GoatSpacing.s24)
+            .padding(horizontal = GoatSpacing.s12)
     ) {
         Spacer(modifier = Modifier.height(GoatSpacing.s32))
 
@@ -98,7 +98,7 @@ private fun ScoresOverTimeContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(GoatSpacing.s4)
+                    verticalArrangement = Arrangement.spacedBy(GoatSpacing.s12)
                 ) {
                     items(
                         items = uiState.weeks,
