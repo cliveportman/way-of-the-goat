@@ -30,15 +30,15 @@
 ### Tiles Row
 
 - **Type:** Row
-- **Dimensions:** Full width × `GoatSizing.Touch.min` (44dp)
+- **Dimensions:** Full width × `GoatSizing.Touch.default` (44dp)
 - **Gap:** `GoatSpacing.s4` (4dp) between tiles
-- **Spacing from header:** `GoatSpacing.s8` (8dp)
+- **Spacing from header:** `GoatSpacing.s4` (4dp)
 - **Content:** 7 score tiles, one per day (Mon → Sun)
 
 ### Score Tile
 
 - **Type:** Box with centered text
-- **Dimensions:** `GoatSizing.Touch.min` × `GoatSizing.Touch.min` (44 × 44dp)
+- **Dimensions:** `GoatSizing.Touch.default` × `GoatSizing.Touch.default` (48 × 48dp)
 - **Corner radius:** None (sharp corners)
 - **Background:** Determined by score value (see colour rules below)
 - **Content:** Score number text, centered horizontally and vertically

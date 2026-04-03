@@ -15,8 +15,9 @@ None — standalone screen (bottom nav tab).
 ## Layout
 
 - **Structure:** Column with fixed header (title + day-of-week labels), then scrollable LazyColumn of week rows
-- **Content padding:** `GoatSpacing.s24` (24dp) horizontal, `GoatSpacing.s32` (32dp) top
+- **Content padding:** `GoatSpacing.s12` (12dp) horizontal, `GoatSpacing.s32` (32dp) top
 - **Section spacing:** `GoatSpacing.s16` (16dp) between title and day headers; `GoatSpacing.s16` (16dp) between day headers and first week row
+- **Row spacing:** `GoatSpacing.s12` (12dp) between week rows in LazyColumn
 
 ## Section Layout
 
@@ -92,7 +93,7 @@ Screen-level layout tokens only (child component tokens in score-week-row spec).
 
 - **Composition:** Fixed header (title + day labels) above a scrollable LazyColumn of `ScoreWeekRow` composables. Use `Column` for the fixed portion and `LazyColumn` for the scrollable week rows.
 - **Data source:** ViewModel exposes `StateFlow<ScoresOverTimeUiState>` with Loading/Success/Error sealed states. The ViewModel queries daily scores from the repository, groups them by week (Mon-Sun), calculates weekly totals, and sorts most recent first.
-- **Navigation:** Route `"activity"` in the existing NavHost (replaces current ActivityScreen). Second item in `bottomNavItems`. No route params needed.
+- **Navigation:** Route `"scores_over_time"` in the existing NavHost. Second item in `bottomNavItems` (label: "History"). No route params needed.
 - **Day-of-week header alignment:** The header labels must align precisely with the tile columns in the week rows below. Use the same `weight(1f)` distribution and `GoatSpacing.s4` gap as the tiles.
 - **Accessibility:** Screen title serves as the screen heading. Each week row should be a semantically grouped element. Day headers provide column context for screen readers.
 - **Scroll performance:** Use `LazyColumn` with `key` set to the week's date range for stable item identity during recomposition.

@@ -41,7 +41,7 @@ fun App() {
         val showBottomNav = currentRoute in listOf(
             Screen.Progress.route,
             Screen.Scores.route,
-            Screen.Activity.route,
+            Screen.ScoresOverTime.route,
             Screen.Help.route
         )
 
@@ -109,7 +109,7 @@ fun App() {
                         targetDateEpochDay = targetScoresDateEpochDay
                     )
                 }
-                composable(Screen.Activity.route) {
+                composable(Screen.ScoresOverTime.route) {
                     ScoresOverTimeScreen(
                         onDateClick = { date ->
                             targetScoresDateEpochDay = date.toEpochDays().toLong()

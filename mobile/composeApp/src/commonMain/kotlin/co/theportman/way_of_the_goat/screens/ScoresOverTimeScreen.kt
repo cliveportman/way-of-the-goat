@@ -14,9 +14,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
@@ -41,12 +46,24 @@ fun ScoresOverTimeScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    ScoresOverTimeContent(
-        uiState = uiState,
-        onDateClick = onDateClick,
-        modifier = modifier
-    )
+    LaunchedEffect(viewModel) {
+        viewModel.errors.collect { message ->
+            snackbarHostState.showSnackbar(message)
+        }
+    }
+
+    Box(modifier = modifier.fillMaxSize()) {
+        ScoresOverTimeContent(
+            uiState = uiState,
+            onDateClick = onDateClick
+        )
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+    }
 }
 
 @Composable
@@ -171,7 +188,7 @@ private fun DayOfWeekHeaders(
 
 // region Previews
 
-@Preview
+@Preview(name = "Dark")
 @Composable
 private fun ScoresOverTimeScreenPreview() {
     WayOfTheGoatTheme {

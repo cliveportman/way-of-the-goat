@@ -1,7 +1,5 @@
 package co.theportman.way_of_the_goat.screens.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,11 +8,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import co.theportman.way_of_the_goat.ui.theme.GoatSizing
@@ -125,29 +125,39 @@ private fun ScoreTile(
         MaterialTheme.goatColors.surfaceContainerHigh
     }
 
-    Box(
-        modifier = modifier
-            .height(GoatSizing.Touch.default)
-            .background(backgroundColor)
-            .then(
-                if (onClick != null) Modifier.clickable(onClick = onClick)
-                else Modifier
-            )
-            .semantics { this.contentDescription = contentDescription },
-        contentAlignment = Alignment.Center
-    ) {
-        if (dayScore != null) {
-            Text(
-                text = dayScore.score.toString(),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.goatColors.surface
-            )
+    val tileModifier = modifier
+        .height(GoatSizing.Touch.default)
+        .semantics { this.contentDescription = contentDescription }
+
+    if (onClick != null) {
+        Surface(
+            onClick = onClick,
+            modifier = tileModifier,
+            shape = RectangleShape,
+            color = backgroundColor
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Text(
+                    text = dayScore!!.score.toString(),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.goatColors.surface
+                )
+            }
         }
+    } else {
+        Surface(
+            modifier = tileModifier,
+            shape = RectangleShape,
+            color = backgroundColor
+        ) {}
     }
 }
 
 /**
  * Returns the tile background colour for a given score value.
+ *
+ * Uses 4 of the 6 score tokens — scorePlus1 and scoreMinus2 are
+ * intentionally omitted per the design spec's score tier thresholds.
  */
 @Composable
 private fun scoreColor(score: Int): Color {
@@ -175,7 +185,7 @@ private fun dayNameForIndex(index: Int): String {
     }
 }
 
-@Preview
+@Preview(name = "Dark")
 @Composable
 private fun ScoreWeekRowPreview() {
     WayOfTheGoatTheme {
