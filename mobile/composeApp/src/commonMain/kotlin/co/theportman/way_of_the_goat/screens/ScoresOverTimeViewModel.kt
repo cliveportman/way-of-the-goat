@@ -3,6 +3,7 @@ package co.theportman.way_of_the_goat.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.theportman.way_of_the_goat.data.cache.ServingsDataManager
+import co.theportman.way_of_the_goat.data.cache.ServingsDataSource
 import co.theportman.way_of_the_goat.data.scoring.WeeklyScoreBuilder
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
@@ -24,8 +25,10 @@ import kotlinx.datetime.todayIn
  * Delegates week grouping and score calculation to [WeeklyScoreBuilder].
  */
 class ScoresOverTimeViewModel(
-    private val servingsDataManager: ServingsDataManager = ServingsDataManager.instance,
-    private val weeklyScoreBuilder: WeeklyScoreBuilder = WeeklyScoreBuilder()
+    private val servingsDataSource: ServingsDataSource = ServingsDataManager.instance,
+    private val weeklyScoreBuilder: WeeklyScoreBuilder = WeeklyScoreBuilder(),
+    private val clock: Clock = Clock.System,
+    private val timeZone: TimeZone = TimeZone.currentSystemDefault()
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ScoresOverTimeUiState>(ScoresOverTimeUiState.Loading)
@@ -35,24 +38,28 @@ class ScoresOverTimeViewModel(
     val errors: SharedFlow<String> = _errors.asSharedFlow()
 
     init {
-        loadData()
-        observeServingsChanges()
+        loadDataAndObserve()
     }
 
-    private fun loadData() {
+    private fun loadDataAndObserve() {
         viewModelScope.launch {
             _uiState.value = ScoresOverTimeUiState.Loading
 
-            if (!servingsDataManager.isInitialized.value) {
+            if (!servingsDataSource.isInitialized.value) {
                 _uiState.value = ScoresOverTimeUiState.Empty
                 return@launch
             }
 
-            val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+            val today = clock.todayIn(timeZone)
 
-            servingsDataManager.loadInitialData(aroundDate = today, bufferDays = 91).fold(
+            servingsDataSource.loadInitialData(aroundDate = today, bufferDays = 91).fold(
                 onSuccess = {
-                    rebuildFromServings(servingsDataManager.servingsFlow.value)
+                    // Collect servingsFlow as the single source of truth.
+                    // The first emission rebuilds from the data just loaded;
+                    // subsequent emissions rebuild when servings change.
+                    servingsDataSource.servingsFlow.collect { servingsMap ->
+                        rebuildFromServings(servingsMap)
+                    }
                 },
                 onFailure = { error ->
                     val message = error.message ?: "Failed to load scores"
@@ -60,16 +67,6 @@ class ScoresOverTimeViewModel(
                     _errors.emit(message)
                 }
             )
-        }
-    }
-
-    private fun observeServingsChanges() {
-        viewModelScope.launch {
-            servingsDataManager.servingsFlow.collect { servingsMap ->
-                if (_uiState.value !is ScoresOverTimeUiState.Loading) {
-                    rebuildFromServings(servingsMap)
-                }
-            }
         }
     }
 

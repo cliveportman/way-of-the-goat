@@ -34,7 +34,7 @@ class WeeklyScoreBuilderTest {
     }
 
     @Test
-    fun `getMonday returns Monday for any day of the week`() {
+    fun `given any day of the week when getMonday then returns that week's Monday`() {
         // Monday 2026-02-16
         assertEquals(LocalDate(2026, 2, 16), WeeklyScoreBuilder.getMonday(LocalDate(2026, 2, 16)))
         // Tuesday
@@ -52,24 +52,24 @@ class WeeklyScoreBuilderTest {
     }
 
     @Test
-    fun `formatDateRange same month`() {
+    fun `given week within same month when formatDateRange then returns single month label`() {
         val label = WeeklyScoreBuilder.formatDateRange(LocalDate(2026, 2, 16))
         assertEquals("Feb 16-22", label)
     }
 
     @Test
-    fun `formatDateRange cross month`() {
+    fun `given week spanning two months when formatDateRange then returns both month labels`() {
         val label = WeeklyScoreBuilder.formatDateRange(LocalDate(2026, 1, 26))
         assertEquals("Jan 26-Feb 1", label)
     }
 
     @Test
-    fun `buildWeeks returns null for empty map`() {
+    fun `given empty servings map when buildWeeks then returns null`() {
         assertNull(builder.buildWeeks(emptyMap()))
     }
 
     @Test
-    fun `buildWeeks groups data into correct weeks`() {
+    fun `given servings in two different weeks when buildWeeks then groups into correct weeks`() {
         val servingsMap = mapOf(
             LocalDate(2026, 2, 16) to servingsForDate(LocalDate(2026, 2, 16)),
             LocalDate(2026, 2, 10) to servingsForDate(LocalDate(2026, 2, 10))
@@ -87,7 +87,7 @@ class WeeklyScoreBuilderTest {
     }
 
     @Test
-    fun `buildWeeks returns most recent week first`() {
+    fun `given servings across multiple weeks when buildWeeks then returns most recent first`() {
         val servingsMap = mapOf(
             LocalDate(2026, 2, 2) to servingsForDate(LocalDate(2026, 2, 2)),
             LocalDate(2026, 2, 16) to servingsForDate(LocalDate(2026, 2, 16))
@@ -101,7 +101,7 @@ class WeeklyScoreBuilderTest {
     }
 
     @Test
-    fun `buildWeekData has 7 entries Mon through Sun`() {
+    fun `given one day of data when buildWeekData then returns 7 entries Mon through Sun`() {
         val monday = LocalDate(2026, 2, 16)
         val servingsMap = mapOf(
             monday to servingsForDate(monday)
@@ -110,15 +110,16 @@ class WeeklyScoreBuilderTest {
         val weekData = builder.buildWeekData(monday, servingsMap)
         assertEquals(7, weekData.dailyScores.size)
         // Monday has a score, rest are null
-        assertNotNull(weekData.dailyScores[0])
-        assertEquals("Monday", weekData.dailyScores[0]!!.dayName)
+        val mondayScore = weekData.dailyScores[0]
+        assertNotNull(mondayScore)
+        assertEquals("Monday", mondayScore.dayName)
         for (i in 1..6) {
             assertNull(weekData.dailyScores[i])
         }
     }
 
     @Test
-    fun `buildWeekData calculates weekly total from scored days only`() {
+    fun `given two scored days when buildWeekData then calculates total from scored days only`() {
         val monday = LocalDate(2026, 2, 16)
         val tuesday = LocalDate(2026, 2, 17)
         val servingsMap = mapOf(
@@ -133,7 +134,7 @@ class WeeklyScoreBuilderTest {
     }
 
     @Test
-    fun `dayNameForDayOfWeek returns correct names`() {
+    fun `given a DayOfWeek when dayNameForDayOfWeek then returns correct English name`() {
         assertEquals("Monday", WeeklyScoreBuilder.dayNameForDayOfWeek(kotlinx.datetime.DayOfWeek.MONDAY))
         assertEquals("Sunday", WeeklyScoreBuilder.dayNameForDayOfWeek(kotlinx.datetime.DayOfWeek.SUNDAY))
     }
