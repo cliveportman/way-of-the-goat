@@ -49,7 +49,7 @@ None — standalone screen (bottom nav tab).
 - **Component:** [score-week-row](../components/score-week-row.md)
 - **Ordering:** Most recent week at top, older weeks below
 - **Scrolling:** LazyColumn, vertically scrollable to reveal older weeks
-- **Item spacing:** `GoatSpacing.s4` (4dp) between rows
+- **Item spacing:** `GoatSpacing.s12` (12dp) between rows
 
 ## Screen States
 

@@ -28,10 +28,11 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import co.theportman.way_of_the_goat.screens.components.DayScore
+import co.theportman.way_of_the_goat.data.scoring.model.DayScore
+import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
 import co.theportman.way_of_the_goat.screens.components.ScoreWeekRow
-import co.theportman.way_of_the_goat.screens.components.WeekScoreData
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
+import androidx.compose.ui.text.style.TextAlign
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.datetime.LocalDate
@@ -180,7 +181,7 @@ private fun DayOfWeekHeaders(
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.goatColors.onSurfaceVariant,
                 modifier = Modifier.weight(1f),
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                textAlign = TextAlign.Center
             )
         }
     }

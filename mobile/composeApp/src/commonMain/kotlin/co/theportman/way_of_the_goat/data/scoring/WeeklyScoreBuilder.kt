@@ -1,8 +1,8 @@
 package co.theportman.way_of_the_goat.data.scoring
 
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
-import co.theportman.way_of_the_goat.screens.components.DayScore
-import co.theportman.way_of_the_goat.screens.components.WeekScoreData
+import co.theportman.way_of_the_goat.data.scoring.model.DayScore
+import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek

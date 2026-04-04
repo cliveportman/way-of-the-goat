@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.theportman.way_of_the_goat.data.cache.ServingsDataManager
 import co.theportman.way_of_the_goat.data.scoring.WeeklyScoreBuilder
-import co.theportman.way_of_the_goat.screens.components.WeekScoreData
+import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
+import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 
@@ -71,7 +73,7 @@ class ScoresOverTimeViewModel(
         }
     }
 
-    private fun rebuildFromServings(servingsMap: Map<kotlinx.datetime.LocalDate, co.theportman.way_of_the_goat.data.scoring.model.DailyServings>) {
+    private fun rebuildFromServings(servingsMap: Map<LocalDate, DailyServings>) {
         val weeks = weeklyScoreBuilder.buildWeeks(servingsMap)
         _uiState.value = if (weeks != null) {
             ScoresOverTimeUiState.Success(weeks)

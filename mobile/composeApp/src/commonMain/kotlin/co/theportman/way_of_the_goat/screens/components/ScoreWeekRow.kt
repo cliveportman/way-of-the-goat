@@ -17,30 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import co.theportman.way_of_the_goat.data.scoring.model.DayScore
+import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
 import co.theportman.way_of_the_goat.ui.theme.GoatSizing
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-/**
- * A single day's score for display in a week row.
- */
-data class DayScore(
-    val date: LocalDate,
-    val dayName: String,
-    val score: Int
-)
-
-/**
- * Data for a single week row in the Scores Over Time screen.
- */
-data class WeekScoreData(
-    val dateRangeLabel: String,
-    val dailyScores: List<DayScore?>,
-    val weeklyTotal: Int
-)
 
 /**
  * Displays a single week's scores as a row of coloured tiles.
@@ -89,68 +73,67 @@ fun ScoreWeekRow(
             horizontalArrangement = Arrangement.spacedBy(GoatSpacing.s4)
         ) {
             weekData.dailyScores.forEachIndexed { index, dayScore ->
-                val dayName = dayScore?.dayName ?: dayNameForIndex(index)
-                val description = if (dayScore != null) {
-                    "$dayName: score ${dayScore.score}"
+                if (dayScore != null) {
+                    ScoreTile(
+                        dayScore = dayScore,
+                        contentDescription = "${dayScore.dayName}: score ${dayScore.score}",
+                        onClick = { onDateClick(dayScore.date) },
+                        modifier = Modifier.weight(1f)
+                    )
                 } else {
-                    "$dayName: no score"
+                    BlankTile(
+                        contentDescription = "${dayNameForIndex(index)}: no score",
+                        modifier = Modifier.weight(1f)
+                    )
                 }
-
-                ScoreTile(
-                    dayScore = dayScore,
-                    contentDescription = description,
-                    onClick = if (dayScore != null) {
-                        { onDateClick(dayScore.date) }
-                    } else null,
-                    modifier = Modifier.weight(1f)
-                )
             }
         }
     }
 }
 
 /**
- * A single score tile within a week row.
+ * A scored tile that displays the day's score and handles tap.
  */
 @Composable
 private fun ScoreTile(
-    dayScore: DayScore?,
+    dayScore: DayScore,
     contentDescription: String,
-    onClick: (() -> Unit)?,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val backgroundColor = if (dayScore != null) {
-        scoreColor(dayScore.score)
-    } else {
-        MaterialTheme.goatColors.surfaceContainerHigh
-    }
-
-    val tileModifier = modifier
-        .height(GoatSizing.Touch.default)
-        .semantics { this.contentDescription = contentDescription }
-
-    if (onClick != null) {
-        Surface(
-            onClick = onClick,
-            modifier = tileModifier,
-            shape = RectangleShape,
-            color = backgroundColor
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Text(
-                    text = dayScore!!.score.toString(),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.goatColors.surface
-                )
-            }
+    Surface(
+        onClick = onClick,
+        modifier = modifier
+            .height(GoatSizing.Touch.default)
+            .semantics { this.contentDescription = contentDescription },
+        shape = RectangleShape,
+        color = scoreColor(dayScore.score)
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Text(
+                text = dayScore.score.toString(),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.goatColors.surface
+            )
         }
-    } else {
-        Surface(
-            modifier = tileModifier,
-            shape = RectangleShape,
-            color = backgroundColor
-        ) {}
     }
+}
+
+/**
+ * An empty tile for days with no score data.
+ */
+@Composable
+private fun BlankTile(
+    contentDescription: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier
+            .height(GoatSizing.Touch.default)
+            .semantics { this.contentDescription = contentDescription },
+        shape = RectangleShape,
+        color = MaterialTheme.goatColors.surfaceContainerHigh
+    ) {}
 }
 
 /**
