@@ -19,6 +19,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import co.theportman.way_of_the_goat.data.scoring.model.DayScore
 import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
+import co.theportman.way_of_the_goat.ui.theme.GoatColorScheme
 import co.theportman.way_of_the_goat.ui.theme.GoatSizing
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
@@ -107,7 +108,7 @@ private fun ScoreTile(
             .height(GoatSizing.Touch.default)
             .semantics { this.contentDescription = contentDescription },
         shape = RectangleShape,
-        color = scoreColor(dayScore.score)
+        color = scoreColor(dayScore.score, MaterialTheme.goatColors)
     ) {
         Box(contentAlignment = Alignment.Center) {
             Text(
@@ -142,13 +143,12 @@ private fun BlankTile(
  * Uses 4 of the 6 score tokens — scorePlus1 and scoreMinus2 are
  * intentionally omitted per the design spec's score tier thresholds.
  */
-@Composable
-private fun scoreColor(score: Int): Color {
+private fun scoreColor(score: Int, colors: GoatColorScheme): Color {
     return when {
-        score <= 0 -> MaterialTheme.goatColors.scoreMinus3
-        score in 1..10 -> MaterialTheme.goatColors.scoreMinus1
-        score in 11..20 -> MaterialTheme.goatColors.score0
-        else -> MaterialTheme.goatColors.scorePlus2
+        score <= 0 -> colors.scoreMinus3
+        score in 1..10 -> colors.scoreMinus1
+        score in 11..20 -> colors.score0
+        else -> colors.scorePlus2
     }
 }
 
