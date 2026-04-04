@@ -108,7 +108,7 @@ private fun DistanceTile(
                 contentDescription = "${dayActivity.dayName}: ${formatDistance(dayActivity.distance)} km, ${dayActivity.activityCount} ${if (dayActivity.activityCount == 1) "activity" else "activities"}"
             },
         shape = RectangleShape,
-        color = MaterialTheme.colorScheme.onSurface
+        color = MaterialTheme.goatColors.onSurface
     ) {
         Box {
             // Distance text — centered
