@@ -19,7 +19,7 @@ import co.theportman.way_of_the_goat.screens.DesignTokensScreen
 import co.theportman.way_of_the_goat.screens.HelpScreen
 import co.theportman.way_of_the_goat.screens.HomeScreen
 import co.theportman.way_of_the_goat.screens.IntroFlowScreen
-import co.theportman.way_of_the_goat.screens.ProgressScreen
+import co.theportman.way_of_the_goat.screens.RunsOverTimeScreen
 import co.theportman.way_of_the_goat.screens.ScoresOverTimeScreen
 import co.theportman.way_of_the_goat.screens.ScoresScreen
 import co.theportman.way_of_the_goat.screens.SecondPage
@@ -39,9 +39,9 @@ fun App() {
 
         // Determine if bottom nav should be visible (hide on SecondPage and Home)
         val showBottomNav = currentRoute in listOf(
-            Screen.Progress.route,
             Screen.Scores.route,
             Screen.ScoresOverTime.route,
+            Screen.RunsOverTime.route,
             Screen.Help.route
         )
 
@@ -85,24 +85,8 @@ fun App() {
                 composable(Screen.SecondPage.route) {
                     SecondPage()
                 }
-                composable(Screen.Progress.route) {
-                    ProgressScreen(
-                        onDateClick = { date, targetScreen ->
-                            when (targetScreen) {
-                                Screen.Scores -> {
-                                    targetScoresDateEpochDay = date.toEpochDays().toLong()
-                                    navController.navigate(Screen.Scores.route) {
-                                        popUpTo(navController.graph.startDestinationId) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                                else -> {}
-                            }
-                        }
-                    )
+                composable(Screen.RunsOverTime.route) {
+                    RunsOverTimeScreen()
                 }
                 composable(Screen.Scores.route) {
                     ScoresScreen(

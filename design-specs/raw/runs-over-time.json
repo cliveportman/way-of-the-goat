@@ -1,0 +1,6780 @@
+{
+  "id": "112:118",
+  "name": "Your mileage screen",
+  "type": "FRAME",
+  "x": 415,
+  "y": 2317,
+  "width": 375,
+  "height": 812,
+  "constraints": {
+    "horizontal": "MIN",
+    "vertical": "MIN"
+  },
+  "layoutAlign": "INHERIT",
+  "layoutSizingHorizontal": "FIXED",
+  "layoutSizingVertical": "FIXED",
+  "fills": [
+    {
+      "type": "SOLID",
+      "color": {
+        "r": 0.007429320830851793,
+        "g": 0.023281749337911606,
+        "b": 0.09250508248806
+      }
+    }
+  ],
+  "clipsContent": true,
+  "children": [
+    {
+      "id": "112:119",
+      "name": "Rectangle 79",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 206,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:120",
+      "name": "Rectangle 80",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:121",
+      "name": "Rectangle 81",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:122",
+      "name": "Rectangle 82",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:123",
+      "name": "Rectangle 83",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:124",
+      "name": "Rectangle 84",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:125",
+      "name": "Rectangle 85",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:126",
+      "name": "6.3",
+      "type": "TEXT",
+      "x": 29,
+      "y": 176,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "6.3",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:127",
+      "name": "14.2",
+      "type": "TEXT",
+      "x": 77,
+      "y": 176,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "14.2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:128",
+      "name": "17.2",
+      "type": "TEXT",
+      "x": 125,
+      "y": 176,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "17.2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:129",
+      "name": "14.2",
+      "type": "TEXT",
+      "x": 174,
+      "y": 176,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "14.2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:130",
+      "name": "9.7",
+      "type": "TEXT",
+      "x": 221,
+      "y": 176,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9.7",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:131",
+      "name": "13.9",
+      "type": "TEXT",
+      "x": 268,
+      "y": 176,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "13.9",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:132",
+      "name": "10.7",
+      "type": "TEXT",
+      "x": 316,
+      "y": 176,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "10.7",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:220",
+      "name": "Rectangle 92",
+      "type": "RECTANGLE",
+      "x": 216,
+      "y": 386,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:221",
+      "name": "Rectangle 93",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:222",
+      "name": "Rectangle 94",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:223",
+      "name": "Rectangle 95",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:224",
+      "name": "Rectangle 96",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:225",
+      "name": "Rectangle 97",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:226",
+      "name": "Rectangle 98",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:227",
+      "name": "8.3",
+      "type": "TEXT",
+      "x": 29,
+      "y": 356,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "8.3",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:228",
+      "name": "14.2",
+      "type": "TEXT",
+      "x": 77,
+      "y": 356,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "14.2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:229",
+      "name": "12.1",
+      "type": "TEXT",
+      "x": 125,
+      "y": 356,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "12.1",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:230",
+      "name": "18.7",
+      "type": "TEXT",
+      "x": 168,
+      "y": 356,
+      "width": 44,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "18.7",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:231",
+      "name": "9.5",
+      "type": "TEXT",
+      "x": 216,
+      "y": 356,
+      "width": 43,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9.5",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:232",
+      "name": "7.7",
+      "type": "TEXT",
+      "x": 268,
+      "y": 356,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "7.7",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:233",
+      "name": "6.2",
+      "type": "TEXT",
+      "x": 316,
+      "y": 356,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "6.2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:235",
+      "name": "Rectangle 99",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 476,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:236",
+      "name": "Rectangle 100",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:237",
+      "name": "Rectangle 101",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:238",
+      "name": "Rectangle 102",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:239",
+      "name": "Rectangle 103",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:240",
+      "name": "Rectangle 104",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:241",
+      "name": "Rectangle 105",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:242",
+      "name": "7.4",
+      "type": "TEXT",
+      "x": 29,
+      "y": 446,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "7.4",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:243",
+      "name": "8.6",
+      "type": "TEXT",
+      "x": 77,
+      "y": 446,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "8.6",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:244",
+      "name": "8",
+      "type": "TEXT",
+      "x": 125,
+      "y": 446,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "8",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:245",
+      "name": "13.7",
+      "type": "TEXT",
+      "x": 174,
+      "y": 446,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "13.7",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:246",
+      "name": "9.1",
+      "type": "TEXT",
+      "x": 221,
+      "y": 446,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9.1",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:247",
+      "name": "7.3",
+      "type": "TEXT",
+      "x": 268,
+      "y": 446,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "7.3",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:248",
+      "name": "12.9",
+      "type": "TEXT",
+      "x": 316,
+      "y": 446,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "12.9",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:250",
+      "name": "Rectangle 106",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 566,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:251",
+      "name": "Rectangle 107",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:252",
+      "name": "Rectangle 108",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:253",
+      "name": "Rectangle 109",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:255",
+      "name": "Rectangle 111",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:256",
+      "name": "Rectangle 112",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:257",
+      "name": "3",
+      "type": "TEXT",
+      "x": 29,
+      "y": 536,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "3",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:259",
+      "name": "3.6",
+      "type": "TEXT",
+      "x": 125,
+      "y": 536,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "3.6",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:260",
+      "name": "4.2",
+      "type": "TEXT",
+      "x": 174,
+      "y": 536,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "4.2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:261",
+      "name": "2.4",
+      "type": "TEXT",
+      "x": 221,
+      "y": 536,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "2.4",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:262",
+      "name": "7.7",
+      "type": "TEXT",
+      "x": 268,
+      "y": 536,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "7.7",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:263",
+      "name": "6.2",
+      "type": "TEXT",
+      "x": 316,
+      "y": 536,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "6.2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:265",
+      "name": "Rectangle 113",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 656,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:267",
+      "name": "Rectangle 115",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:268",
+      "name": "Rectangle 116",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:269",
+      "name": "Rectangle 117",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:270",
+      "name": "Rectangle 118",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:273",
+      "name": "3.3",
+      "type": "TEXT",
+      "x": 77,
+      "y": 626,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "3.3",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:274",
+      "name": "5.9",
+      "type": "TEXT",
+      "x": 125,
+      "y": 626,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "5.9",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:275",
+      "name": "6.8",
+      "type": "TEXT",
+      "x": 174,
+      "y": 626,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "6.8",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:276",
+      "name": "3.6",
+      "type": "TEXT",
+      "x": 221,
+      "y": 626,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "3.6",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:278",
+      "name": "1",
+      "type": "TEXT",
+      "x": 316,
+      "y": 626,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "1",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:133",
+      "name": "M",
+      "type": "TEXT",
+      "x": 29,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "M",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:134",
+      "name": "T",
+      "type": "TEXT",
+      "x": 77,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "T",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:135",
+      "name": "W",
+      "type": "TEXT",
+      "x": 125,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "W",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:136",
+      "name": "T",
+      "type": "TEXT",
+      "x": 174,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "T",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:137",
+      "name": "F",
+      "type": "TEXT",
+      "x": 221,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "F",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:138",
+      "name": "S",
+      "type": "TEXT",
+      "x": 268,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "S",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:139",
+      "name": "S",
+      "type": "TEXT",
+      "x": 316,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "S",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:140",
+      "name": "Feb 16-22",
+      "type": "TEXT",
+      "x": 25,
+      "y": 140,
+      "width": 69,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Feb 16-22",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:141",
+      "name": "86.6 km",
+      "type": "TEXT",
+      "x": 300,
+      "y": 140,
+      "width": 55,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "86.6 km",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:142",
+      "name": "71.1 km",
+      "type": "TEXT",
+      "x": 306,
+      "y": 230,
+      "width": 49,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "71.1 km",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:143",
+      "name": "77 km",
+      "type": "TEXT",
+      "x": 314,
+      "y": 320,
+      "width": 41,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "77 km",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:144",
+      "name": "67.3 km",
+      "type": "TEXT",
+      "x": 302,
+      "y": 410,
+      "width": 53,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "67.3 km",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:145",
+      "name": "Rectangle 86",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 296,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:146",
+      "name": "Rectangle 87",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:147",
+      "name": "Rectangle 88",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:148",
+      "name": "Rectangle 89",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:149",
+      "name": "Rectangle 90",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:150",
+      "name": "Rectangle 91",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:153",
+      "name": "11.6",
+      "type": "TEXT",
+      "x": 77,
+      "y": 266,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "11.6",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:154",
+      "name": "9.6",
+      "type": "TEXT",
+      "x": 125,
+      "y": 266,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9.6",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:155",
+      "name": "14.1",
+      "type": "TEXT",
+      "x": 174,
+      "y": 266,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "14.1",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:156",
+      "name": "11.1",
+      "type": "TEXT",
+      "x": 221,
+      "y": 266,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "11.1",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:157",
+      "name": "15.1",
+      "type": "TEXT",
+      "x": 268,
+      "y": 266,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "15.1",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:158",
+      "name": "9.5",
+      "type": "TEXT",
+      "x": 316,
+      "y": 266,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9.5",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "112:159",
+      "name": "Feb 9-15",
+      "type": "TEXT",
+      "x": 25,
+      "y": 230,
+      "width": 61,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Feb 9-15",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:174",
+      "name": "Feb 2-8",
+      "type": "TEXT",
+      "x": 25,
+      "y": 320,
+      "width": 54,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Feb 2-8",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:189",
+      "name": "Jan 26 - Feb 1",
+      "type": "TEXT",
+      "x": 25,
+      "y": 410,
+      "width": 98,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Jan 26 - Feb 1",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "115:280",
+      "name": "Rectangle 119",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 746,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:281",
+      "name": "Rectangle 120",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 746,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:286",
+      "name": "Rectangle 125",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 746,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:297",
+      "name": "Rectangle 126",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 746,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:299",
+      "name": "Rectangle 127",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 746,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:301",
+      "name": "Rectangle 128",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 746,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:303",
+      "name": "Rectangle 129",
+      "type": "RECTANGLE",
+      "x": 311,
+      "y": 746,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:305",
+      "name": "Rectangle 130",
+      "type": "RECTANGLE",
+      "x": 263,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:307",
+      "name": "Rectangle 131",
+      "type": "RECTANGLE",
+      "x": 24,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:309",
+      "name": "Rectangle 132",
+      "type": "RECTANGLE",
+      "x": 72,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:311",
+      "name": "Rectangle 133",
+      "type": "RECTANGLE",
+      "x": 24,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "115:287",
+      "name": "9.8",
+      "type": "TEXT",
+      "x": 29,
+      "y": 716,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9.8",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:291",
+      "name": "2",
+      "type": "TEXT",
+      "x": 221,
+      "y": 716,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "2",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:292",
+      "name": "2.8",
+      "type": "TEXT",
+      "x": 268,
+      "y": 716,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "2.8",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold"
+      }
+    },
+    {
+      "id": "115:294",
+      "name": "14.7 km",
+      "type": "TEXT",
+      "x": 303,
+      "y": 680,
+      "width": 52,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "14.7 km",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "115:295",
+      "name": "Jan 26 - Feb 1",
+      "type": "TEXT",
+      "x": 25,
+      "y": 680,
+      "width": 98,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Jan 26 - Feb 1",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:190",
+      "name": "27.4 km",
+      "type": "TEXT",
+      "x": 302,
+      "y": 500,
+      "width": 53,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "27.4 km",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:205",
+      "name": "Jan 19 - 25",
+      "type": "TEXT",
+      "x": 25,
+      "y": 500,
+      "width": 77,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Jan 19 - 25",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:206",
+      "name": "20.7 km",
+      "type": "TEXT",
+      "x": 301,
+      "y": 590,
+      "width": 54,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "20.7 km",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:213",
+      "name": "Jan 12 - 18",
+      "type": "TEXT",
+      "x": 25,
+      "y": 590,
+      "width": 75,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Jan 12 - 18",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:214",
+      "name": "Your endurance activities",
+      "type": "TEXT",
+      "x": 24,
+      "y": 32,
+      "width": 326,
+      "height": 33,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Your endurance activities",
+      "fontSize": 28,
+      "fontWeight": 700,
+      "textAutoResize": "HEIGHT",
+      "fontName": {
+        "family": "Roboto",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "115:313",
+      "name": "Ellipse 11",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 252,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:320",
+      "name": "Ellipse 14",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 300,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:322",
+      "name": "Ellipse 15",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 348,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:314",
+      "name": "Ellipse 12",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 246,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:318",
+      "name": "Ellipse 13",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 240,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:324",
+      "name": "Ellipse 16",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 205,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:325",
+      "name": "Ellipse 17",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 199,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:326",
+      "name": "Ellipse 18",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 193,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:328",
+      "name": "Ellipse 19",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 157,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:329",
+      "name": "Ellipse 20",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 151,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:330",
+      "name": "Ellipse 21",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 145,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:332",
+      "name": "Ellipse 22",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 109,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:333",
+      "name": "Ellipse 23",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 103,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:334",
+      "name": "Ellipse 24",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 97,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:340",
+      "name": "Ellipse 28",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 109,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:341",
+      "name": "Ellipse 29",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 103,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:342",
+      "name": "Ellipse 30",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 97,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:344",
+      "name": "Ellipse 31",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 157,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:345",
+      "name": "Ellipse 32",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 151,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:346",
+      "name": "Ellipse 33",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 145,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:348",
+      "name": "Ellipse 34",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 205,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:349",
+      "name": "Ellipse 35",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 199,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:350",
+      "name": "Ellipse 36",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 193,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:352",
+      "name": "Ellipse 37",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 252,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:353",
+      "name": "Ellipse 38",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 246,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:354",
+      "name": "Ellipse 39",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 240,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:356",
+      "name": "Ellipse 40",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 300,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:364",
+      "name": "Ellipse 41",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 348,
+      "y": 289,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:366",
+      "name": "Ellipse 42",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 109,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:367",
+      "name": "Ellipse 43",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 103,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:368",
+      "name": "Ellipse 44",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 97,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:383",
+      "name": "Ellipse 57",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 61,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:384",
+      "name": "Ellipse 58",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 55,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:385",
+      "name": "Ellipse 59",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 49,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:369",
+      "name": "Ellipse 45",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 157,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:370",
+      "name": "Ellipse 46",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 151,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:371",
+      "name": "Ellipse 47",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 145,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:372",
+      "name": "Ellipse 48",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 205,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:373",
+      "name": "Ellipse 49",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 199,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:374",
+      "name": "Ellipse 50",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 193,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:375",
+      "name": "Ellipse 51",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 252,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:376",
+      "name": "Ellipse 52",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 246,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:377",
+      "name": "Ellipse 53",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 240,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:378",
+      "name": "Ellipse 54",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 300,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:381",
+      "name": "Ellipse 56",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 294,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:379",
+      "name": "Ellipse 55",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 348,
+      "y": 379,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:387",
+      "name": "Ellipse 60",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 109,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:388",
+      "name": "Ellipse 61",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 103,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:389",
+      "name": "Ellipse 62",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 97,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:390",
+      "name": "Ellipse 63",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 61,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:391",
+      "name": "Ellipse 64",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 55,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:393",
+      "name": "Ellipse 66",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 157,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:394",
+      "name": "Ellipse 67",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 151,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:396",
+      "name": "Ellipse 69",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 205,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:397",
+      "name": "Ellipse 70",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 199,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:398",
+      "name": "Ellipse 71",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 193,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:399",
+      "name": "Ellipse 72",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 252,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:400",
+      "name": "Ellipse 73",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 246,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:402",
+      "name": "Ellipse 75",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 300,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:403",
+      "name": "Ellipse 76",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 294,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:404",
+      "name": "Ellipse 77",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 348,
+      "y": 469,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:422",
+      "name": "Ellipse 93",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 109,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:423",
+      "name": "Ellipse 94",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 103,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:427",
+      "name": "Ellipse 98",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 157,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:428",
+      "name": "Ellipse 99",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 151,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:429",
+      "name": "Ellipse 100",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 205,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:430",
+      "name": "Ellipse 101",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 199,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:431",
+      "name": "Ellipse 102",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 193,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:432",
+      "name": "Ellipse 103",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 252,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:436",
+      "name": "Ellipse 107",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 348,
+      "y": 649,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:441",
+      "name": "Ellipse 111",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 61,
+      "y": 739,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:442",
+      "name": "Ellipse 112",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 55,
+      "y": 739,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:454",
+      "name": "Ellipse 121",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 49,
+      "y": 739,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:448",
+      "name": "Ellipse 118",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 252,
+      "y": 739,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:450",
+      "name": "Ellipse 120",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 300,
+      "y": 739,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:409",
+      "name": "Ellipse 81",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 61,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:411",
+      "name": "Ellipse 83",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 157,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:412",
+      "name": "Ellipse 84",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 151,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:413",
+      "name": "Ellipse 85",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 205,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:414",
+      "name": "Ellipse 86",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 199,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:416",
+      "name": "Ellipse 88",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 252,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:418",
+      "name": "Ellipse 90",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 300,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:419",
+      "name": "Ellipse 91",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 294,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:420",
+      "name": "Ellipse 92",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 348,
+      "y": 559,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:336",
+      "name": "Ellipse 25",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 61,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:337",
+      "name": "Ellipse 26",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 55,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    },
+    {
+      "id": "115:338",
+      "name": "Ellipse 27",
+      "type": "ELLIPSE",
+      "isAsset": true,
+      "x": 49,
+      "y": 199,
+      "width": 5,
+      "height": 5,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      }
+    }
+  ]
+}

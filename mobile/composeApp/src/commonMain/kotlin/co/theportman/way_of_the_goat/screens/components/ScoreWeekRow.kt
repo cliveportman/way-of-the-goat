@@ -121,23 +121,6 @@ private fun ScoreTile(
 }
 
 /**
- * An empty tile for days with no score data.
- */
-@Composable
-private fun BlankTile(
-    contentDescription: String,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        modifier = modifier
-            .height(GoatSizing.Touch.default)
-            .semantics { this.contentDescription = contentDescription },
-        shape = RectangleShape,
-        color = MaterialTheme.goatColors.surfaceContainerHigh
-    ) {}
-}
-
-/**
  * Returns the tile background colour for a given score value.
  *
  * Uses 4 of the 6 score tokens — scorePlus1 and scoreMinus2 are
@@ -149,22 +132,6 @@ private fun scoreColor(score: Int, colors: GoatColorScheme): Color {
         score in 1..10 -> colors.scoreMinus1
         score in 11..20 -> colors.score0
         else -> colors.scorePlus2
-    }
-}
-
-/**
- * Fallback day name for tiles with no score data.
- */
-private fun dayNameForIndex(index: Int): String {
-    return when (index) {
-        0 -> "Monday"
-        1 -> "Tuesday"
-        2 -> "Wednesday"
-        3 -> "Thursday"
-        4 -> "Friday"
-        5 -> "Saturday"
-        6 -> "Sunday"
-        else -> "Day"
     }
 }
 
