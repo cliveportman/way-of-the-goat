@@ -189,7 +189,7 @@ Design tokens live in `ui/theme/`. **Never hardcode colours, spacing, or type si
 ```kotlin
 // ✅ Always use tokens
 MaterialTheme.goatColors.scorePlus2
-MaterialTheme.colorScheme.surface
+MaterialTheme.goatColors.surface
 GoatSpacing.s16
 GoatSizing.Touch.default
 GoatRadius.md
