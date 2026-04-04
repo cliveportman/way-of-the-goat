@@ -1,0 +1,3600 @@
+{
+  "id": "108:130",
+  "name": "Your scores screen",
+  "type": "FRAME",
+  "x": 0,
+  "y": 2317,
+  "width": 375,
+  "height": 812,
+  "constraints": {
+    "horizontal": "MIN",
+    "vertical": "MIN"
+  },
+  "layoutAlign": "INHERIT",
+  "layoutSizingHorizontal": "FIXED",
+  "layoutSizingVertical": "FIXED",
+  "fills": [
+    {
+      "type": "SOLID",
+      "color": {
+        "r": 0.007429320830851793,
+        "g": 0.023281749337911606,
+        "b": 0.09250508248806
+      }
+    }
+  ],
+  "clipsContent": true,
+  "children": [
+    {
+      "id": "108:237",
+      "name": "Rectangle 79",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:238",
+      "name": "Rectangle 80",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:239",
+      "name": "Rectangle 81",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6024434566497803,
+            "g": 0.9016712307929993,
+            "b": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:240",
+      "name": "Rectangle 82",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:242",
+      "name": "Rectangle 83",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:243",
+      "name": "Rectangle 84",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 0.7215686440467834,
+            "b": 0.4156862795352936
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:244",
+      "name": "Rectangle 85",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 206,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:248",
+      "name": "14",
+      "type": "TEXT",
+      "x": 29,
+      "y": 174,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "14",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:250",
+      "name": "16",
+      "type": "TEXT",
+      "x": 77,
+      "y": 174,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "16",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:252",
+      "name": "9",
+      "type": "TEXT",
+      "x": 125,
+      "y": 174,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:254",
+      "name": "16",
+      "type": "TEXT",
+      "x": 174,
+      "y": 174,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "16",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:256",
+      "name": "13",
+      "type": "TEXT",
+      "x": 221,
+      "y": 174,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "13",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:258",
+      "name": "14",
+      "type": "TEXT",
+      "x": 268,
+      "y": 174,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "14",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:260",
+      "name": "27",
+      "type": "TEXT",
+      "x": 316,
+      "y": 174,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "27",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:314",
+      "name": "M",
+      "type": "TEXT",
+      "x": 29,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "M",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:315",
+      "name": "T",
+      "type": "TEXT",
+      "x": 77,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "T",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:316",
+      "name": "W",
+      "type": "TEXT",
+      "x": 125,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "W",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:317",
+      "name": "T",
+      "type": "TEXT",
+      "x": 174,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "T",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:318",
+      "name": "F",
+      "type": "TEXT",
+      "x": 221,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "F",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:319",
+      "name": "S",
+      "type": "TEXT",
+      "x": 268,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "S",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:320",
+      "name": "S",
+      "type": "TEXT",
+      "x": 316,
+      "y": 95,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.5647059082984924,
+            "g": 0.6313725709915161,
+            "b": 0.7254902124404907
+          }
+        }
+      ],
+      "characters": "S",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:262",
+      "name": "Feb 16-22",
+      "type": "TEXT",
+      "x": 25,
+      "y": 140,
+      "width": 69,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Feb 16-22",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:324",
+      "name": "109",
+      "type": "TEXT",
+      "x": 330,
+      "y": 140,
+      "width": 25,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "109",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:326",
+      "name": "86",
+      "type": "TEXT",
+      "x": 337,
+      "y": 230,
+      "width": 18,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "86",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:328",
+      "name": "81",
+      "type": "TEXT",
+      "x": 339,
+      "y": 320,
+      "width": 16,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "81",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:330",
+      "name": "102",
+      "type": "TEXT",
+      "x": 330,
+      "y": 410,
+      "width": 25,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "102",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:264",
+      "name": "Rectangle 86",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 0.7215686440467834,
+            "b": 0.4156862795352936
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:265",
+      "name": "Rectangle 87",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:266",
+      "name": "Rectangle 88",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 0.7215686440467834,
+            "b": 0.4156862795352936
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:267",
+      "name": "Rectangle 89",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6024434566497803,
+            "g": 0.9016712307929993,
+            "b": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:268",
+      "name": "Rectangle 90",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:269",
+      "name": "Rectangle 91",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 0.7215686440467834,
+            "b": 0.4156862795352936
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:270",
+      "name": "Rectangle 92",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 296,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:271",
+      "name": "13",
+      "type": "TEXT",
+      "x": 29,
+      "y": 264,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "13",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:272",
+      "name": "19",
+      "type": "TEXT",
+      "x": 77,
+      "y": 264,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "19",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:273",
+      "name": "4",
+      "type": "TEXT",
+      "x": 125,
+      "y": 264,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "4",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:274",
+      "name": "21",
+      "type": "TEXT",
+      "x": 174,
+      "y": 264,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "21",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:275",
+      "name": "9",
+      "type": "TEXT",
+      "x": 221,
+      "y": 264,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "9",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:276",
+      "name": "19",
+      "type": "TEXT",
+      "x": 268,
+      "y": 264,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "19",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:277",
+      "name": "1",
+      "type": "TEXT",
+      "x": 316,
+      "y": 264,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "1",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:278",
+      "name": "Feb 9-15",
+      "type": "TEXT",
+      "x": 25,
+      "y": 230,
+      "width": 61,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Feb 9-15",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:280",
+      "name": "Rectangle 93",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 0.7215686440467834,
+            "b": 0.4156862795352936
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:281",
+      "name": "Rectangle 94",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 0.7215686440467834,
+            "b": 0.4156862795352936
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:282",
+      "name": "Rectangle 95",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:283",
+      "name": "Rectangle 96",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:284",
+      "name": "Rectangle 97",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:285",
+      "name": "Rectangle 98",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:286",
+      "name": "Rectangle 99",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 386,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6024434566497803,
+            "g": 0.9016712307929993,
+            "b": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:287",
+      "name": "20",
+      "type": "TEXT",
+      "x": 29,
+      "y": 354,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "20",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:288",
+      "name": "16",
+      "type": "TEXT",
+      "x": 77,
+      "y": 354,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "16",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:289",
+      "name": "12",
+      "type": "TEXT",
+      "x": 125,
+      "y": 354,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "12",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:290",
+      "name": "18",
+      "type": "TEXT",
+      "x": 174,
+      "y": 354,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "18",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:291",
+      "name": "4",
+      "type": "TEXT",
+      "x": 221,
+      "y": 354,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "4",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:292",
+      "name": "1",
+      "type": "TEXT",
+      "x": 268,
+      "y": 354,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "1",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:293",
+      "name": "10",
+      "type": "TEXT",
+      "x": 316,
+      "y": 354,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "10",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:294",
+      "name": "Feb 2-8",
+      "type": "TEXT",
+      "x": 25,
+      "y": 320,
+      "width": 54,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Feb 2-8",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:296",
+      "name": "Rectangle 100",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9843137264251709,
+            "g": 0.1725490242242813,
+            "b": 0.21176470816135406
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:297",
+      "name": "Rectangle 101",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:298",
+      "name": "Rectangle 102",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6024434566497803,
+            "g": 0.9016712307929993,
+            "b": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:299",
+      "name": "Rectangle 103",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6024434566497803,
+            "g": 0.9016712307929993,
+            "b": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:300",
+      "name": "Rectangle 104",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:301",
+      "name": "Rectangle 105",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:302",
+      "name": "Rectangle 106",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 476,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "108:303",
+      "name": "18",
+      "type": "TEXT",
+      "x": 29,
+      "y": 444,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "18",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:304",
+      "name": "19",
+      "type": "TEXT",
+      "x": 77,
+      "y": 444,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "19",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:305",
+      "name": "18",
+      "type": "TEXT",
+      "x": 125,
+      "y": 444,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "18",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:306",
+      "name": "21",
+      "type": "TEXT",
+      "x": 174,
+      "y": 444,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "21",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:307",
+      "name": "-4",
+      "type": "TEXT",
+      "x": 221,
+      "y": 444,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "-4",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:308",
+      "name": "11",
+      "type": "TEXT",
+      "x": 268,
+      "y": 444,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "11",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:309",
+      "name": "21",
+      "type": "TEXT",
+      "x": 316,
+      "y": 444,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "21",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "108:310",
+      "name": "Jan 26 - Feb 1",
+      "type": "TEXT",
+      "x": 25,
+      "y": 410,
+      "width": 98,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Jan 26 - Feb 1",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:84",
+      "name": "51",
+      "type": "TEXT",
+      "x": 339,
+      "y": 500,
+      "width": 16,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "51",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:85",
+      "name": "Rectangle 107",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9843137264251709,
+            "g": 0.1725490242242813,
+            "b": 0.21176470816135406
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:86",
+      "name": "Rectangle 108",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9843137264251709,
+            "g": 0.1725490242242813,
+            "b": 0.21176470816135406
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:87",
+      "name": "Rectangle 109",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:88",
+      "name": "Rectangle 110",
+      "type": "RECTANGLE",
+      "x": 168.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:89",
+      "name": "Rectangle 111",
+      "type": "RECTANGLE",
+      "x": 72.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:90",
+      "name": "Rectangle 112",
+      "type": "RECTANGLE",
+      "x": 120.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 0.7215686440467834,
+            "b": 0.4156862795352936
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:91",
+      "name": "Rectangle 113",
+      "type": "RECTANGLE",
+      "x": 24.1160888671875,
+      "y": 566,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.4814550578594208,
+            "g": 0.9463489055633545,
+            "b": 0.6570022106170654
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:92",
+      "name": "16",
+      "type": "TEXT",
+      "x": 29,
+      "y": 534,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "16",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:93",
+      "name": "14",
+      "type": "TEXT",
+      "x": 77,
+      "y": 534,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "14",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:94",
+      "name": "5",
+      "type": "TEXT",
+      "x": 125,
+      "y": 534,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "5",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:95",
+      "name": "12",
+      "type": "TEXT",
+      "x": 174,
+      "y": 534,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "12",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:96",
+      "name": "-7",
+      "type": "TEXT",
+      "x": 221,
+      "y": 534,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "-7",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:97",
+      "name": "-5",
+      "type": "TEXT",
+      "x": 268,
+      "y": 534,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "-5",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:98",
+      "name": "16",
+      "type": "TEXT",
+      "x": 316,
+      "y": 534,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "16",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:99",
+      "name": "Jan 19 - 25",
+      "type": "TEXT",
+      "x": 25,
+      "y": 500,
+      "width": 77,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Jan 19 - 25",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:101",
+      "name": "40",
+      "type": "TEXT",
+      "x": 337,
+      "y": 590,
+      "width": 18,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "40",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAlignHorizontal": "RIGHT",
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "112:102",
+      "name": "Rectangle 114",
+      "type": "RECTANGLE",
+      "x": 216.1160888671875,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9843137264251709,
+            "g": 0.1725490242242813,
+            "b": 0.21176470816135406
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:103",
+      "name": "Rectangle 115",
+      "type": "RECTANGLE",
+      "x": 263.1160888671875,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6024434566497803,
+            "g": 0.9016712307929993,
+            "b": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:104",
+      "name": "Rectangle 116",
+      "type": "RECTANGLE",
+      "x": 311.1160888671875,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6024434566497803,
+            "g": 0.9016712307929993,
+            "b": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "112:113",
+      "name": "-3",
+      "type": "TEXT",
+      "x": 221,
+      "y": 624,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "-3",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:114",
+      "name": "21",
+      "type": "TEXT",
+      "x": 268,
+      "y": 624,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "21",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:115",
+      "name": "22",
+      "type": "TEXT",
+      "x": 316,
+      "y": 624,
+      "width": 34,
+      "height": 24,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.007429320830851793,
+            "g": 0.023281749337911606,
+            "b": 0.09250508248806
+          }
+        }
+      ],
+      "characters": "22",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "textAlignHorizontal": "CENTER",
+      "textAutoResize": "HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.15000000596046448
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 24
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "112:116",
+      "name": "Jan 12 - 18",
+      "type": "TEXT",
+      "x": 25,
+      "y": 590,
+      "width": 75,
+      "height": 20,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Jan 12 - 18",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "textAutoResize": "WIDTH_AND_HEIGHT",
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.25
+      },
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 20
+      },
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+      }
+    },
+    {
+      "id": "108:322",
+      "name": "Your scores",
+      "type": "TEXT",
+      "x": 24,
+      "y": 32,
+      "width": 300,
+      "height": 33,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9725490212440491,
+            "g": 0.9803921580314636,
+            "b": 0.9882352948188782
+          }
+        }
+      ],
+      "characters": "Your scores",
+      "fontSize": 28,
+      "fontWeight": 700,
+      "textAutoResize": "HEIGHT",
+      "fontName": {
+        "family": "Roboto",
+        "style": "Bold"
+      }
+    },
+    {
+      "id": "238:10",
+      "name": "Rectangle 134",
+      "type": "RECTANGLE",
+      "x": 166,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "238:12",
+      "name": "Rectangle 135",
+      "type": "RECTANGLE",
+      "x": 120,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "238:14",
+      "name": "Rectangle 136",
+      "type": "RECTANGLE",
+      "x": 72,
+      "y": 656,
+      "width": 44,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    },
+    {
+      "id": "238:16",
+      "name": "Rectangle 137",
+      "type": "RECTANGLE",
+      "x": 25,
+      "y": 656,
+      "width": 43,
+      "height": 44,
+      "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+      },
+      "layoutAlign": "INHERIT",
+      "layoutSizingHorizontal": "FIXED",
+      "layoutSizingVertical": "FIXED",
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.11372549086809158,
+            "g": 0.16078431904315948,
+            "b": 0.239215686917305
+          }
+        }
+      ]
+    }
+  ]
+}
