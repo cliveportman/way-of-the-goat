@@ -11,9 +11,9 @@ sealed class Screen(val route: String) {
     data object Home : Screen("home")
     data object IntroFlow : Screen("intro_flow")
     data object SecondPage : Screen("second_page")
-    data object Progress : Screen("progress")
     data object Scores : Screen("scores")
     data object ScoresOverTime : Screen("scores_over_time")
+    data object RunsOverTime : Screen("runs_over_time")
     data object Help : Screen("help")
     data object DesignTokens : Screen("design_tokens")
 }
@@ -27,6 +27,6 @@ data class BottomNavItem(
 val bottomNavItems = listOf(
     BottomNavItem(Screen.Scores, Icons.Filled.GridView, "Scores"),
     BottomNavItem(Screen.ScoresOverTime, Icons.AutoMirrored.Filled.List, "History"),
-    BottomNavItem(Screen.Progress, Icons.Filled.ShowChart, "Progress"),
+    BottomNavItem(Screen.RunsOverTime, Icons.Filled.ShowChart, "Runs"),
     BottomNavItem(Screen.Help, Icons.Filled.Info, "Help")
 )

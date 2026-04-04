@@ -14,9 +14,9 @@ import kotlinx.coroutines.sync.withLock
 
 /**
  * Shared singleton cache for activity data
- * Used by both ProgressViewModel and ScoresViewModel to avoid duplicate API calls
+ * Used by ViewModels to avoid duplicate API calls
  */
-object ActivityDataManager {
+object ActivityDataManager : ActivityDataSource {
 
     private val repository = IntervalsRepository()
     private val mutex = Mutex()
@@ -33,13 +33,13 @@ object ActivityDataManager {
 
     // Expose activities as StateFlow for reactive updates
     private val _activitiesFlow = MutableStateFlow<List<Activity>>(emptyList())
-    val activitiesFlow: StateFlow<List<Activity>> = _activitiesFlow.asStateFlow()
+    override val activitiesFlow: StateFlow<List<Activity>> = _activitiesFlow.asStateFlow()
 
     /**
      * Load initial data around a specific date
      * Loads targetDate ± bufferDays
      */
-    suspend fun loadInitialData(aroundDate: LocalDate, bufferDays: Int = 30): Result<Unit> {
+    override suspend fun loadInitialData(aroundDate: LocalDate, bufferDays: Int): Result<Unit> {
         return mutex.withLock {
             try {
                 val oldest = aroundDate.minus(bufferDays, DateTimeUnit.DAY)
