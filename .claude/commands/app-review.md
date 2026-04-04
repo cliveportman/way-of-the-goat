@@ -104,7 +104,17 @@ Flag missing previews or tests as a **critical issue** unless:
 
 Preview functions must be `private` and wrapped in `WayOfTheGoatTheme`.
 
-## 3. Design Token Usage (Critical)
+## 3. Design Spec Compliance
+
+Before flagging any design spec deviation as an issue, locate the relevant spec file by searching `design-specs/screens/` and `design-specs/components/` for a filename matching the screen or component under review. If a matching spec exists, check whether it has a `## Deviations` section. This section records **deliberate** differences between the spec and the implementation — values that were adjusted during or after implementation (e.g., spacing tweaked for better on-device feel).
+
+**If the deviation is listed:** do not flag it. It was intentional.
+**If no matching spec exists:** skip this check.
+**If the deviation is NOT listed:** flag it as a suggestion (not critical), noting the spec value and the implemented value, so the author can confirm whether it's intentional or accidental.
+
+Design spec deviations are **suggestions, not critical issues** — the spec is a starting point, not a contract. Only flag as critical if the deviation causes a functional or accessibility problem (e.g., touch targets below 48dp).
+
+## 4. Design Token Usage (Critical)
 
 **No hardcoded colours, spacing, radius, or type sizes.** All values must come from the design token system.
 
@@ -131,7 +141,7 @@ MaterialTheme.typography.bodyMedium
 
 When flagging, reference the appropriate token from `ui/theme/` by name.
 
-## 4. Compose Conventions
+## 5. Compose Conventions
 
 - `modifier: Modifier = Modifier` present on all composable functions
 - State collected with `collectAsStateWithLifecycle()` — not `collectAsState()`
@@ -140,7 +150,7 @@ When flagging, reference the appropriate token from `ui/theme/` by name.
 - No `@Composable` lambda capturing state incorrectly (lambdas should read state at call site, not capture a snapshot)
 - `Modifier.minimumInteractiveComponentSize()` or `GoatSizing.Touch.default` applied to small interactive elements
 
-## 5. State Management
+## 6. State Management
 
 - `MutableStateFlow` is `private`; `StateFlow` is the public API (`asStateFlow()`)
 - `MutableSharedFlow` is `private`; `SharedFlow` is the public API (`asSharedFlow()`)
@@ -148,7 +158,7 @@ When flagging, reference the appropriate token from `ui/theme/` by name.
 - Sealed classes used for screen UI states (`Loading`, `Success`, `Error`)
 - Value classes (`@JvmInline value class`) used for domain IDs — not raw `Long`/`String`
 
-## 6. Kotlin Quality
+## 7. Kotlin Quality
 
 - No `!!` (non-null assertion) without a comment explaining why it's safe
 - No `var` where `val` would work
@@ -156,14 +166,14 @@ When flagging, reference the appropriate token from `ui/theme/` by name.
 - Prefer `fold` / `map` / `onSuccess` / `onFailure` on `Result<T>` over manual `isSuccess` checks
 - `runCatching { }` at the data layer boundary — not deeper
 
-## 7. KMP Conventions
+## 8. KMP Conventions
 
 - `commonMain` has no Android (`android.*`) or iOS (`platform.*`) imports
 - Platform differences use `expect`/`actual` — not runtime platform checks
 - `kotlinx.datetime` used throughout — not `java.time.*`
 - New files placed in `commonMain` unless the code is genuinely platform-specific
 
-## 8. Testing Standards
+## 9. Testing Standards
 
 - `runTest` used for all coroutine tests — not bare `runBlocking`
 - Turbine used for `StateFlow` / `SharedFlow` assertions
@@ -171,14 +181,14 @@ When flagging, reference the appropriate token from `ui/theme/` by name.
 - Fakes/stubs used for repositories — not real SQLDelight databases in unit tests
 - New public functions in the data layer have at least one test covering the happy path
 
-## 9. Accessibility
+## 10. Accessibility
 
 - Icons that convey meaning have a non-null `contentDescription`
 - Decorative icons have `contentDescription = null`
 - `Modifier.semantics { }` used on complex interactive components where the default semantics are insufficient
 - Touch targets meet `GoatSizing.Touch.default` (48dp) for interactive elements
 
-## 10. Error Handling
+## 11. Error Handling
 
 - Errors not swallowed silently — `onFailure` is always handled
 - User-facing error messages surfaced via `SharedFlow` event — not left as internal `println` or `Log.e`
@@ -221,6 +231,7 @@ Nit-picks will not be re-raised in subsequent reviews.]
 ---
 
 **Architecture:** [single sentence — are the MVVM + Repository layers respected?]
+**Design spec compliance:** [single sentence — any deviations from spec, and were they documented?]
 **Design tokens:** [single sentence — any hardcoded values?]
 **Previews & tests:** [single sentence — are new composables covered?]
 **Kotlin quality:** [single sentence assessment]

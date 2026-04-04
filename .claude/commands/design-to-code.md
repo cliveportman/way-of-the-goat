@@ -140,9 +140,42 @@ Take a look and let me know if anything needs changing. When you're ready,
 say **"implement"** and I'll proceed to code generation.
 ```
 
-**Do not proceed to Step 3 until the user explicitly confirms.**
+**Do not proceed to the next step until the user explicitly confirms.**
 
 If the user requests changes: apply them, update the affected files, and re-present the summary. Repeat until confirmed.
+
+---
+
+### Step 2.5: Planning Gate (Screens and Flows)
+
+**Skip this step for components** — they rarely need a plan.
+
+After specs are confirmed, ask:
+
+```
+This is a {screen/flow} with {brief scope summary — e.g. "a new ViewModel, data layer
+helper, and navigation changes"}.
+
+Would you like to plan the implementation before coding?
+
+- **"plan"** — I'll create a `docs/features/{name}/plan.md` covering architecture,
+  data flow, phases, and testing strategy
+- **"skip"** — proceed straight to implementation
+```
+
+**Deriving the feature name:** use the spec filename without extension (e.g. `scores-over-time.md` → `scores-over-time`). If the name is ambiguous or derived from a raw JSON path, ask the user to confirm.
+
+**If the user says "plan":**
+
+1. Use the Agent tool to invoke the **`rubber-duck`** agent, passing:
+   - The confirmed spec file path(s)
+   - The instruction to read the specs and create an implementation plan at `docs/features/{name}/plan.md` — write only this file, no session log
+   - A note to follow the `plan.md` format in `.claude/skills/docs-conventions/SKILL.md`
+   - The scope: architecture decisions, ViewModel design, data layer changes, navigation wiring, testing strategy, and phased tasks
+2. Present the plan to the user for review. Iterate until confirmed.
+3. Pass the plan path to the `jake-wharton` agent in Step 3 alongside the spec paths.
+
+**If the user says "skip":** proceed directly to Step 3.
 
 ---
 

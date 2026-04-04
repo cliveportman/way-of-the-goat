@@ -31,7 +31,7 @@ import kotlinx.datetime.plus
  * - Date range loading with buffer
  * - Active suite management
  */
-class ServingsDataManager private constructor() {
+class ServingsDataManager private constructor() : ServingsDataSource {
 
     private var repository: ServingsRepository? = null
     private val mutex = Mutex()
@@ -52,11 +52,11 @@ class ServingsDataManager private constructor() {
 
     // Expose servings data as flow for reactive updates
     private val _servingsFlow = MutableStateFlow<Map<LocalDate, DailyServings>>(emptyMap())
-    val servingsFlow: StateFlow<Map<LocalDate, DailyServings>> = _servingsFlow.asStateFlow()
+    override val servingsFlow: StateFlow<Map<LocalDate, DailyServings>> = _servingsFlow.asStateFlow()
 
     // Initialization state
     private val _isInitialized = MutableStateFlow(false)
-    val isInitialized: StateFlow<Boolean> = _isInitialized.asStateFlow()
+    override val isInitialized: StateFlow<Boolean> = _isInitialized.asStateFlow()
 
     /**
      * Initialize with database driver factory.
@@ -91,7 +91,7 @@ class ServingsDataManager private constructor() {
     /**
      * Load initial data around a specific date.
      */
-    suspend fun loadInitialData(aroundDate: LocalDate, bufferDays: Int = 30): Result<Unit> {
+    override suspend fun loadInitialData(aroundDate: LocalDate, bufferDays: Int): Result<Unit> {
         return mutex.withLock {
             try {
                 val oldest = aroundDate.minus(bufferDays, DateTimeUnit.DAY)

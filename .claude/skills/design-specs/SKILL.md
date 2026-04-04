@@ -100,6 +100,15 @@ All specs are created and implemented via `/design-to-code`.
 }
 ```
 
+## Deviations
+
+Record any deliberate differences between this spec and the implementation. This prevents code reviews from re-flagging intentional changes.
+
+| Value | Spec | Implemented | Reason |
+|-------|------|-------------|--------|
+
+_(Empty until implementation. Add rows when a value is intentionally changed during or after implementation.)_
+
 ## Implementation Notes
 
 - **Accessibility:** {contentDescription, semantics, minimum touch target}
@@ -174,6 +183,15 @@ Only tokens for the screen's own layout — not child component internals.
 }
 ```
 
+## Deviations
+
+Record any deliberate differences between this spec and the implementation. This prevents code reviews from re-flagging intentional changes.
+
+| Value | Spec | Implemented | Reason |
+|-------|------|-------------|--------|
+
+_(Empty until implementation. Add rows when a value is intentionally changed during or after implementation.)_
+
 ## Implementation Notes
 
 - **Composition:** {how child composables are arranged}
@@ -241,6 +259,15 @@ Only tokens for the screen's own layout — not child component internals.
 ```
 {ASCII flow diagram — converted to Mermaid file by /design-to-code}
 ```
+
+## Deviations
+
+Record any deliberate differences between this spec and the implementation. This prevents code reviews from re-flagging intentional changes.
+
+| Value | Spec | Implemented | Reason |
+|-------|------|-------------|--------|
+
+_(Empty until implementation. Add rows when a value is intentionally changed during or after implementation.)_
 
 ## Implementation Notes
 
