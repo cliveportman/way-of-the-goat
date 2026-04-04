@@ -115,7 +115,7 @@ private fun DistanceTile(
             Text(
                 text = formatDistance(dayActivity.distance),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.goatColors.surface,
                 modifier = Modifier.align(Alignment.Center)
             )
 
@@ -149,44 +149,12 @@ private fun ActivityDots(
                 modifier = Modifier
                     .size(GoatSpacing.s4)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surface)
+                    .background(MaterialTheme.goatColors.surface)
             )
         }
     }
 }
 
-/**
- * An empty tile for days with no activity data.
- */
-@Composable
-private fun BlankTile(
-    contentDescription: String,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        modifier = modifier
-            .height(GoatSizing.Touch.default)
-            .semantics { this.contentDescription = contentDescription },
-        shape = RectangleShape,
-        color = MaterialTheme.goatColors.surfaceContainerHigh
-    ) {}
-}
-
-/**
- * Fallback day name for tiles with no activity data.
- */
-private fun dayNameForIndex(index: Int): String {
-    return when (index) {
-        0 -> "Monday"
-        1 -> "Tuesday"
-        2 -> "Wednesday"
-        3 -> "Thursday"
-        4 -> "Friday"
-        5 -> "Saturday"
-        6 -> "Sunday"
-        else -> "Day"
-    }
-}
 
 // region Previews
 

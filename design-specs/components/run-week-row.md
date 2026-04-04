@@ -30,7 +30,7 @@
 ### Tiles Row
 
 - **Type:** Row
-- **Dimensions:** Full width × `GoatSizing.Touch.default` (44dp)
+- **Dimensions:** Full width × `GoatSizing.Touch.default` (48dp)
 - **Gap:** `GoatSpacing.s4` (4dp) between tiles
 - **Spacing from header:** `GoatSpacing.s4` (4dp)
 - **Content:** 7 distance tiles, one per day (Mon → Sun)
@@ -38,7 +38,7 @@
 ### Distance Tile
 
 - **Type:** Box with centered text and optional activity dots
-- **Dimensions:** `weight(1f)` × `GoatSizing.Touch.default` (44dp)
+- **Dimensions:** `weight(1f)` × `GoatSizing.Touch.default` (48dp)
 - **Corner radius:** None (sharp corners)
 - **Background:** `MaterialTheme.colorScheme.onSurface` (#F8FAFC) for data tiles
 - **Content:**
