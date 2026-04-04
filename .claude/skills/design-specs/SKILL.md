@@ -287,10 +287,10 @@ Specs use semantic token names. Never hardcode hex values in implementation.
 
 | Spec token | Compose value |
 |---|---|
-| `surface` | `MaterialTheme.colorScheme.surface` |
-| `onSurface` | `MaterialTheme.colorScheme.onSurface` |
-| `surfaceVariant` | `MaterialTheme.colorScheme.surfaceVariant` |
-| `onSurfaceVariant` | `MaterialTheme.colorScheme.onSurfaceVariant` |
+| `surface` | `MaterialTheme.goatColors.surface` |
+| `onSurface` | `MaterialTheme.goatColors.onSurface` |
+| `surfaceVariant` | `MaterialTheme.goatColors.surfaceVariant` |
+| `onSurfaceVariant` | `MaterialTheme.goatColors.onSurfaceVariant` |
 | `primary` | `MaterialTheme.colorScheme.primary` |
 | `onPrimary` | `MaterialTheme.colorScheme.onPrimary` |
 | `outline` | `MaterialTheme.colorScheme.outline` |

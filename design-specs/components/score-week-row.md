@@ -30,7 +30,7 @@
 ### Tiles Row
 
 - **Type:** Row
-- **Dimensions:** Full width × `GoatSizing.Touch.default` (44dp)
+- **Dimensions:** Full width × `GoatSizing.Touch.default` (48dp)
 - **Gap:** `GoatSpacing.s4` (4dp) between tiles
 - **Spacing from header:** `GoatSpacing.s4` (4dp)
 - **Content:** 7 score tiles, one per day (Mon → Sun)
