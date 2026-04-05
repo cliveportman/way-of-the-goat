@@ -1,6 +1,5 @@
 package co.theportman.way_of_the_goat.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,11 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -28,14 +29,16 @@ import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.isDebugBuild
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
+import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 @Composable
 fun HelpScreen(
-    onNavigateToDesignTokens: () -> Unit = {}
+    onNavigateToDesignTokens: () -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = GoatSpacing.s16),
         verticalArrangement = Arrangement.spacedBy(GoatSpacing.s8)
@@ -90,13 +93,13 @@ fun HelpScreen(
             val balanced = SuiteDefinitions.BALANCED
             Column(verticalArrangement = Arrangement.spacedBy(GoatSpacing.s4)) {
                 FoodCategoryRow(
-                    category = balanced.categoryById("fruit"),
+                    category = balanced.categoryById("fruit")!!, // Known valid category ID
                     servingCount = 2,
                     onIncrement = {},
                     onDecrement = {},
                 )
                 FoodCategoryRow(
-                    category = balanced.categoryById("refinedgrains"),
+                    category = balanced.categoryById("refinedgrains")!!, // Known valid category ID
                     servingCount = 3,
                     onIncrement = {},
                     onDecrement = {},
@@ -157,99 +160,17 @@ fun HelpScreen(
             )
         }
 
-        // Healthy categories
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("veg"),
-                heading = "Vegetables",
-                description = "Raw or cooked vegetables, pulses, tomatoes, chillies, eaten whole, chopped, pureed, whatever. One serving might be a fist-sized portion of veg, a decent side salad or a bowl of soup.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("fruit"),
-                heading = "Fruit",
-                description = "Whole fruit, tinned fruit, canned fruit, smoothies and juices made with 100% fruit. One serving might be an apple or a banana, a handful of berries or a glass of juice. Something like apple crumble, you'd count as a portion of fruit and a portion of sweets.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("nuts"),
-                heading = "Nuts + seeds + healthy oils",
-                description = "Any nuts, seeds and healthy oils (e.g. an olive oil-based salad-dressing). One portion would be a handful. Nut butters without added sugar also count.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("wholegrains"),
-                heading = "Whole grains",
-                description = "Whole oats, wheat and other grains, including baked goods and pastas made with whole grain flours. One portion would be two slices of bread or a bowl of porridge.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("dairy"),
-                heading = "Dairy",
-                description = "Unsweetened milk from cows, sheep and goats, unsweetened yoghurt, cheese, cream. And processed milks like soya milk. Small amounts of butter spread on bread do not count. A portion would be a glass of milk, two slices of cheese, a decent portion of yoghurt.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BODY_COMPOSITION.categoryById("leandairy"),
-                heading = "Lean dairy",
-                description = "Lower-fat dairy options such as skimmed or semi-skimmed milk, low-fat yoghurt and cottage cheese. A portion would be a glass of milk or a decent serving of yoghurt. Used in place of Dairy in some scoring profiles.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("leanproteins"),
-                heading = "Lean proteins",
-                description = "Unprocessed meats from land animals and fish. And eggs. One portion would be a chicken breast, regular-sized steak or fish fillet or 2 eggs. Listed as \"Lean meats\" in some scoring profiles.",
-            )
-        }
-
-        // Unhealthy categories
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("refinedgrains"),
-                heading = "Refined grains",
-                description = "White rice, white flour, most pastas, cereals, breads and other baked goods. A portion would be two slices of bread, a bowl of rice or pasta, etc.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("sweets"),
-                heading = "Sweets",
-                description = "Anything with a substantial amount of sugar and anything artificially sweetened: sweets, pastries and other desserts, sugary drinks, energy bars, many breakfast cereals, yoghurts with sugar listed as their second ingredient.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("fattymeats"),
-                heading = "Fatty meats",
-                description = "Meats that have been processed beyond cutting, grinding and seasoning: sausages, ham, bacon, corned beef, jerky, most fast foods.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.RACING_WEIGHT.categoryById("fattyproteins"),
-                heading = "Fatty proteins",
-                description = "Processed and fatty meats and proteins: sausages, ham, bacon, corned beef, jerky, most fast foods. Used in place of Fatty meats in some scoring profiles.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.RACING_WEIGHT.categoryById("friedfoods"),
-                heading = "Fried foods",
-                description = "Chips (fries), crisps, fried chicken or fish, donuts. Use your common sense with serving sizes.",
-            )
-        }
-        item {
-            FoodCategoryGuideEntry(
-                category = SuiteDefinitions.BALANCED.categoryById("junkfoods"),
-                heading = "Junk foods",
-                description = "Fried foods, crisps, fast food and other low-quality snack foods. Chips (fries), fried chicken or fish, donuts and similar items. Use your common sense with serving sizes.",
-            )
+        // Food category entries
+        items(GUIDE_ENTRIES.size) { index ->
+            val entry = GUIDE_ENTRIES[index]
+            val category = entry.suite.categoryById(entry.categoryId)
+            if (category != null) {
+                FoodCategoryGuideEntry(
+                    category = category,
+                    heading = entry.heading,
+                    description = entry.description,
+                )
+            }
         }
 
         // ── Breaking the rules ────────────────────────────────
@@ -461,24 +382,30 @@ fun HelpScreen(
                 )
             }
             item {
-                Row(
+                Surface(
+                    onClick = onNavigateToDesignTokens,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onNavigateToDesignTokens() }
-                        .padding(vertical = GoatSpacing.s12),
-                    verticalAlignment = Alignment.CenterVertically
+                        .padding(vertical = GoatSpacing.s16)
                 ) {
-                    Text(
-                        text = "Design tokens",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.goatColors.onSurface,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Text(
-                        text = "\u2192",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.goatColors.onSurfaceVariant
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = GoatSpacing.s12),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Design tokens",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.goatColors.onSurface,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = "\u2192",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.goatColors.onSurfaceVariant
+                        )
+                    }
                 }
             }
         }
@@ -488,14 +415,45 @@ fun HelpScreen(
     }
 }
 
+@Preview(name = "Default")
+@Composable
+private fun HelpScreenPreview() {
+    WayOfTheGoatTheme(darkTheme = true) {
+        HelpScreen()
+    }
+}
+
+@Preview(name = "Light")
+@Composable
+private fun HelpScreenPreviewLight() {
+    WayOfTheGoatTheme(darkTheme = false) {
+        HelpScreen()
+    }
+}
+
+@Preview(name = "FoodCategoryGuideEntry")
+@Composable
+private fun FoodCategoryGuideEntryPreview() {
+    val fruitCategory = SuiteDefinitions.BALANCED.categoryById("fruit")
+    if (fruitCategory != null) {
+        WayOfTheGoatTheme(darkTheme = true) {
+            FoodCategoryGuideEntry(
+                category = fruitCategory,
+                heading = "Fruit",
+                description = "Whole fruit, tinned fruit, canned fruit, smoothies and juices made with 100% fruit.",
+            )
+        }
+    }
+}
+
 /**
  * A divider used between major guide sections.
  */
 @Composable
-private fun SectionDivider() {
+private fun SectionDivider(modifier: Modifier = Modifier) {
     HorizontalDivider(
         color = MaterialTheme.goatColors.outline,
-        modifier = Modifier.padding(vertical = GoatSpacing.s8)
+        modifier = modifier.padding(vertical = GoatSpacing.s8)
     )
 }
 
@@ -507,8 +465,9 @@ private fun FoodCategoryGuideEntry(
     category: FoodCategory,
     heading: String,
     description: String,
+    modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(modifier = modifier) {
         Text(
             text = heading,
             style = MaterialTheme.typography.titleLarge,
@@ -531,7 +490,104 @@ private fun FoodCategoryGuideEntry(
 }
 
 /**
- * Extension to look up a category by its string ID within a suite.
+ * Data class representing a food category guide entry.
  */
-private fun ScoringSuite.categoryById(id: String): FoodCategory =
-    categories.first { it.id == CategoryId(id) }
+private data class GuideEntry(
+    val suite: ScoringSuite,
+    val categoryId: String,
+    val heading: String,
+    val description: String,
+)
+
+/**
+ * All food category guide entries.
+ */
+private val GUIDE_ENTRIES = listOf(
+    // Healthy categories
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "veg",
+        "Vegetables",
+        "Raw or cooked vegetables, pulses, tomatoes, chillies, eaten whole, chopped, pureed, whatever. One serving might be a fist-sized portion of veg, a decent side salad or a bowl of soup.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "fruit",
+        "Fruit",
+        "Whole fruit, tinned fruit, canned fruit, smoothies and juices made with 100% fruit. One serving might be an apple or a banana, a handful of berries or a glass of juice. Something like apple crumble, you'd count as a portion of fruit and a portion of sweets.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "nuts",
+        "Nuts + seeds + healthy oils",
+        "Any nuts, seeds and healthy oils (e.g. an olive oil-based salad-dressing). One portion would be a handful. Nut butters without added sugar also count.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "wholegrains",
+        "Whole grains",
+        "Whole oats, wheat and other grains, including baked goods and pastas made with whole grain flours. One portion would be two slices of bread or a bowl of porridge.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "dairy",
+        "Dairy",
+        "Unsweetened milk from cows, sheep and goats, unsweetened yoghurt, cheese, cream. And processed milks like soya milk. Small amounts of butter spread on bread do not count. A portion would be a glass of milk, two slices of cheese, a decent portion of yoghurt.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BODY_COMPOSITION,
+        "leandairy",
+        "Lean dairy",
+        "Lower-fat dairy options such as skimmed or semi-skimmed milk, low-fat yoghurt and cottage cheese. A portion would be a glass of milk or a decent serving of yoghurt. Used in place of Dairy in some scoring profiles.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "leanproteins",
+        "Lean proteins",
+        "Unprocessed meats from land animals and fish. And eggs. One portion would be a chicken breast, regular-sized steak or fish fillet or 2 eggs. Listed as \"Lean meats\" in some scoring profiles.",
+    ),
+    // Unhealthy categories
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "refinedgrains",
+        "Refined grains",
+        "White rice, white flour, most pastas, cereals, breads and other baked goods. A portion would be two slices of bread, a bowl of rice or pasta, etc.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "sweets",
+        "Sweets",
+        "Anything with a substantial amount of sugar and anything artificially sweetened: sweets, pastries and other desserts, sugary drinks, energy bars, many breakfast cereals, yoghurts with sugar listed as their second ingredient.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "fattymeats",
+        "Fatty meats",
+        "Meats that have been processed beyond cutting, grinding and seasoning: sausages, ham, bacon, corned beef, jerky, most fast foods.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.RACING_WEIGHT,
+        "fattyproteins",
+        "Fatty proteins",
+        "Processed and fatty meats and proteins: sausages, ham, bacon, corned beef, jerky, most fast foods. Used in place of Fatty meats in some scoring profiles.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.RACING_WEIGHT,
+        "friedfoods",
+        "Fried foods",
+        "Chips (fries), crisps, fried chicken or fish, donuts. Use your common sense with serving sizes.",
+    ),
+    GuideEntry(
+        SuiteDefinitions.BALANCED,
+        "junkfoods",
+        "Junk foods",
+        "Fried foods, crisps, fast food and other low-quality snack foods. Chips (fries), fried chicken or fish, donuts and similar items. Use your common sense with serving sizes.",
+    ),
+)
+
+/**
+ * Extension to look up a category by its string ID within a suite.
+ * Returns null if the category is not found.
+ */
+private fun ScoringSuite.categoryById(id: String): FoodCategory? =
+    getCategoryById(CategoryId(id))
