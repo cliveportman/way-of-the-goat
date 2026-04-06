@@ -15,55 +15,55 @@ struct TrackPoint {
 }
 
 #[derive(Debug, Serialize, Clone)]
-pub struct ChartPoint {
-    pub distance_km: f64,
-    pub pace_min_per_km: Option<f64>,
-    pub hr: Option<u32>,
-    pub elevation_m: Option<f64>,
+pub(crate) struct ChartPoint {
+    pub(crate) distance_km: f64,
+    pub(crate) pace_min_per_km: Option<f64>,
+    pub(crate) hr: Option<u32>,
+    pub(crate) elevation_m: Option<f64>,
 }
 
 #[derive(Debug, Serialize)]
-pub struct Vo2Estimate {
-    pub method: String,
-    pub value: f64,
-    pub confidence_pct: u32, // 0–100, data-driven
-    pub notes: String,
+pub(crate) struct Vo2Estimate {
+    pub(crate) method: String,
+    pub(crate) value: f64,
+    pub(crate) confidence_pct: u32, // 0–100, data-driven
+    pub(crate) notes: String,
 }
 
 #[derive(Debug, Serialize)]
-pub struct PeakKmResult {
+pub(crate) struct PeakKmResult {
     /// Average VO2 expressed over the km (mL/kg/min) — what your body actually consumed,
     /// grade-corrected via ACSM. Not the same as VO2max unless you genuinely hit your ceiling.
-    pub vo2_expressed: f64,
+    pub(crate) vo2_expressed: f64,
     /// VO2max implied by extrapolating avg HR to HRmax over this km. Only present when HR
     /// data is available. May be unreliable if the km was very short or HR hadn't settled.
-    pub vo2max_est: Option<f64>,
-    pub pace_min_per_km: f64,
+    pub(crate) vo2max_est: Option<f64>,
+    pub(crate) pace_min_per_km: f64,
     /// Net gradient as a percentage (positive = uphill, negative = downhill).
-    pub avg_grade_pct: f64,
-    pub avg_hr: Option<u32>,
+    pub(crate) avg_grade_pct: f64,
+    pub(crate) avg_hr: Option<u32>,
     /// Cumulative distance at the start of this km.
-    pub start_distance_km: f64,
+    pub(crate) start_distance_km: f64,
 }
 
 #[derive(Debug, Serialize)]
-pub struct AnalysisResult {
-    pub total_distance_km: f64,
-    pub total_duration_min: f64,
-    pub avg_pace_min_per_km: f64,
-    pub elevation_gain_m: f64,
-    pub avg_hr: Option<f64>,
-    pub max_hr_recorded: Option<u32>,
-    pub has_hr_data: bool,
-    pub has_elevation_data: bool,
-    pub has_time_data: bool,
-    pub point_count: usize,
-    pub estimates: Vec<Vo2Estimate>,
-    pub fitness_category: Option<String>,
-    pub fitness_description: Option<String>,
-    pub peak_1km: Option<PeakKmResult>,
-    pub chart_points: Vec<ChartPoint>,
-    pub error: Option<String>,
+pub(crate) struct AnalysisResult {
+    pub(crate) total_distance_km: f64,
+    pub(crate) total_duration_min: f64,
+    pub(crate) avg_pace_min_per_km: f64,
+    pub(crate) elevation_gain_m: f64,
+    pub(crate) avg_hr: Option<f64>,
+    pub(crate) max_hr_recorded: Option<u32>,
+    pub(crate) has_hr_data: bool,
+    pub(crate) has_elevation_data: bool,
+    pub(crate) has_time_data: bool,
+    pub(crate) point_count: usize,
+    pub(crate) estimates: Vec<Vo2Estimate>,
+    pub(crate) fitness_category: Option<String>,
+    pub(crate) fitness_description: Option<String>,
+    pub(crate) peak_1km: Option<PeakKmResult>,
+    pub(crate) chart_points: Vec<ChartPoint>,
+    pub(crate) error: Option<String>,
 }
 
 // ============================================================
@@ -89,6 +89,14 @@ fn parse_timestamp(s: &str) -> Option<f64> {
     let hour: f64 = tp.next()?.parse().ok()?;
     let min: f64 = tp.next()?.parse().ok()?;
     let sec: f64 = tp.next()?.parse().ok()?;
+
+    // Validate ranges to avoid panics on malformed timestamps
+    if month < 1 || month > 12 || day < 1 || day > 31 {
+        return None;
+    }
+    if hour < 0.0 || hour > 23.0 || min < 0.0 || min > 59.0 || sec < 0.0 || sec > 59.0 {
+        return None;
+    }
 
     // Days since 2000-01-01
     let mut days: i64 = 0;
@@ -168,7 +176,9 @@ fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
             if j >= bytes.len() {
                 break;
             }
-            // tag_start..j are between '<' and '>' — all tag content is ASCII in valid GPX
+            // Safe to slice: '<' and '>' are single-byte ASCII and cannot appear as
+            // continuation bytes in multibyte UTF-8, so byte-scanning for them always
+            // lands on valid UTF-8 boundaries.
             let tag = &content[tag_start..j];
             i = j + 1;
 
@@ -180,7 +190,7 @@ fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
                 if let (Some(lat), Some(lon)) = (lat, lon) {
                     current = Some(TrackPoint { lat, lon, ele: None, time_s: None, hr: None });
                 }
-            } else if tag.starts_with("/trkpt") || tag == "/trkpt" {
+            } else if tag.starts_with("/trkpt") {
                 if let Some(pt) = current.take() {
                     points.push(pt);
                 }
@@ -452,7 +462,7 @@ fn best_1km_vo2(segments: &[Segment], effective_max_hr: f64) -> Option<PeakKmRes
                 (Some(e2), Some(e1)) => e2 - e1,
                 _ => 0.0,
             };
-            let avg_grade_pct = round1(net_ele / actual_dist * 100.0);
+            let avg_grade_pct = round_to(net_ele / actual_dist * 100.0, 1);
 
             let avg_hr = if hr_count > 0 {
                 Some((hr_sum as f64 / hr_count as f64).round() as u32)
@@ -467,7 +477,7 @@ fn best_1km_vo2(segments: &[Segment], effective_max_hr: f64) -> Option<PeakKmRes
                     }
                     let est = avg_vo2 * effective_max_hr / hr as f64;
                     if est > 15.0 && est < 120.0 {
-                        Some(round1(est))
+                        Some(round_to(est, 1))
                     } else {
                         None
                     }
@@ -477,16 +487,16 @@ fn best_1km_vo2(segments: &[Segment], effective_max_hr: f64) -> Option<PeakKmRes
             };
 
             best = Some(PeakKmResult {
-                vo2_expressed: round1(avg_vo2),
+                vo2_expressed: round_to(avg_vo2, 1),
                 vo2max_est,
                 pace_min_per_km: if speed_mpm > 0.0 {
-                    round2(1000.0 / speed_mpm)
+                    round_to(1000.0 / speed_mpm, 2)
                 } else {
                     0.0
                 },
                 avg_grade_pct,
                 avg_hr,
-                start_distance_km: round2(left_dist / 1000.0),
+                start_distance_km: round_to(left_dist / 1000.0, 2),
             });
         }
 
@@ -503,6 +513,8 @@ fn best_1km_vo2(segments: &[Segment], effective_max_hr: f64) -> Option<PeakKmRes
     best
 }
 
+/// `weight_kg` is accepted for a future energy-expenditure calculation but is not
+/// used by the current VO2 estimation methods (ACSM VO2 is per-kg, so weight cancels out).
 fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> AnalysisResult {
     if points.len() < 10 {
         return AnalysisResult {
@@ -628,7 +640,7 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
 
             estimates.push(Vo2Estimate {
                 method: "ACSM + Heart Rate (Steady-State)".to_string(),
-                value: round1(median),
+                value: round_to(median, 1),
                 confidence_pct,
                 notes: format!(
                     "Uses ACSM running metabolic equation and HR/HRmax linearity. \
@@ -707,7 +719,7 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
 
                         estimates.push(Vo2Estimate {
                             method: format!("Jack Daniels — Best {:.0}-min Effort", dur),
-                            value: round1(vo2max),
+                            value: round_to(vo2max, 1),
                             confidence_pct,
                             notes: format!(
                                 "Based on your fastest {:.0}-minute segment (avg pace {}:{:02} /km). {}",
@@ -728,7 +740,7 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
                 if vo2max > 15.0 && vo2max < 110.0 {
                     estimates.push(Vo2Estimate {
                         method: "Jack Daniels — Whole Activity".to_string(),
-                        value: round1(vo2max),
+                        value: round_to(vo2max, 1),
                         confidence_pct: 18,
                         notes: "Based on average pace across the entire activity. Assumes race-like \
                                 effort throughout — almost always an underestimate for training runs."
@@ -802,7 +814,7 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
 
                     estimates.push(Vo2Estimate {
                         method: "Firstbeat (HR–VO2 Regression)".to_string(),
-                        value: round1(vo2max),
+                        value: round_to(vo2max, 1),
                         confidence_pct,
                         notes: format!(
                             "Fits a linear regression across {} steady-state (HR, VO2) pairs \
@@ -831,12 +843,12 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
         .step_by(step)
         .map(|s| {
             let pace = if s.speed_mpm > 10.0 {
-                Some(round2(1000.0 / s.speed_mpm))
+                Some(round_to(1000.0 / s.speed_mpm, 2))
             } else {
                 None
             };
             ChartPoint {
-                distance_km: round2(s.cum_dist_m / 1000.0),
+                distance_km: round_to(s.cum_dist_m / 1000.0, 2),
                 pace_min_per_km: pace,
                 hr: s.hr,
                 elevation_m: s.elevation_m,
@@ -845,9 +857,9 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
         .collect();
 
     AnalysisResult {
-        total_distance_km: round2(total_dist_km),
-        total_duration_min: round1(total_duration_min),
-        avg_pace_min_per_km: round2(avg_pace),
+        total_distance_km: round_to(total_dist_km, 2),
+        total_duration_min: round_to(total_duration_min, 1),
+        avg_pace_min_per_km: round_to(avg_pace, 2),
         elevation_gain_m: elevation_gain.round(),
         avg_hr,
         max_hr_recorded,
@@ -864,17 +876,17 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
     }
 }
 
-fn round1(v: f64) -> f64 {
-    (v * 10.0).round() / 10.0
-}
-fn round2(v: f64) -> f64 {
-    (v * 100.0).round() / 100.0
+fn round_to(v: f64, places: u32) -> f64 {
+    let factor = 10f64.powi(places as i32);
+    (v * factor).round() / factor
 }
 
 // ============================================================
 // WASM EXPORT
 // ============================================================
 
+/// Returns JSON as a `String` rather than a `JsValue` via `serde-wasm-bindgen` to keep binary
+/// size small — the extra serialise/parse round-trip is negligible for the payload sizes here.
 #[wasm_bindgen]
 pub fn analyze_gpx(gpx_content: &str, weight_kg: f64, max_hr: u32) -> String {
     let points = match parse_gpx(gpx_content) {
