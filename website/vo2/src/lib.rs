@@ -90,8 +90,19 @@ fn parse_timestamp(s: &str) -> Option<f64> {
     let min: f64 = tp.next()?.parse().ok()?;
     let sec: f64 = tp.next()?.parse().ok()?;
 
-    // Validate ranges to avoid panics on malformed timestamps
-    if month < 1 || month > 12 || day < 1 || day > 31 {
+    // Validate ranges to avoid panics and nonsensical timestamps
+    if year < 2000 || year > 2100 {
+        return None;
+    }
+    if month < 1 || month > 12 {
+        return None;
+    }
+    let max_day = match month {
+        2 => if is_leap(year) { 29 } else { 28 },
+        4 | 6 | 9 | 11 => 30,
+        _ => 31,
+    };
+    if day < 1 || day > max_day {
         return None;
     }
     if hour < 0.0 || hour > 23.0 || min < 0.0 || min > 59.0 || sec < 0.0 || sec > 59.0 {
@@ -135,8 +146,10 @@ fn local_tag_name(tag: &str) -> &str {
     // strip self-close slash
     let name = name.trim_end_matches('/');
     // strip namespace prefix
-    name.split(':').last().unwrap_or(name)
+    name.rsplit_once(':').map_or(name, |(_, local)| local)
 }
+
+const MAX_TRACK_POINTS: usize = 200_000;
 
 fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
     let mut points: Vec<TrackPoint> = Vec::new();
@@ -193,6 +206,12 @@ fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
             } else if tag.starts_with("/trkpt") {
                 if let Some(pt) = current.take() {
                     points.push(pt);
+                    if points.len() > MAX_TRACK_POINTS {
+                        return Err(format!(
+                            "GPX file exceeds {} track points — file is too large to analyse",
+                            MAX_TRACK_POINTS
+                        ));
+                    }
                 }
             } else if current.is_some() && !local.is_empty() {
                 // Opening a child element — read its text content immediately
@@ -901,5 +920,22 @@ pub fn analyze_gpx(gpx_content: &str, weight_kg: f64, max_hr: u32) -> String {
     };
     let result = analyze(&points, weight_kg, max_hr);
     serde_json::to_string(&result)
-        .unwrap_or_else(|_| r#"{"error":"Serialization failed","estimates":[],"chart_points":[]}"#.to_string())
+        .unwrap_or_else(|_| serde_json::json!({
+            "total_distance_km": 0.0,
+            "total_duration_min": 0.0,
+            "avg_pace_min_per_km": 0.0,
+            "elevation_gain_m": 0.0,
+            "avg_hr": null,
+            "max_hr_recorded": null,
+            "has_hr_data": false,
+            "has_elevation_data": false,
+            "has_time_data": false,
+            "point_count": 0,
+            "estimates": [],
+            "fitness_category": null,
+            "fitness_description": null,
+            "peak_1km": null,
+            "chart_points": [],
+            "error": "Serialization failed"
+        }).to_string())
 }
