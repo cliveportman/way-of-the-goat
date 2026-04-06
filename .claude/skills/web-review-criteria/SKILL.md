@@ -37,6 +37,8 @@ Checklist for reviewing static HTML/CSS/JavaScript and Rust/WASM integration in 
 
 ## 3. JavaScript Quality
 
+> **Applies when JS or WASM files are present in the changeset.** Skip this section if no JavaScript is present.
+
 - [ ] All variables declared with `const` or `let` — no bare global assignments
 - [ ] WASM module loaded asynchronously (`async`/`await` or `.then()`)
 - [ ] WASM load failure handled and surfaced to the user — not silently swallowed
@@ -62,6 +64,8 @@ Checklist for reviewing static HTML/CSS/JavaScript and Rust/WASM integration in 
 
 ## 5. Performance
 
+> **WASM items apply only when a WASM module is present in the changeset.** The font, image, and script items apply to all pages.
+
 - [ ] WASM fetched and instantiated with `WebAssembly.instantiateStreaming()` — not two-step fetch + `WebAssembly.instantiate(arrayBuffer)`
 - [ ] Fonts loaded with `font-display: swap` or `font-display: optional` — not blocking render
 - [ ] No synchronous XHR (`XMLHttpRequest` with `async: false`)
@@ -84,6 +88,8 @@ Checklist for reviewing static HTML/CSS/JavaScript and Rust/WASM integration in 
 ---
 
 ## 7. UX States
+
+> **Applies when WASM or interactive JS components are present.** Skip this section for static pages with no JavaScript.
 
 - [ ] Loading state displayed while WASM initialises (spinner, skeleton, or "Loading…" text)
 - [ ] Error state displayed if WASM fails to load or a computation throws — message is user-friendly, not a raw stack trace

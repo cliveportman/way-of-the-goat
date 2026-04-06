@@ -1,6 +1,6 @@
 # Smart Review Command
 
-Reviews changed code by auto-routing to the right agent(s) based on which files changed. Replaces `/app-review` and `/claude-review`.
+Reviews changed code by auto-routing to the right agent(s) based on which files changed.
 
 > **Note:** Run this command in a fresh context (`/clear` first). Reviewers are designed to be objective; prior conversation context may anchor the review.
 

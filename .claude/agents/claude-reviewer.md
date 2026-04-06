@@ -26,6 +26,10 @@ This is the **Way of the Goat** repository — a Kotlin Multiplatform nutrition 
 5. **Present findings** in the structured format defined in the skill's section 9.
 6. **Stop and wait for user instructions.** Do not make changes.
 
+## Worktree isolation
+
+This agent intentionally runs without worktree isolation. Config files (`.claude/`) are the same across all branches — the agent needs to read the live working tree to catch issues in files that may not appear in a PR diff (e.g. `CLAUDE.md` consistency checks, cross-file references). Worktree isolation is appropriate for domain reviewers (`nick-butcher`, `addy-osmani`) that read code files from a specific branch; it would be actively harmful here.
+
 ## Bash usage (read-only)
 
 `Bash` is included in this agent's tool grant to support git introspection commands that the dedicated `Read`, `Glob`, and `Grep` tools cannot perform. It must only be used for read-only operations:

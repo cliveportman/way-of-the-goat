@@ -1,6 +1,6 @@
 ---
 name: addy-osmani
-description: Reviews static HTML/CSS/JS for semantics, accessibility, performance, and security. Use when a PR contains any HTML, CSS, or JS file under website/. Read-only — does not modify code.
+description: Reviews static HTML/CSS/JS and WASM loading code for semantics, accessibility, performance, and security. Use when a PR contains any HTML, CSS, or JS file under website/. Read-only — does not modify code.
 model: inherits
 tools: Read, Glob, Grep
 ---

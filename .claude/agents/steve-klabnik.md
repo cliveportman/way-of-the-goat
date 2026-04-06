@@ -1,6 +1,6 @@
 ---
 name: steve-klabnik
-description: Reviews Rust and wasm-bindgen code for correctness, safety, and WASM hygiene. Use when a PR contains *.rs or Cargo.toml changes in website/. Read-only — does not modify code.
+description: Reviews Rust and wasm-bindgen code for correctness, safety, and WASM hygiene. Use when a PR contains *.rs, Cargo.toml, *.wasm, or pkg/ changes in website/. Read-only — does not modify code.
 model: inherits
 tools: Read, Glob, Grep
 ---
