@@ -249,6 +249,8 @@ fun ScoreCard(
 
 Every new composable gets a `@Preview`. Show the default state and any meaningful variants.
 
+> **KMP hard rule:** Always import `org.jetbrains.compose.ui.tooling.preview.Preview` — **never** `androidx.compose.ui.tooling.preview.Preview`. The `androidx` variant is Android-only and will break KMP compilation in `commonMain`. This mistake is easy to make and hard to spot in review.
+
 ```kotlin
 @Preview
 @Composable
@@ -329,18 +331,49 @@ Test naming convention: backtick style describing behaviour — `fun \`given con
 
 ## Verification
 
-After making changes:
+After making changes, run all three — all must pass before returning:
 
 ```bash
+# Static analysis — must pass with 0 violations
+./gradlew detekt
+
 # Build debug APK (catches compile errors on all platforms)
 ./gradlew :composeApp:assembleDebug
 
 # Run common tests
 ./gradlew :composeApp:jvmTest
 
-# Regenerate SQLDelight after schema changes
+# Regenerate SQLDelight after schema changes (only if schema changed)
 ./gradlew :composeApp:generateCommonMainWayOfTheGoatDatabaseInterface
 ```
+
+---
+
+## Self-Review Checklist
+
+Before returning your work, check each item against your own changes. Do not rely on review to catch these — they must be correct before submission.
+
+**Composables**
+- [ ] Every composable has `modifier: Modifier = Modifier` as the last parameter
+- [ ] `@Preview` import is `org.jetbrains.compose.ui.tooling.preview.Preview` (not `androidx`)
+- [ ] Every new composable has at least a default and a dark `@Preview`, both `private`, both wrapped in `WayOfTheGoatTheme`
+- [ ] Clickable containers use `Surface` — not `Box`/`Column` with `.clickable {}`
+
+**Kotlin quality**
+- [ ] Compile-time string/numeric constants are `private const val` — not `private val`
+- [ ] No unused imports
+- [ ] No `!!` without a comment
+- [ ] Safe collection access: `firstOrNull {}` not `first {}`, `getCategoryById` not unsafe lookups
+
+**KMP**
+- [ ] No `android.*` or `platform.*` imports in `commonMain`
+- [ ] No `java.time.*` — use `kotlinx.datetime`
+
+**Architecture**
+- [ ] No business logic in `@Composable` functions
+- [ ] `MutableStateFlow` is private; `StateFlow` is the public API
+
+If any item fails, fix it before considering the task done.
 
 ---
 
