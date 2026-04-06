@@ -25,6 +25,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import co.theportman.way_of_the_goat.ui.components.ContinueButton
 import co.theportman.way_of_the_goat.ui.icons.GoatMoon
+import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 @Composable
@@ -43,10 +44,10 @@ fun HomeScreen(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = 64.dp)
+                .padding(vertical = GoatSpacing.s64)
         ) {
             // Top spacing
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s40))
 
             // Main content
             Column(
@@ -61,7 +62,7 @@ fun HomeScreen(
                     modifier = Modifier.size(100.dp)
                 )
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s32))
 
                 // Title
                 Text(
@@ -71,7 +72,7 @@ fun HomeScreen(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s16))
 
                 // Subtitle
                 Text(
@@ -83,7 +84,7 @@ fun HomeScreen(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s32))
 
                 // Attribution text
                 Text(
@@ -123,7 +124,7 @@ fun HomeScreen(
             ContinueButton(onClick = onContinueClick)
 
             // Bottom spacing
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s24))
         }
     }
 }

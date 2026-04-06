@@ -33,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
@@ -74,6 +73,9 @@ fun ScoresScreen(
 
     // Collect servings flow for reactive updates
     val servingsMap by viewModel.servingsFlow.collectAsStateWithLifecycle()
+
+    // Collect refresh state
+    val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
 
     // Collect profile switcher state
     val profileSwitcherState by viewModel.profileSwitcherState.collectAsStateWithLifecycle()
@@ -180,7 +182,7 @@ fun ScoresScreen(
                 today = today,
                 uiState = uiState,
                 isDateLoaded = isDateLoaded,
-                isRefreshing = viewModel.isRefreshing.collectAsStateWithLifecycle().value,
+                isRefreshing = isRefreshing,
                 displaySuite = pageSuite,
                 dailyServings = dailyServings,
                 totals = if (pageSuite != null) viewModel.getTotalsForDisplay(dailyServings, pageSuite) else DailyTotalsForDisplay.empty(),
@@ -276,7 +278,7 @@ private fun ScoresPageContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = GoatSpacing.s12)
         ) {
             Spacer(modifier = Modifier.height(GoatSpacing.s16))
             // Date heading

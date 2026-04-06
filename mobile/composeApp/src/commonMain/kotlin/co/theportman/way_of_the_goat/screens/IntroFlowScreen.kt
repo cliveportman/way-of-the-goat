@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import co.theportman.way_of_the_goat.ui.components.ContinueButton
+import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.coroutines.launch
 
@@ -92,15 +93,15 @@ fun IntroFlowScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 64.dp),
+                .padding(horizontal = GoatSpacing.s24)
+                .padding(bottom = GoatSpacing.s64),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PageIndicators(
                 currentPage = pagerState.currentPage,
                 totalPages = 3
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s24))
             ContinueButton(onClick = {
                 if (pagerState.currentPage < 2) {
                     scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
@@ -108,7 +109,7 @@ fun IntroFlowScreen(
                     onComplete()
                 }
             })
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s24))
         }
     }
 }
@@ -121,8 +122,8 @@ private fun IntroPageContent(content: IntroContent) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp)
-            .padding(top = 64.dp, bottom = 200.dp) // Bottom padding for fixed controls
+            .padding(horizontal = GoatSpacing.s24)
+            .padding(top = GoatSpacing.s64, bottom = 200.dp)
             .verticalScroll(rememberScrollState())
     ) {
         // Heading
@@ -132,7 +133,7 @@ private fun IntroPageContent(content: IntroContent) {
             color = MaterialTheme.goatColors.onSurface
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(GoatSpacing.s24))
 
         // Body paragraphs
         content.bodyParagraphs.forEachIndexed { index, paragraph ->
@@ -143,7 +144,7 @@ private fun IntroPageContent(content: IntroContent) {
             )
 
             if (index < content.bodyParagraphs.size - 1) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s16))
             }
         }
     }
@@ -158,12 +159,12 @@ private fun PageIndicators(
     totalPages: Int
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(GoatSpacing.s8)
     ) {
         repeat(totalPages) { index ->
             Box(
                 modifier = Modifier
-                    .size(8.dp)
+                    .size(GoatSpacing.s8)
                     .background(
                         color = if (index == currentPage) MaterialTheme.goatColors.onSurface else MaterialTheme.goatColors.surfaceContainerHigh,
                         shape = CircleShape
