@@ -28,5 +28,5 @@ val bottomNavItems = listOf(
     BottomNavItem(Screen.Scores, Icons.Filled.GridView, "Scores"),
     BottomNavItem(Screen.ScoresOverTime, Icons.AutoMirrored.Filled.List, "History"),
     BottomNavItem(Screen.RunsOverTime, Icons.Filled.ShowChart, "Runs"),
-    BottomNavItem(Screen.Help, Icons.Filled.Info, "Help")
+    BottomNavItem(Screen.Help, Icons.Filled.Info, "User guide")
 )
