@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VO2 Max Calculator</title>
+<title>VO2 Max Calculator — Way of the Goat</title>
+<meta name="description" content="Upload a GPX file to estimate your VO2 max using ACSM, Jack Daniels, and Firstbeat methods.">
 <style>
   :root {
     --bg: #0d0d0d;
@@ -217,7 +218,7 @@
   .estimate-value {
     font-size: 32px; font-weight: 800; line-height: 1;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
   }
   .estimate-unit { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .badge {
@@ -252,7 +253,7 @@
   .fitness-cat-name {
     font-size: 22px; font-weight: 800;
     background: linear-gradient(90deg, var(--accent), #22d3ee);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
   }
   .fitness-cat-desc { font-size: 14px; color: var(--muted); margin-top: 2px; }
 
@@ -305,6 +306,18 @@
     margin-bottom: 10px;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation: none; }
+    .analyze-btn, .upload-area { transition: none; }
+    .input-wrap { transition: none; }
+  }
+
+  .upload-area:focus-within {
+    border-color: var(--accent);
+    outline: 2px solid var(--accent2);
+    outline-offset: 2px;
+  }
+
   @media (max-width: 600px) {
     .inputs { grid-template-columns: 1fr; }
     .header { padding: 16px 20px; }
@@ -316,20 +329,20 @@
 </head>
 <body>
 
-<div class="header">
+<header class="header">
   <div class="header-icon">🫀</div>
   <div>
     <h1>VO2 Max Calculator</h1>
     <p>Upload a GPX file from any GPS device or app</p>
   </div>
-</div>
+</header>
 
-<div class="container">
+<main class="container">
 
   <!-- Upload -->
   <div class="upload-area" id="dropZone">
+    <label for="fileInput" class="upload-icon">📁</label>
     <input type="file" id="fileInput" accept=".gpx">
-    <div class="upload-icon">📁</div>
     <h2>Drop your GPX file here</h2>
     <p>or click to browse — supports Garmin, Polar, Apple Watch, Strava, etc.</p>
   </div>
@@ -343,7 +356,7 @@
   <!-- Inputs -->
   <div class="inputs">
     <div class="input-group">
-      <label>Body Weight</label>
+      <label for="weightInput">Body Weight</label>
       <div class="input-wrap">
         <input type="number" id="weightInput" placeholder="70" min="20" max="300" value="">
         <span class="input-unit">kg</span>
@@ -351,7 +364,7 @@
       <p class="input-hint">Used to calculate absolute VO2 capacity</p>
     </div>
     <div class="input-group">
-      <label>Max Heart Rate</label>
+      <label for="maxHrInput">Max Heart Rate</label>
       <div class="input-wrap">
         <input type="number" id="maxHrInput" placeholder="185" min="100" max="220" value="">
         <span class="input-unit">bpm</span>
@@ -387,7 +400,7 @@
     <div id="chartsContainer"></div>
 
   </div>
-</div>
+</main>
 
 <script type="module">
 // ----------------------------------------------------------------
@@ -403,7 +416,6 @@ let pendingFile = null;
     await init();
     wasmReady = true;
     updateBtn();
-    console.log('WASM loaded');
   } catch (e) {
     console.error('WASM load failed:', e);
     showStatus('error', 'Failed to load WASM module. See console for details.');
@@ -476,8 +488,8 @@ analyzeBtn.addEventListener('click', async () => {
       renderResults(data, weightKg);
     }
   } catch (e) {
-    showStatus('error', 'Unexpected error: ' + e.message);
     console.error(e);
+    showStatus('error', 'Something went wrong analysing the file. Check the console for details.');
   } finally {
     analyzeBtn.disabled = false;
   }
@@ -511,10 +523,18 @@ function renderResults(d, weightKg) {
     if (s.hidden) continue;
     const card = document.createElement('div');
     card.className = 'stat-card';
-    card.innerHTML = `
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-value">${s.value}<span class="stat-unit">${s.unit}</span></div>
-    `;
+    const label = document.createElement('div');
+    label.className = 'stat-label';
+    label.textContent = s.label;
+    const value = document.createElement('div');
+    value.className = 'stat-value';
+    value.textContent = s.value;
+    const unit = document.createElement('span');
+    unit.className = 'stat-unit';
+    unit.textContent = s.unit;
+    value.appendChild(unit);
+    card.appendChild(label);
+    card.appendChild(value);
     grid.appendChild(card);
   }
 
@@ -522,17 +542,23 @@ function renderResults(d, weightKg) {
   const noticesEl = document.createElement('div');
   noticesEl.style.marginTop = '10px';
   if (!d.has_hr_data) {
-    noticesEl.innerHTML += `<div class="notice">⚠️ No heart rate data found in this GPX file. Add a HR monitor for the most accurate VO2 max estimate.</div>`;
+    const notice = document.createElement('div');
+    notice.className = 'notice';
+    notice.textContent = '⚠️ No heart rate data found in this GPX file. Add a HR monitor for the most accurate VO2 max estimate.';
+    noticesEl.appendChild(notice);
   }
   if (!d.has_time_data) {
-    noticesEl.innerHTML += `<div class="notice">⚠️ No timestamps in GPX file — pace and time-based analysis unavailable.</div>`;
+    const notice = document.createElement('div');
+    notice.className = 'notice';
+    notice.textContent = '⚠️ No timestamps in GPX file — pace and time-based analysis unavailable.';
+    noticesEl.appendChild(notice);
   }
   grid.after(noticesEl);
 
   // ---- Estimates ----
   const vo2Title = document.getElementById('vo2Title');
   const estimatesEl = document.getElementById('estimatesContainer');
-  estimatesEl.innerHTML = '';
+  estimatesEl.replaceChildren();
 
   if (d.estimates.length > 0) {
     vo2Title.style.display = '';
@@ -542,33 +568,67 @@ function renderResults(d, weightKg) {
       const pct = e.confidence_pct;
       const barColor = pct >= 70 ? '#4ade80' : pct >= 45 ? '#fbbf24' : '#666';
       const textColor = pct >= 70 ? '#4ade80' : pct >= 45 ? '#fbbf24' : '#888';
-      card.innerHTML = `
-        <div>
-          <div class="estimate-method">${e.method}</div>
-          <div class="estimate-notes">${e.notes}</div>
-        </div>
-        <div class="estimate-right">
-          <div class="estimate-value">${e.value}</div>
-          <div class="estimate-unit">mL/kg/min</div>
-          <div>
-            <span class="badge" style="color:${textColor};background:${barColor}18;border:1px solid ${barColor}44">
-              <span class="badge-bar-track"><span class="badge-bar-fill" style="width:${pct}%;background:${barColor}"></span></span>
-              ${pct}% confidence
-            </span>
-          </div>
-          ${weightKg > 0 ? `<div class="estimate-unit" style="margin-top:6px">${(e.value * weightKg / 1000).toFixed(2)} L/min absolute</div>` : ''}
-        </div>
-      `;
+
+      const left = document.createElement('div');
+      const methodEl = document.createElement('div');
+      methodEl.className = 'estimate-method';
+      methodEl.textContent = e.method;
+      const notesEl = document.createElement('div');
+      notesEl.className = 'estimate-notes';
+      notesEl.textContent = e.notes;
+      left.appendChild(methodEl);
+      left.appendChild(notesEl);
+
+      const right = document.createElement('div');
+      right.className = 'estimate-right';
+      const valueEl = document.createElement('div');
+      valueEl.className = 'estimate-value';
+      valueEl.textContent = e.value;
+      const unitEl = document.createElement('div');
+      unitEl.className = 'estimate-unit';
+      unitEl.textContent = 'mL/kg/min';
+
+      const badgeWrap = document.createElement('div');
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.style.cssText = `color:${textColor};background:${barColor}18;border:1px solid ${barColor}44`;
+      const barTrack = document.createElement('span');
+      barTrack.className = 'badge-bar-track';
+      const barFill = document.createElement('span');
+      barFill.className = 'badge-bar-fill';
+      barFill.style.cssText = `width:${pct}%;background:${barColor}`;
+      barTrack.appendChild(barFill);
+      badge.appendChild(barTrack);
+      badge.appendChild(document.createTextNode(` ${pct}% confidence`));
+      badgeWrap.appendChild(badge);
+
+      right.appendChild(valueEl);
+      right.appendChild(unitEl);
+      right.appendChild(badgeWrap);
+
+      if (weightKg > 0) {
+        const absEl = document.createElement('div');
+        absEl.className = 'estimate-unit';
+        absEl.style.marginTop = '6px';
+        absEl.textContent = (e.value * weightKg / 1000).toFixed(2) + ' L/min absolute';
+        right.appendChild(absEl);
+      }
+
+      card.appendChild(left);
+      card.appendChild(right);
       estimatesEl.appendChild(card);
     }
   } else {
     vo2Title.style.display = '';
-    estimatesEl.innerHTML = `<div class="notice">Could not calculate VO2 max — need either HR data or time data in the GPX file.</div>`;
+    const noData = document.createElement('div');
+    noData.className = 'notice';
+    noData.textContent = 'Could not calculate VO2 max — need either HR data or time data in the GPX file.';
+    estimatesEl.appendChild(noData);
   }
 
   // ---- Fitness category ----
   const fitSection = document.getElementById('fitnessSection');
-  fitSection.innerHTML = '';
+  fitSection.replaceChildren();
   if (d.fitness_category) {
     const bestEstimate = d.estimates.length
       ? d.estimates.reduce((a, b) => b.confidence_pct > a.confidence_pct ? b : a)
@@ -576,28 +636,64 @@ function renderResults(d, weightKg) {
     const vo2val = bestEstimate ? bestEstimate.value : 0;
     const pct = Math.min(100, Math.max(0, (vo2val - 20) / (85 - 20) * 100));
 
-    fitSection.innerHTML = `
-      <div class="section-title">Fitness Category</div>
-      <div class="fitness-banner">
-        <div>
-          <div class="fitness-cat-name">${d.fitness_category}</div>
-          <div class="fitness-cat-desc">${d.fitness_description}</div>
-          ${bestEstimate ? `<div class="fitness-cat-desc" style="margin-top:4px;font-size:12px;">Based on <strong style="color:var(--text)">${bestEstimate.method}</strong> &mdash; ${bestEstimate.confidence_pct}% confidence</div>` : ''}
-        </div>
-        <div class="vo2-scale" style="min-width:120px; max-width:240px;">
-          <div class="vo2-scale-marker" style="left:${pct}%"></div>
-        </div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px;padding:0 2px;">
-        <span>20 (Poor)</span><span>40 (Fair)</span><span>60 (Superior)</span><span>85+ (Elite)</span>
-      </div>
-    `;
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = 'Fitness Category';
+
+    const banner = document.createElement('div');
+    banner.className = 'fitness-banner';
+
+    const info = document.createElement('div');
+    const catName = document.createElement('div');
+    catName.className = 'fitness-cat-name';
+    catName.textContent = d.fitness_category;
+    const catDesc = document.createElement('div');
+    catDesc.className = 'fitness-cat-desc';
+    catDesc.textContent = d.fitness_description;
+    info.appendChild(catName);
+    info.appendChild(catDesc);
+
+    if (bestEstimate) {
+      const basis = document.createElement('div');
+      basis.className = 'fitness-cat-desc';
+      basis.style.cssText = 'margin-top:4px;font-size:12px;';
+      basis.appendChild(document.createTextNode('Based on '));
+      const strong = document.createElement('strong');
+      strong.style.color = 'var(--text)';
+      strong.textContent = bestEstimate.method;
+      basis.appendChild(strong);
+      basis.appendChild(document.createTextNode(` \u2014 ${bestEstimate.confidence_pct}% confidence`));
+      info.appendChild(basis);
+    }
+
+    const scale = document.createElement('div');
+    scale.className = 'vo2-scale';
+    scale.style.cssText = 'min-width:120px;max-width:240px;';
+    const marker = document.createElement('div');
+    marker.className = 'vo2-scale-marker';
+    marker.style.left = pct + '%';
+    scale.appendChild(marker);
+
+    banner.appendChild(info);
+    banner.appendChild(scale);
+
+    const legend = document.createElement('div');
+    legend.style.cssText = 'display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px;padding:0 2px;';
+    for (const label of ['20 (Poor)', '40 (Fair)', '60 (Superior)', '85+ (Elite)']) {
+      const span = document.createElement('span');
+      span.textContent = label;
+      legend.appendChild(span);
+    }
+
+    fitSection.appendChild(title);
+    fitSection.appendChild(banner);
+    fitSection.appendChild(legend);
   }
 
   // ---- Peak 1 km ----
   const peak1kmTitle = document.getElementById('peak1kmTitle');
   const peak1kmEl = document.getElementById('peak1kmSection');
-  peak1kmEl.innerHTML = '';
+  peak1kmEl.replaceChildren();
   if (d.peak_1km) {
     peak1kmTitle.style.display = '';
     const p = d.peak_1km;
@@ -608,32 +704,71 @@ function renderResults(d, weightKg) {
       : `${p.avg_grade_pct.toFixed(1)}%`;
     const gradeColor = p.avg_grade_pct > 2 ? 'var(--warn)' : p.avg_grade_pct < -2 ? '#60a5fa' : 'var(--muted)';
 
-    peak1kmEl.innerHTML = `
-      <div class="estimate-card">
-        <div style="flex:1">
-          <div class="estimate-method">Highest-intensity kilometre</div>
-          <div class="estimate-notes" style="margin-top:6px;display:flex;gap:18px;flex-wrap:wrap">
-            <span>📍 Starting at <strong style="color:var(--text)">${p.start_distance_km} km</strong></span>
-            <span>⚡ Pace <strong style="color:var(--text)">${paceMin}:${paceSec} /km</strong></span>
-            <span>⛰ Gradient <strong style="color:${gradeColor}">${gradeStr}</strong></span>
-            ${p.avg_hr ? `<span>♥ Avg HR <strong style="color:var(--text)">${p.avg_hr} bpm</strong></span>` : ''}
-          </div>
-          <div class="estimate-notes" style="margin-top:8px">
-            VO2 expressed is the oxygen cost of running that kilometre — not your VO2 max, but the
-            highest metabolic demand you placed on yourself during this activity.
-            ${p.vo2max_est ? `The implied VO2 max extrapolates your HR during that km to your entered HRmax.` : ''}
-          </div>
-        </div>
-        <div class="estimate-right">
-          <div class="estimate-value">${p.vo2_expressed}</div>
-          <div class="estimate-unit">mL/kg/min expressed</div>
-          ${p.vo2max_est ? `
-            <div style="margin-top:10px">
-              <div style="font-size:22px;font-weight:700;color:#a78bfa">${p.vo2max_est}</div>
-              <div class="estimate-unit">mL/kg/min implied max</div>
-            </div>` : ''}
-        </div>
-      </div>`;
+    const card = document.createElement('div');
+    card.className = 'estimate-card';
+
+    const left = document.createElement('div');
+    left.style.flex = '1';
+    const methodEl = document.createElement('div');
+    methodEl.className = 'estimate-method';
+    methodEl.textContent = 'Highest-intensity kilometre';
+    left.appendChild(methodEl);
+
+    const statsRow = document.createElement('div');
+    statsRow.className = 'estimate-notes';
+    statsRow.style.cssText = 'margin-top:6px;display:flex;gap:18px;flex-wrap:wrap';
+
+    function addStat(emoji, label, value, color) {
+      const span = document.createElement('span');
+      span.appendChild(document.createTextNode(emoji + ' ' + label + ' '));
+      const strong = document.createElement('strong');
+      strong.style.color = color;
+      strong.textContent = value;
+      span.appendChild(strong);
+      statsRow.appendChild(span);
+    }
+    addStat('📍', 'Starting at', p.start_distance_km + ' km', 'var(--text)');
+    addStat('⚡', 'Pace', paceMin + ':' + paceSec + ' /km', 'var(--text)');
+    addStat('⛰', 'Gradient', gradeStr, gradeColor);
+    if (p.avg_hr) addStat('♥', 'Avg HR', p.avg_hr + ' bpm', 'var(--text)');
+    left.appendChild(statsRow);
+
+    const desc = document.createElement('div');
+    desc.className = 'estimate-notes';
+    desc.style.marginTop = '8px';
+    let descText = 'VO2 expressed is the oxygen cost of running that kilometre — not your VO2 max, but the highest metabolic demand you placed on yourself during this activity.';
+    if (p.vo2max_est) descText += ' The implied VO2 max extrapolates your HR during that km to your entered HRmax.';
+    desc.textContent = descText;
+    left.appendChild(desc);
+
+    const right = document.createElement('div');
+    right.className = 'estimate-right';
+    const valueEl = document.createElement('div');
+    valueEl.className = 'estimate-value';
+    valueEl.textContent = p.vo2_expressed;
+    const unitEl = document.createElement('div');
+    unitEl.className = 'estimate-unit';
+    unitEl.textContent = 'mL/kg/min expressed';
+    right.appendChild(valueEl);
+    right.appendChild(unitEl);
+
+    if (p.vo2max_est) {
+      const impliedWrap = document.createElement('div');
+      impliedWrap.style.marginTop = '10px';
+      const impliedVal = document.createElement('div');
+      impliedVal.style.cssText = 'font-size:22px;font-weight:700;color:#a78bfa';
+      impliedVal.textContent = p.vo2max_est;
+      const impliedUnit = document.createElement('div');
+      impliedUnit.className = 'estimate-unit';
+      impliedUnit.textContent = 'mL/kg/min implied max';
+      impliedWrap.appendChild(impliedVal);
+      impliedWrap.appendChild(impliedUnit);
+      right.appendChild(impliedWrap);
+    }
+
+    card.appendChild(left);
+    card.appendChild(right);
+    peak1kmEl.appendChild(card);
   }
 
   // ---- Charts ----
@@ -888,9 +1023,15 @@ function smoothArray(arr, window) {
 function showStatus(type, msg) {
   const el = document.getElementById('status');
   el.className = 'status visible ' + type;
-  el.innerHTML = type === 'loading'
-    ? `<div class="spinner"></div><span>${msg}</span>`
-    : `<span>⚠️ ${msg}</span>`;
+  el.innerHTML = '';
+  if (type === 'loading') {
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    el.appendChild(spinner);
+  }
+  const span = document.createElement('span');
+  span.textContent = type === 'loading' ? msg : '\u26A0\uFE0F ' + msg;
+  el.appendChild(span);
 }
 
 function hideStatus() {
