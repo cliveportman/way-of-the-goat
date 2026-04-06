@@ -28,6 +28,8 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 | `nick-butcher` | Compose/KMP code review (read-only) | inherits |
 | `rubber-duck` | Brainstorming, planning, architecture discussion (no production code) | sonnet |
 | `claude-reviewer` | Review .claude/ changes — agents, skills, commands, hooks (read-only) | sonnet |
+| `steve-klabnik` | Rust/WASM code review — correctness, safety, wasm-bindgen (read-only) | inherits |
+| `addy-osmani` | Web HTML/CSS/JS review — semantics, a11y, performance, security (read-only) | inherits |
 
 ## Commands
 
@@ -35,14 +37,13 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 |---------|---------|
 | `/commit` | Stage and commit changes with semantic prefix and contributor emoji |
 | `/pr-create` | Create a draft PR and generate a test plan |
-| `/app-review <pr-number>` | Full KMP/Compose code review of a PR via Nick Butcher agent |
-| `/app-review <pr-number> --recheck` | Re-review changed files only, with follow-up on previous issues |
+| `/review [pr-number]` | Auto-route review to nick-butcher, addy-osmani, steve-klabnik, or claude-reviewer based on changed files |
+| `/review [pr-number] --recheck` | Re-review changed files only (mobile domain); full review for web/Rust/.claude |
+| `/review --audit` | Full audit of entire `.claude/` directory via claude-reviewer |
+| `/review --file <path>` | Review a single `.claude/` file via claude-reviewer |
 | `/retro <feature-or-issue-name>` | Write a post-merge retrospective to `docs/` |
 | `/design-to-code` | Full pipeline: Figma design → spec curation → Compose implementation |
 | `/design-to-code --edit <spec-path>` | Update specs and code when a design changes |
-| `/claude-review` | Review .claude/ changes on current branch via claude-reviewer agent |
-| `/claude-review --audit` | Full review of the entire .claude/ directory |
-| `/claude-review --file <path>` | Review a specific .claude/ file |
 | `/claude-update` | Fetch new Anthropic/competitor knowledge and propose updates to claude-review-criteria skill |
 
 ### Design-to-Code Sub-commands
@@ -66,6 +67,7 @@ Skills are in `.claude/skills/`. Agents read these before working:
 | `kmp-conventions` | Architecture, state management, file naming, error handling, testing |
 | `design-specs` | Spec file formats, Figma token → Compose mapping |
 | `kmp-review-criteria` | Review checklist for KMP/Compose code |
+| `web-review-criteria` | Review checklist for static HTML/CSS/JS and WASM loading code |
 | `docs-conventions` | Documentation formats for `docs/` — features, issues, ADRs |
 | `mermaid` | Mermaid flowchart conventions and colour scheme |
 | `claude-review-criteria` | Review checklist for .claude/ changes — best practices, anti-patterns, competitor awareness |
