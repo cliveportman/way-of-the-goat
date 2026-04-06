@@ -35,12 +35,12 @@ import co.theportman.way_of_the_goat.ui.theme.GoatStroke
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 @Composable
-fun DesignTokensScreen() {
+fun DesignTokensScreen(modifier: Modifier = Modifier) {
     val colors = MaterialTheme.goatColors
     val typography = MaterialTheme.typography
 
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(colors.surface)
             .padding(horizontal = 16.dp),

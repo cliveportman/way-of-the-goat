@@ -9,7 +9,6 @@ import co.theportman.way_of_the_goat.testutils.FakeServingsDataSource
 import co.theportman.way_of_the_goat.testutils.TestDispatcherHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant

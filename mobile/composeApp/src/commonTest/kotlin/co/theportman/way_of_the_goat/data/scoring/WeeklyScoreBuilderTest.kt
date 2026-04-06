@@ -2,7 +2,6 @@ package co.theportman.way_of_the_goat.data.scoring
 
 import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
-import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate

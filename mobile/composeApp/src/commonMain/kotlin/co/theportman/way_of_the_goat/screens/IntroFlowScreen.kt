@@ -43,7 +43,10 @@ data class IntroContent(
  * Currently always shows intro flow after splash screen
  */
 @Composable
-fun IntroFlowScreen(onComplete: () -> Unit) {
+fun IntroFlowScreen(
+    onComplete: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val pagerState = rememberPagerState(pageCount = { 3 })
     val scope = rememberCoroutineScope()
 

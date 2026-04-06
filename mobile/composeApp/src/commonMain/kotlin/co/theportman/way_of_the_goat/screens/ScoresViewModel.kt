@@ -3,7 +3,6 @@ package co.theportman.way_of_the_goat.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.theportman.way_of_the_goat.data.cache.ServingsDataManager
-import co.theportman.way_of_the_goat.data.scoring.DailyScoreResult
 import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
 import co.theportman.way_of_the_goat.data.scoring.ScoreCalculator
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions

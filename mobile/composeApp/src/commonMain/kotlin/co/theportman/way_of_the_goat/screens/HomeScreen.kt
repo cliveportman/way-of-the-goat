@@ -29,9 +29,12 @@ import co.theportman.way_of_the_goat.ui.icons.GoatMoon
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 @Composable
-fun HomeScreen(onContinueClick: () -> Unit) {
+fun HomeScreen(
+    onContinueClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.goatColors.surface),
         contentAlignment = Alignment.Center

@@ -1,0 +1,124 @@
+# Detekt configuration for Way of the Goat
+# Only high-signal rules are enabled. Everything else is off by default.
+
+config:
+  validation: true
+
+# Disable all rules by default — we opt in to specific ones below.
+complexity:
+  active: false
+
+coroutines:
+  active: false
+
+empty-blocks:
+  active: false
+
+exceptions:
+  active: false
+
+naming:
+  active: false
+
+performance:
+  active: false
+
+potential-bugs:
+  active: false
+
+style:
+  active: true
+  # Disable all style rules by default, then enable specific ones.
+  MagicNumber:
+    active: false
+  ReturnCount:
+    active: false
+  ForbiddenComment:
+    active: false
+  MaxLineLength:
+    active: false
+  WildcardImport:
+    active: false
+  NewLineAtEndOfFile:
+    active: false
+  ThrowsCount:
+    active: false
+  UnnecessaryAbstractClass:
+    active: false
+  UtilityClassWithPublicConstructor:
+    active: false
+  MayBeConst:
+    active: true
+  UnusedImports:
+    active: true
+
+# compose-rules (io.nlopez.compose.rules via detektPlugins)
+Compose:
+  # Catches composables missing modifier: Modifier = Modifier parameter.
+  ModifierMissing:
+    active: true
+  # Ensures multipreview annotations follow naming conventions.
+  PreviewAnnotationNaming:
+    active: true
+  # Ensures @Preview composables are not public.
+  PreviewPublic:
+    active: true
+  # All other compose rules are disabled.
+  ComposableAnnotationNaming:
+    active: false
+  ComposableNaming:
+    active: false
+  ComposableParamOrder:
+    active: false
+  CompositionLocalAllowlist:
+    active: false
+  CompositionLocalNaming:
+    active: false
+  ContentEmitterReturningValues:
+    active: false
+  ContentTrailingLambda:
+    active: false
+  ContentSlotReused:
+    active: false
+  DefaultsVisibility:
+    active: false
+  LambdaParameterEventTrailing:
+    active: false
+  LambdaParameterInRestartableEffect:
+    active: false
+  Material2:
+    active: false
+  ModifierClickableOrder:
+    active: false
+  ModifierComposed:
+    active: false
+  ModifierNaming:
+    active: false
+  ModifierNotUsedAtRoot:
+    active: false
+  ModifierReused:
+    active: false
+  ModifierWithoutDefault:
+    active: false
+  MultipleEmitters:
+    active: false
+  MutableParams:
+    active: false
+  MutableStateAutoboxing:
+    active: false
+  MutableStateParam:
+    active: false
+  ParameterNaming:
+    active: false
+  PreviewNaming:
+    active: false
+  RememberMissing:
+    active: false
+  RememberContentMissing:
+    active: false
+  UnstableCollections:
+    active: false
+  ViewModelForwarding:
+    active: false
+  ViewModelInjection:
+    active: false
