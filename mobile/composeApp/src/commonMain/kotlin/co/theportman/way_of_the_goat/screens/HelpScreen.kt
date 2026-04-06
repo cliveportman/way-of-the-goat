@@ -17,11 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.invisibleToUser
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.FoodCategory
@@ -92,18 +94,22 @@ fun HelpScreen(
         item {
             val balanced = SuiteDefinitions.BALANCED
             Column(verticalArrangement = Arrangement.spacedBy(GoatSpacing.s4)) {
-                FoodCategoryRow(
-                    category = balanced.categoryById("fruit")!!, // Known valid category ID
-                    servingCount = 2,
-                    onIncrement = {},
-                    onDecrement = {},
-                )
-                FoodCategoryRow(
-                    category = balanced.categoryById("refinedgrains")!!, // Known valid category ID
-                    servingCount = 3,
-                    onIncrement = {},
-                    onDecrement = {},
-                )
+                val fruitCategory = balanced.getCategoryById(CategoryId("fruit"))
+                val refinedGrainsCategory = balanced.getCategoryById(CategoryId("refinedgrains"))
+                if (fruitCategory != null && refinedGrainsCategory != null) {
+                    FoodCategoryRow(
+                        category = fruitCategory,
+                        servingCount = 2,
+                        onIncrement = {},
+                        onDecrement = {},
+                    )
+                    FoodCategoryRow(
+                        category = refinedGrainsCategory,
+                        servingCount = 3,
+                        onIncrement = {},
+                        onDecrement = {},
+                    )
+                }
             }
         }
         item {
@@ -161,9 +167,9 @@ fun HelpScreen(
         }
 
         // Food category entries
-        items(GUIDE_ENTRIES.size) { index ->
+        items(GUIDE_ENTRIES.size, key = { GUIDE_ENTRIES[it].categoryId.value }) { index ->
             val entry = GUIDE_ENTRIES[index]
-            val category = entry.suite.categoryById(entry.categoryId)
+            val category = entry.suite.getCategoryById(entry.categoryId)
             if (category != null) {
                 FoodCategoryGuideEntry(
                     category = category,
@@ -175,200 +181,35 @@ fun HelpScreen(
 
         // ── Breaking the rules ────────────────────────────────
         item { SectionDivider() }
-        item {
-            Text(
-                text = "Breaking the rules",
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "You 100% need to work out what works for you with this. Remember a food can cover more than one category and there are exceptions to every rule. Some examples:",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "- I might dilute 250ml of milkshake with another 250ml of milk and call it 2 portions of Dairy and 1 portion of Sweets.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
+        item { SectionHeading("Breaking the rules") }
+        item { BodyText(BREAKING_THE_RULES_INTRO) }
+        item { BodyText(BREAKING_THE_RULES_EXAMPLE) }
 
         // ── Other stuff ───────────────────────────────────────
         item { SectionDivider() }
-        item {
-            Text(
-                text = "Other stuff",
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "You're a vegetarian",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "While you could just wing it with the existing food groups, a vegetarian option that uses different categories is something I'd like to add if there is the interest. Let me know using the details at the bottom of the page.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "Eating on the run",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "Anything you eat while exercising doesn't count. So go run an ultramarathon and stuff your face while doing so!",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "Processed vs unprocessed",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = buildAnnotatedString {
-                    append("Matt (author of ")
-                    withStyle(SpanStyle(fontStyle = FontStyle.Italic)) {
-                        append("Racing Weight")
-                    }
-                    append(") is quite keen on unprocessed food, and the science is only getting stronger. It's not that all processed food is bad, but you'll find most of it is low quality. So if you can steer clear of it, you probably should.")
-                },
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "Protein shakes",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "Unsweetened whey protein fits the nutrition profile of lean proteins, so count it as that. The sweetened powders and shakes can contain surprising amounts of sugar or artificial sweetener though, so you'll need to use your judgement there - we'd probably make a large shake and treat it as 1 portion of lean proteins and 1 portion of sweets.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "There is already an official app",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = buildAnnotatedString {
-                    append("There is, and I've paid for it and used it for several weeks. But there's a lot about it that I don't like and development seems to have stagnated, so I built my own. If you feel bad for Matt, buy his book ")
-                    withStyle(SpanStyle(fontStyle = FontStyle.Italic)) {
-                        append("Racing Weight")
-                    }
-                    append(" (or any of his other books). Actually, please just do that anyway!")
-                },
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
+        item { SectionHeading("Other stuff") }
+        item { SectionSubheading(OTHER_STUFF_VEGETARIAN_TITLE) }
+        item { BodyText(OTHER_STUFF_VEGETARIAN) }
+        item { SectionSubheading(OTHER_STUFF_EATING_ON_THE_RUN_TITLE) }
+        item { BodyText(OTHER_STUFF_EATING_ON_THE_RUN) }
+        item { SectionSubheading(OTHER_STUFF_PROCESSED_TITLE) }
+        item { BodyText(buildAnnotatedString(OTHER_STUFF_PROCESSED_CONTENT)) }
+        item { SectionSubheading(OTHER_STUFF_PROTEIN_SHAKES_TITLE) }
+        item { BodyText(OTHER_STUFF_PROTEIN_SHAKES) }
+        item { SectionSubheading(OTHER_STUFF_OFFICIAL_APP_TITLE) }
+        item { BodyText(buildAnnotatedString(OTHER_STUFF_OFFICIAL_APP_CONTENT)) }
 
         // ── Technical questions ───────────────────────────────
         item { SectionDivider() }
-        item {
-            Text(
-                text = "Technical questions",
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "What happens to your data?",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "It currently stays on your device, which means that once it's gone, it really is gone. We are planning on adding cloud backup at some point.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "What happens to my data if I uninstall the app?",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "It's gone for good. Reinstalling will not bring it back (the tiny database is destroyed).",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "Do I need an account?",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = "No. I want people to use this app without an account and use it without needing an internet connection. If I add a cloud backup feature, that will require an account but it'll be an opt-in feature only.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-
-        item {
-            Text(
-                text = "Suggestions for improvement",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
-        item {
-            Text(
-                text = buildAnnotatedString {
-                    append("If you have any suggestions, get in touch using ")
-                    withStyle(SpanStyle(fontStyle = FontStyle.Italic)) {
-                        append("wayofthegoat@theportman.co")
-                    }
-                    append(" - yes, that is just a .co at the end.")
-                },
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.goatColors.onSurface,
-            )
-        }
+        item { SectionHeading("Technical questions") }
+        item { SectionSubheading(TECHNICAL_WHAT_HAPPENS_TO_DATA_TITLE) }
+        item { BodyText(TECHNICAL_WHAT_HAPPENS_TO_DATA) }
+        item { SectionSubheading(TECHNICAL_UNINSTALL_TITLE) }
+        item { BodyText(TECHNICAL_UNINSTALL) }
+        item { SectionSubheading(TECHNICAL_ACCOUNT_TITLE) }
+        item { BodyText(TECHNICAL_ACCOUNT) }
+        item { SectionSubheading(TECHNICAL_SUGGESTIONS_TITLE) }
+        item { BodyText(buildAnnotatedString(TECHNICAL_SUGGESTIONS_CONTENT)) }
 
         // ── Developer section (debug only) ────────────────────
         if (isDebugBuild) {
@@ -434,15 +275,13 @@ private fun HelpScreenPreviewLight() {
 @Preview(name = "FoodCategoryGuideEntry")
 @Composable
 private fun FoodCategoryGuideEntryPreview() {
-    val fruitCategory = SuiteDefinitions.BALANCED.categoryById("fruit")
-    if (fruitCategory != null) {
-        WayOfTheGoatTheme(darkTheme = true) {
-            FoodCategoryGuideEntry(
-                category = fruitCategory,
-                heading = "Fruit",
-                description = "Whole fruit, tinned fruit, canned fruit, smoothies and juices made with 100% fruit.",
-            )
-        }
+    val fruitCategory = SuiteDefinitions.BALANCED.getCategoryById(CategoryId("fruit"))!!
+    WayOfTheGoatTheme(darkTheme = true) {
+        FoodCategoryGuideEntry(
+            category = fruitCategory,
+            heading = "Fruit",
+            description = "Whole fruit, tinned fruit, canned fruit, smoothies and juices made with 100% fruit.",
+        )
     }
 }
 
@@ -454,6 +293,58 @@ private fun SectionDivider(modifier: Modifier = Modifier) {
     HorizontalDivider(
         color = MaterialTheme.goatColors.outline,
         modifier = modifier.padding(vertical = GoatSpacing.s8)
+    )
+}
+
+/**
+ * A section heading.
+ */
+@Composable
+private fun SectionHeading(text: String, modifier: Modifier = Modifier) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.headlineSmall,
+        color = MaterialTheme.goatColors.onSurface,
+        modifier = modifier
+    )
+}
+
+/**
+ * A section subheading.
+ */
+@Composable
+private fun SectionSubheading(text: String, modifier: Modifier = Modifier) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleLarge,
+        color = MaterialTheme.goatColors.onSurface,
+        modifier = modifier
+    )
+}
+
+/**
+ * Body text content.
+ */
+@Composable
+private fun BodyText(text: String, modifier: Modifier = Modifier) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.goatColors.onSurface,
+        modifier = modifier
+    )
+}
+
+/**
+ * Body text content with rich formatting.
+ */
+@Composable
+private fun BodyText(text: androidx.compose.ui.text.AnnotatedString, modifier: Modifier = Modifier) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.goatColors.onSurface,
+        modifier = modifier
     )
 }
 
@@ -494,10 +385,62 @@ private fun FoodCategoryGuideEntry(
  */
 private data class GuideEntry(
     val suite: ScoringSuite,
-    val categoryId: String,
+    val categoryId: CategoryId,
     val heading: String,
     val description: String,
 )
+
+// ── Breaking the rules section content ──
+private const val BREAKING_THE_RULES_INTRO =
+    "You 100% need to work out what works for you with this. Remember a food can cover more than one category and there are exceptions to every rule. Some examples:"
+private const val BREAKING_THE_RULES_EXAMPLE =
+    "- I might dilute 250ml of milkshake with another 250ml of milk and call it 2 portions of Dairy and 1 portion of Sweets."
+
+// ── Other stuff section content ──
+private const val OTHER_STUFF_VEGETARIAN_TITLE = "You're a vegetarian"
+private const val OTHER_STUFF_VEGETARIAN =
+    "While you could just wing it with the existing food groups, a vegetarian option that uses different categories is something I'd like to add if there is the interest. Let me know using the details at the bottom of the page."
+private const val OTHER_STUFF_EATING_ON_THE_RUN_TITLE = "Eating on the run"
+private const val OTHER_STUFF_EATING_ON_THE_RUN =
+    "Anything you eat while exercising doesn't count. So go run an ultramarathon and stuff your face while doing so!"
+private const val OTHER_STUFF_PROCESSED_TITLE = "Processed vs unprocessed"
+private val OTHER_STUFF_PROCESSED_CONTENT: String = "Matt (author of {Racing Weight}) is quite keen on unprocessed food, and the science is only getting stronger. It's not that all processed food is bad, but you'll find most of it is low quality. So if you can steer clear of it, you probably should."
+private const val OTHER_STUFF_PROTEIN_SHAKES_TITLE = "Protein shakes"
+private const val OTHER_STUFF_PROTEIN_SHAKES =
+    "Unsweetened whey protein fits the nutrition profile of lean proteins, so count it as that. The sweetened powders and shakes can contain surprising amounts of sugar or artificial sweetener though, so you'll need to use your judgement there - we'd probably make a large shake and treat it as 1 portion of lean proteins and 1 portion of sweets."
+private const val OTHER_STUFF_OFFICIAL_APP_TITLE = "There is already an official app"
+private val OTHER_STUFF_OFFICIAL_APP_CONTENT: String = "There is, and I've paid for it and used it for several weeks. But there's a lot about it that I don't like and development seems to have stagnated, so I built my own. If you feel bad for Matt, buy his book {Racing Weight} (or any of his other books). Actually, please just do that anyway!"
+
+// ── Technical questions section content ──
+private const val TECHNICAL_WHAT_HAPPENS_TO_DATA_TITLE = "What happens to your data?"
+private const val TECHNICAL_WHAT_HAPPENS_TO_DATA =
+    "It currently stays on your device, which means that once it's gone, it really is gone. We are planning on adding cloud backup at some point."
+private const val TECHNICAL_UNINSTALL_TITLE = "What happens to my data if I uninstall the app?"
+private const val TECHNICAL_UNINSTALL =
+    "It's gone for good. Reinstalling will not bring it back (the tiny database is destroyed)."
+private const val TECHNICAL_ACCOUNT_TITLE = "Do I need an account?"
+private const val TECHNICAL_ACCOUNT =
+    "No. I want people to use this app without an account and use it without needing an internet connection. If I add a cloud backup feature, that will require an account but it'll be an opt-in feature only."
+private const val TECHNICAL_SUGGESTIONS_TITLE = "Suggestions for improvement"
+private val TECHNICAL_SUGGESTIONS_CONTENT: String = "If you have any suggestions, get in touch using {wayofthegoat@theportman.co} - yes, that is just a .co at the end."
+
+/**
+ * Helper function to create AnnotatedString with italic formatting for braced content.
+ */
+private fun buildAnnotatedString(content: String): androidx.compose.ui.text.AnnotatedString {
+    return buildAnnotatedString {
+        var lastIndex = 0
+        val regex = "\\{([^}]+)\\}".toRegex()
+        for (match in regex.findAll(content)) {
+            append(content.substring(lastIndex, match.range.first))
+            withStyle(SpanStyle(fontStyle = FontStyle.Italic)) {
+                append(match.groupValues[1])
+            }
+            lastIndex = match.range.last + 1
+        }
+        append(content.substring(lastIndex))
+    }
+}
 
 /**
  * All food category guide entries.
@@ -506,88 +449,82 @@ private val GUIDE_ENTRIES = listOf(
     // Healthy categories
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "veg",
+        CategoryId("veg"),
         "Vegetables",
         "Raw or cooked vegetables, pulses, tomatoes, chillies, eaten whole, chopped, pureed, whatever. One serving might be a fist-sized portion of veg, a decent side salad or a bowl of soup.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "fruit",
+        CategoryId("fruit"),
         "Fruit",
         "Whole fruit, tinned fruit, canned fruit, smoothies and juices made with 100% fruit. One serving might be an apple or a banana, a handful of berries or a glass of juice. Something like apple crumble, you'd count as a portion of fruit and a portion of sweets.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "nuts",
+        CategoryId("nuts"),
         "Nuts + seeds + healthy oils",
         "Any nuts, seeds and healthy oils (e.g. an olive oil-based salad-dressing). One portion would be a handful. Nut butters without added sugar also count.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "wholegrains",
+        CategoryId("wholegrains"),
         "Whole grains",
         "Whole oats, wheat and other grains, including baked goods and pastas made with whole grain flours. One portion would be two slices of bread or a bowl of porridge.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "dairy",
+        CategoryId("dairy"),
         "Dairy",
         "Unsweetened milk from cows, sheep and goats, unsweetened yoghurt, cheese, cream. And processed milks like soya milk. Small amounts of butter spread on bread do not count. A portion would be a glass of milk, two slices of cheese, a decent portion of yoghurt.",
     ),
     GuideEntry(
         SuiteDefinitions.BODY_COMPOSITION,
-        "leandairy",
+        CategoryId("leandairy"),
         "Lean dairy",
         "Lower-fat dairy options such as skimmed or semi-skimmed milk, low-fat yoghurt and cottage cheese. A portion would be a glass of milk or a decent serving of yoghurt. Used in place of Dairy in some scoring profiles.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "leanproteins",
+        CategoryId("leanproteins"),
         "Lean proteins",
         "Unprocessed meats from land animals and fish. And eggs. One portion would be a chicken breast, regular-sized steak or fish fillet or 2 eggs. Listed as \"Lean meats\" in some scoring profiles.",
     ),
     // Unhealthy categories
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "refinedgrains",
+        CategoryId("refinedgrains"),
         "Refined grains",
         "White rice, white flour, most pastas, cereals, breads and other baked goods. A portion would be two slices of bread, a bowl of rice or pasta, etc.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "sweets",
+        CategoryId("sweets"),
         "Sweets",
         "Anything with a substantial amount of sugar and anything artificially sweetened: sweets, pastries and other desserts, sugary drinks, energy bars, many breakfast cereals, yoghurts with sugar listed as their second ingredient.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "fattymeats",
+        CategoryId("fattymeats"),
         "Fatty meats",
         "Meats that have been processed beyond cutting, grinding and seasoning: sausages, ham, bacon, corned beef, jerky, most fast foods.",
     ),
     GuideEntry(
         SuiteDefinitions.RACING_WEIGHT,
-        "fattyproteins",
+        CategoryId("fattyproteins"),
         "Fatty proteins",
         "Processed and fatty meats and proteins: sausages, ham, bacon, corned beef, jerky, most fast foods. Used in place of Fatty meats in some scoring profiles.",
     ),
     GuideEntry(
         SuiteDefinitions.RACING_WEIGHT,
-        "friedfoods",
+        CategoryId("friedfoods"),
         "Fried foods",
         "Chips (fries), crisps, fried chicken or fish, donuts. Use your common sense with serving sizes.",
     ),
     GuideEntry(
         SuiteDefinitions.BALANCED,
-        "junkfoods",
+        CategoryId("junkfoods"),
         "Junk foods",
         "Fried foods, crisps, fast food and other low-quality snack foods. Chips (fries), fried chicken or fish, donuts and similar items. Use your common sense with serving sizes.",
     ),
 )
 
-/**
- * Extension to look up a category by its string ID within a suite.
- * Returns null if the category is not found.
- */
-private fun ScoringSuite.categoryById(id: String): FoodCategory? =
-    getCategoryById(CategoryId(id))
