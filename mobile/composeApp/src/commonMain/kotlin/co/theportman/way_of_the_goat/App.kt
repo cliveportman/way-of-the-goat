@@ -3,7 +3,6 @@ package co.theportman.way_of_the_goat
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -24,11 +23,9 @@ import co.theportman.way_of_the_goat.screens.ScoresOverTimeScreen
 import co.theportman.way_of_the_goat.screens.ScoresScreen
 import co.theportman.way_of_the_goat.screens.SecondPage
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-@Preview
-fun App() {
+fun App(modifier: Modifier = Modifier) {
     WayOfTheGoatTheme(darkTheme = isSystemInDarkTheme()) {
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -46,6 +43,7 @@ fun App() {
         )
 
         Scaffold(
+            modifier = modifier,
             bottomBar = {
                 if (showBottomNav) {
                     BottomNavigationBar(
@@ -126,9 +124,10 @@ fun App() {
 fun BottomNavigationBar(
     navController: NavHostController,
     currentRoute: String?,
-    onScreenNavigate: (Screen) -> Unit
+    onScreenNavigate: (Screen) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    NavigationBar {
+    NavigationBar(modifier = modifier) {
         bottomNavItems.forEach { item ->
             NavigationBarItem(
                 icon = { Icon(item.icon, contentDescription = item.label) },

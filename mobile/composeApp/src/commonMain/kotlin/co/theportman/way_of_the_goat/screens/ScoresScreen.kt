@@ -1,7 +1,6 @@
 package co.theportman.way_of_the_goat.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,27 +23,29 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
+import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.screens.components.DataLossConfirmationDialog
 import co.theportman.way_of_the_goat.screens.components.FoodCategoryRow
 import co.theportman.way_of_the_goat.screens.components.ProfileSwitcherSheet
 import co.theportman.way_of_the_goat.screens.components.ScoreSummary
+import co.theportman.way_of_the_goat.ui.theme.GoatSizing
+import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
@@ -58,22 +59,26 @@ import kotlinx.datetime.todayIn
 @Composable
 fun ScoresScreen(
     targetDateEpochDay: Long? = null,
-    viewModel: ScoresViewModel = viewModel { ScoresViewModel() }
+    viewModel: ScoresViewModel = viewModel { ScoresViewModel() },
+    modifier: Modifier = Modifier
 ) {
     // Get today's date
     val today = remember { Clock.System.todayIn(TimeZone.currentSystemDefault()) }
 
     // Collect UI state
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     // Collect active suite
-    val activeSuite by viewModel.activeSuite.collectAsState()
+    val activeSuite by viewModel.activeSuite.collectAsStateWithLifecycle()
 
     // Collect servings flow for reactive updates
-    val servingsMap by viewModel.servingsFlow.collectAsState()
+    val servingsMap by viewModel.servingsFlow.collectAsStateWithLifecycle()
+
+    // Collect refresh state
+    val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
 
     // Collect profile switcher state
-    val profileSwitcherState by viewModel.profileSwitcherState.collectAsState()
+    val profileSwitcherState by viewModel.profileSwitcherState.collectAsStateWithLifecycle()
 
     // Snackbar for error messages
     val snackbarHostState = remember { SnackbarHostState() }
@@ -175,11 +180,15 @@ fun ScoresScreen(
             ScoresPageContent(
                 date = pageDate,
                 today = today,
-                viewModel = viewModel,
                 uiState = uiState,
                 isDateLoaded = isDateLoaded,
+                isRefreshing = isRefreshing,
                 displaySuite = pageSuite,
                 dailyServings = dailyServings,
+                totals = if (pageSuite != null) viewModel.getTotalsForDisplay(dailyServings, pageSuite) else DailyTotalsForDisplay.empty(),
+                onRefresh = { viewModel.refreshCurrentDate(pageDate) },
+                onIncrement = { categoryId -> viewModel.incrementServings(pageDate, categoryId) },
+                onDecrement = { categoryId -> viewModel.decrementServings(pageDate, categoryId) },
                 onProfileClick = { viewModel.openProfileSwitcher(pageDate) }
             )
         }
@@ -224,28 +233,29 @@ fun ScoresScreen(
 private fun ScoresPageContent(
     date: LocalDate,
     today: LocalDate,
-    viewModel: ScoresViewModel,
     uiState: ScoresUiState,
     isDateLoaded: Boolean,
+    isRefreshing: Boolean,
     displaySuite: ScoringSuite?,
     dailyServings: DailyServings?,
+    totals: DailyTotalsForDisplay,
+    onRefresh: () -> Unit,
+    onIncrement: (CategoryId) -> Unit,
+    onDecrement: (CategoryId) -> Unit,
     onProfileClick: () -> Unit
 ) {
-    // Collect refresh state
-    val isRefreshing by viewModel.isRefreshing.collectAsState()
-
     // Show loading indicator if date data isn't loaded yet
     if (!isDateLoaded && uiState is ScoresUiState.Loading) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.goatColors.surface)
-                .padding(16.dp),
+                .padding(GoatSpacing.s16),
             contentAlignment = Alignment.Center
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(GoatSpacing.s8)
             ) {
                 CircularProgressIndicator(color = MaterialTheme.goatColors.onSurface)
                 Text(
@@ -260,7 +270,7 @@ private fun ScoresPageContent(
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,
-        onRefresh = { viewModel.refreshCurrentDate(date) },
+        onRefresh = onRefresh,
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.goatColors.surface)
@@ -268,18 +278,17 @@ private fun ScoresPageContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = GoatSpacing.s12)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s16))
             // Date heading
             Text(
                 text = formatDate(date),
                 color = MaterialTheme.goatColors.onSurface,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s16))
 
             // Profile switch card
             ProfileSwitchCard(
@@ -287,7 +296,7 @@ private fun ScoresPageContent(
                 onClick = onProfileClick
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s16))
 
             if (displaySuite != null) {
                 // Food categories list
@@ -295,7 +304,7 @@ private fun ScoresPageContent(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(GoatSpacing.s4)
                 ) {
                     items(
                         items = displaySuite.categories,
@@ -306,18 +315,13 @@ private fun ScoresPageContent(
                         FoodCategoryRow(
                             category = category,
                             servingCount = servingCount,
-                            onIncrement = {
-                                viewModel.incrementServings(date, category.id)
-                            },
-                            onDecrement = {
-                                viewModel.decrementServings(date, category.id)
-                            }
+                            onIncrement = { onIncrement(category.id) },
+                            onDecrement = { onDecrement(category.id) }
                         )
                     }
 
                     // Score summary as last item in the list
                     item {
-                        val totals = viewModel.getTotalsForDisplay(dailyServings, displaySuite)
                         ScoreSummary(totals = totals)
                     }
                 }
@@ -332,7 +336,7 @@ private fun ScoresPageContent(
                     Text(
                         text = "Select a profile above to start tracking",
                         color = MaterialTheme.goatColors.onSurfaceVariant,
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }
@@ -345,14 +349,15 @@ private fun ProfileSwitchCard(
     profileName: String?,
     onClick: () -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(vertical = 8.dp)
+    Surface(
+        onClick = onClick,
+        color = MaterialTheme.goatColors.surface,
+        modifier = Modifier.fillMaxWidth()
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = GoatSpacing.s8),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
@@ -360,14 +365,12 @@ private fun ProfileSwitchCard(
                 Text(
                     text = "ACTIVE PROFILE",
                     color = MaterialTheme.goatColors.onSurfaceVariant,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium
+                    style = MaterialTheme.typography.titleSmall
                 )
                 Text(
                     text = profileName ?: "No profile selected",
                     color = if (profileName != null) MaterialTheme.goatColors.onSurface else MaterialTheme.goatColors.onSurfaceVariant,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
             Row(
@@ -376,14 +379,19 @@ private fun ProfileSwitchCard(
                 Text(
                     text = "Change profile",
                     color = MaterialTheme.goatColors.onSurfaceVariant,
-                    fontSize = 14.sp
+                    style = MaterialTheme.typography.bodySmall
                 )
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = "Change profile",
-                    tint = MaterialTheme.goatColors.onSurfaceVariant,
-                    modifier = Modifier.size(20.dp)
-                )
+                Box(
+                    modifier = Modifier.size(GoatSizing.Touch.default),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = "Change profile",
+                        tint = MaterialTheme.goatColors.onSurfaceVariant,
+                        modifier = Modifier.size(GoatSizing.Icon.md)
+                    )
+                }
             }
         }
     }

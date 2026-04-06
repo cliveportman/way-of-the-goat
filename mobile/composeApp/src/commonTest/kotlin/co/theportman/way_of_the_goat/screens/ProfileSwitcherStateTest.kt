@@ -1,7 +1,6 @@
 package co.theportman.way_of_the_goat.screens
 
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
-import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertFalse

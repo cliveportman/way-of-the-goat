@@ -21,10 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.ui.components.ContinueButton
+import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.coroutines.launch
 
@@ -43,7 +42,10 @@ data class IntroContent(
  * Currently always shows intro flow after splash screen
  */
 @Composable
-fun IntroFlowScreen(onComplete: () -> Unit) {
+fun IntroFlowScreen(
+    onComplete: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val pagerState = rememberPagerState(pageCount = { 3 })
     val scope = rememberCoroutineScope()
 
@@ -91,15 +93,15 @@ fun IntroFlowScreen(onComplete: () -> Unit) {
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 64.dp),
+                .padding(horizontal = GoatSpacing.s24)
+                .padding(bottom = GoatSpacing.s64),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PageIndicators(
                 currentPage = pagerState.currentPage,
                 totalPages = 3
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s24))
             ContinueButton(onClick = {
                 if (pagerState.currentPage < 2) {
                     scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
@@ -107,7 +109,7 @@ fun IntroFlowScreen(onComplete: () -> Unit) {
                     onComplete()
                 }
             })
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s24))
         }
     }
 }
@@ -120,35 +122,29 @@ private fun IntroPageContent(content: IntroContent) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp)
-            .padding(top = 64.dp, bottom = 200.dp) // Bottom padding for fixed controls
+            .padding(horizontal = GoatSpacing.s24)
+            .padding(top = GoatSpacing.s64, bottom = 200.dp)
             .verticalScroll(rememberScrollState())
     ) {
         // Heading
         Text(
             text = content.heading,
-            style = MaterialTheme.typography.headlineLarge.copy(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            ),
+            style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.goatColors.onSurface
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(GoatSpacing.s24))
 
         // Body paragraphs
         content.bodyParagraphs.forEachIndexed { index, paragraph ->
             Text(
                 text = paragraph,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontSize = 16.sp,
-                    lineHeight = 22.sp
-                ),
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.goatColors.onSurface
             )
 
             if (index < content.bodyParagraphs.size - 1) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s16))
             }
         }
     }
@@ -163,12 +159,12 @@ private fun PageIndicators(
     totalPages: Int
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(GoatSpacing.s8)
     ) {
         repeat(totalPages) { index ->
             Box(
                 modifier = Modifier
-                    .size(8.dp)
+                    .size(GoatSpacing.s8)
                     .background(
                         color = if (index == currentPage) MaterialTheme.goatColors.onSurface else MaterialTheme.goatColors.surfaceContainerHigh,
                         shape = CircleShape

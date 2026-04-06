@@ -32,6 +32,9 @@ When implementing a named feature, read `docs/features/{name}/plan.md` if it exi
 # Generate SQLDelight code after schema changes
 ./gradlew :composeApp:generateCommonMainWayOfTheGoatDatabaseInterface
 
+# Run static analysis (detekt + compose-rules)
+./gradlew detekt
+
 # Clean build
 ./gradlew clean
 ```

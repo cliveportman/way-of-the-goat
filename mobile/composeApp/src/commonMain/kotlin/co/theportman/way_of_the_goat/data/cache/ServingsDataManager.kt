@@ -4,11 +4,9 @@ import co.theportman.way_of_the_goat.data.database.DatabaseDriverFactory
 import co.theportman.way_of_the_goat.data.database.WayOfTheGoatDatabase
 import co.theportman.way_of_the_goat.data.repository.ServingsRepository
 import co.theportman.way_of_the_goat.data.scoring.DailyScoreResult
-import co.theportman.way_of_the_goat.data.scoring.ScoreCalculator
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
-import co.theportman.way_of_the_goat.data.scoring.model.DailyServingsBuilder
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,12 +69,13 @@ class ServingsDataManager private constructor() : ServingsDataSource {
 
                 val driver = driverFactory.createDriver()
                 val database = WayOfTheGoatDatabase(driver)
-                repository = ServingsRepository(database)
+                val repo = ServingsRepository(database)
+                repository = repo
 
                 // Initialize repository (loads user preferences)
-                repository!!.initialize().fold(
+                repo.initialize().fold(
                     onSuccess = {
-                        _activeSuite.value = repository!!.activeSuite.value
+                        _activeSuite.value = repo.activeSuite.value
                         _isInitialized.value = true
                         Result.success(Unit)
                     },

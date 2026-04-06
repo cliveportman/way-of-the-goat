@@ -19,6 +19,8 @@ kotlinx-serialization = "1.8.0"
 turbine = "1.2.0"
 ktor = "3.0.3"
 sqldelight = "2.0.2"
+detekt = "1.23.8"
+detekt-compose = "0.4.28"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -47,6 +49,7 @@ sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sq
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+detekt-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt-compose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -56,3 +59,4 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -105,6 +106,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    detektPlugins(libs.detekt.compose)
 }
 
 sqldelight {
@@ -113,5 +115,15 @@ sqldelight {
             packageName.set("co.theportman.way_of_the_goat.data.database")
         }
     }
+}
+
+detekt {
+    config.setFrom(files("$rootDir/../detekt.yml"))
+    source.setFrom(
+        "src/commonMain/kotlin",
+        "src/androidMain/kotlin",
+        "src/iosMain/kotlin",
+        "src/commonTest/kotlin",
+    )
 }
 

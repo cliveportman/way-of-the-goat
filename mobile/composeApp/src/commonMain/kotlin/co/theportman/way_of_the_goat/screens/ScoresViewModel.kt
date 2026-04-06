@@ -3,7 +3,6 @@ package co.theportman.way_of_the_goat.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.theportman.way_of_the_goat.data.cache.ServingsDataManager
-import co.theportman.way_of_the_goat.data.scoring.DailyScoreResult
 import co.theportman.way_of_the_goat.data.scoring.DailyTotalsForDisplay
 import co.theportman.way_of_the_goat.data.scoring.ScoreCalculator
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
@@ -68,7 +67,7 @@ class ScoresViewModel : ViewModel() {
     val profileSwitcherState: StateFlow<ProfileSwitcherState> = _profileSwitcherState.asStateFlow()
 
     // One-shot error events for snackbar display
-    private val _errorEvent = MutableSharedFlow<String>()
+    private val _errorEvent = MutableSharedFlow<String>(extraBufferCapacity = 1)
     val errorEvent: SharedFlow<String> = _errorEvent.asSharedFlow()
 
     // Expose active suite for UI
@@ -154,11 +153,11 @@ class ScoresViewModel : ViewModel() {
                         // Success - data is automatically updated via StateFlow
                     },
                     onFailure = { error ->
-                        println("Error refreshing date: ${error.message}")
+                        _errorEvent.emit(error.message ?: "Failed to refresh data")
                     }
                 )
             } catch (e: Exception) {
-                println("Exception refreshing date: ${e.message}")
+                _errorEvent.emit(e.message ?: "Failed to refresh data")
             } finally {
                 _isRefreshing.value = false
             }
@@ -233,7 +232,7 @@ class ScoresViewModel : ViewModel() {
             servingsDataManager.incrementServings(date, categoryId, maxServings).fold(
                 onSuccess = { /* UI updates via StateFlow */ },
                 onFailure = { error ->
-                    println("Error incrementing servings: ${error.message}")
+                    _errorEvent.emit(error.message ?: "Failed to update servings")
                 }
             )
         }
@@ -247,7 +246,7 @@ class ScoresViewModel : ViewModel() {
             servingsDataManager.decrementServings(date, categoryId).fold(
                 onSuccess = { /* UI updates via StateFlow */ },
                 onFailure = { error ->
-                    println("Error decrementing servings: ${error.message}")
+                    _errorEvent.emit(error.message ?: "Failed to update servings")
                 }
             )
         }

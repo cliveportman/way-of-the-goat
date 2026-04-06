@@ -30,7 +30,8 @@ These steps are performed by the main session before dispatching the Nick Butche
 2. Run `git fetch origin <branch>` to ensure the latest remote state is available. Do NOT rely on a local branch which may be out of date.
 3. Call the `EnterWorktree` tool (with a name like `app-review-<number>`) — this switches the session into an isolated worktree.
 4. Inside the worktree, run `git reset --hard origin/<branch>` to switch to the PR branch. (Safe — the worktree is isolated and will be removed on `ExitWorktree`.)
-5. Dispatch the Nick Butcher agent (see Agent Routing below) to perform the review inside the worktree.
+5. From the `mobile/` directory in the worktree, run `./gradlew detekt`. Note any failures — pass them to Nick Butcher as pre-identified Critical issues.
+6. Dispatch the Nick Butcher agent (see Agent Routing below) to perform the review inside the worktree.
 
 ---
 
@@ -55,6 +56,8 @@ Use the **Nick Butcher** agent for this review. Before reviewing, the agent shou
 - `.claude/skills/kmp-review-criteria/SKILL.md` — the full review checklist
 - `.claude/skills/kmp-conventions/SKILL.md` — architecture, patterns, naming
 - `mobile/CLAUDE.md` — project-specific conventions and design token system
+
+If `./gradlew detekt` (step 5 above) produced violations, include them in Nick Butcher's prompt so they are surfaced as Critical issues without requiring the agent to run Bash.
 
 ---
 

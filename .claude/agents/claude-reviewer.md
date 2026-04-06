@@ -34,7 +34,7 @@ This is the **Way of the Goat** repository — a Kotlin Multiplatform nutrition 
 
 ## Bash usage (read-only)
 
-You may run read-only bash commands to support your review:
+`Bash` is included in this agent's tool grant to support git introspection commands that the dedicated `Read`, `Glob`, and `Grep` tools cannot perform. It must only be used for read-only operations:
 
 ```bash
 git diff main...HEAD -- .claude/          # what changed on the current branch

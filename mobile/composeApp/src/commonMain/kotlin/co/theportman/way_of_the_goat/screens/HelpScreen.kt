@@ -22,8 +22,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.invisibleToUser
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.FoodCategory
@@ -275,6 +273,7 @@ private fun HelpScreenPreviewLight() {
 @Preview(name = "FoodCategoryGuideEntry")
 @Composable
 private fun FoodCategoryGuideEntryPreview() {
+    // safe: BALANCED always contains the "fruit" category
     val fruitCategory = SuiteDefinitions.BALANCED.getCategoryById(CategoryId("fruit"))!!
     WayOfTheGoatTheme(darkTheme = true) {
         FoodCategoryGuideEntry(
@@ -404,12 +403,12 @@ private const val OTHER_STUFF_EATING_ON_THE_RUN_TITLE = "Eating on the run"
 private const val OTHER_STUFF_EATING_ON_THE_RUN =
     "Anything you eat while exercising doesn't count. So go run an ultramarathon and stuff your face while doing so!"
 private const val OTHER_STUFF_PROCESSED_TITLE = "Processed vs unprocessed"
-private val OTHER_STUFF_PROCESSED_CONTENT: String = "Matt (author of {Racing Weight}) is quite keen on unprocessed food, and the science is only getting stronger. It's not that all processed food is bad, but you'll find most of it is low quality. So if you can steer clear of it, you probably should."
+private const val OTHER_STUFF_PROCESSED_CONTENT: String = "Matt (author of {Racing Weight}) is quite keen on unprocessed food, and the science is only getting stronger. It's not that all processed food is bad, but you'll find most of it is low quality. So if you can steer clear of it, you probably should."
 private const val OTHER_STUFF_PROTEIN_SHAKES_TITLE = "Protein shakes"
 private const val OTHER_STUFF_PROTEIN_SHAKES =
     "Unsweetened whey protein fits the nutrition profile of lean proteins, so count it as that. The sweetened powders and shakes can contain surprising amounts of sugar or artificial sweetener though, so you'll need to use your judgement there - we'd probably make a large shake and treat it as 1 portion of lean proteins and 1 portion of sweets."
 private const val OTHER_STUFF_OFFICIAL_APP_TITLE = "There is already an official app"
-private val OTHER_STUFF_OFFICIAL_APP_CONTENT: String = "There is, and I've paid for it and used it for several weeks. But there's a lot about it that I don't like and development seems to have stagnated, so I built my own. If you feel bad for Matt, buy his book {Racing Weight} (or any of his other books). Actually, please just do that anyway!"
+private const val OTHER_STUFF_OFFICIAL_APP_CONTENT: String = "There is, and I've paid for it and used it for several weeks. But there's a lot about it that I don't like and development seems to have stagnated, so I built my own. If you feel bad for Matt, buy his book {Racing Weight} (or any of his other books). Actually, please just do that anyway!"
 
 // ── Technical questions section content ──
 private const val TECHNICAL_WHAT_HAPPENS_TO_DATA_TITLE = "What happens to your data?"
@@ -422,7 +421,7 @@ private const val TECHNICAL_ACCOUNT_TITLE = "Do I need an account?"
 private const val TECHNICAL_ACCOUNT =
     "No. I want people to use this app without an account and use it without needing an internet connection. If I add a cloud backup feature, that will require an account but it'll be an opt-in feature only."
 private const val TECHNICAL_SUGGESTIONS_TITLE = "Suggestions for improvement"
-private val TECHNICAL_SUGGESTIONS_CONTENT: String = "If you have any suggestions, get in touch using {wayofthegoat@theportman.co} - yes, that is just a .co at the end."
+private const val TECHNICAL_SUGGESTIONS_CONTENT: String = "If you have any suggestions, get in touch using {wayofthegoat@theportman.co} - yes, that is just a .co at the end."
 
 /**
  * Helper function to create AnnotatedString with italic formatting for braced content.

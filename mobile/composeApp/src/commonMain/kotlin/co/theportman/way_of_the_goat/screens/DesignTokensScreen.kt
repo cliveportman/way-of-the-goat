@@ -35,18 +35,18 @@ import co.theportman.way_of_the_goat.ui.theme.GoatStroke
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 @Composable
-fun DesignTokensScreen() {
+fun DesignTokensScreen(modifier: Modifier = Modifier) {
     val colors = MaterialTheme.goatColors
     val typography = MaterialTheme.typography
 
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(colors.surface)
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(horizontal = GoatSpacing.s16),
+        verticalArrangement = Arrangement.spacedBy(GoatSpacing.s8)
     ) {
-        item { Spacer(Modifier.height(16.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s16)) }
 
         // -- Colours: Primitives --
         item { SectionHeading("Colours \u2014 Primitives") }
@@ -148,7 +148,7 @@ fun DesignTokensScreen() {
         }
 
         // -- Colours: Semantic (Dark) --
-        item { Spacer(Modifier.height(8.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s8)) }
         item { SectionHeading("Colours \u2014 Semantic (Dark)") }
 
         val semanticTokens = listOf(
@@ -181,7 +181,7 @@ fun DesignTokensScreen() {
         }
 
         // -- Typography --
-        item { Spacer(Modifier.height(8.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s8)) }
         item { SectionHeading("Typography") }
 
         val typographySlots = listOf(
@@ -209,7 +209,7 @@ fun DesignTokensScreen() {
         }
 
         // -- Spacing --
-        item { Spacer(Modifier.height(8.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s8)) }
         item { SectionHeading("Spacing") }
 
         val spacingValues = listOf(
@@ -234,7 +234,7 @@ fun DesignTokensScreen() {
         }
 
         // -- Sizing --
-        item { Spacer(Modifier.height(8.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s8)) }
         item { SectionHeading("Sizing") }
 
         val sizingValues = listOf(
@@ -260,7 +260,7 @@ fun DesignTokensScreen() {
         }
 
         // -- Radius --
-        item { Spacer(Modifier.height(8.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s8)) }
         item { SectionHeading("Radius") }
 
         val radiusValues = listOf(
@@ -278,7 +278,7 @@ fun DesignTokensScreen() {
         }
 
         // -- Stroke --
-        item { Spacer(Modifier.height(8.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s8)) }
         item { SectionHeading("Stroke") }
 
         val strokeValues = listOf(
@@ -293,7 +293,7 @@ fun DesignTokensScreen() {
             }
         }
 
-        item { Spacer(Modifier.height(32.dp)) }
+        item { Spacer(Modifier.height(GoatSpacing.s32)) }
     }
 }
 
@@ -303,7 +303,7 @@ private fun SectionHeading(title: String) {
         text = title,
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.goatColors.onSurface,
-        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+        modifier = Modifier.padding(top = GoatSpacing.s16, bottom = GoatSpacing.s8)
     )
 }
 
@@ -316,25 +316,25 @@ private fun PaletteRow(familyName: String, shades: List<Pair<String, Color>>) {
             text = familyName,
             style = MaterialTheme.typography.bodySmall,
             color = colors.onSurfaceVariant,
-            modifier = Modifier.padding(bottom = 4.dp)
+            modifier = Modifier.padding(bottom = GoatSpacing.s4)
         )
         Row(
             modifier = Modifier.horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
+            horizontalArrangement = Arrangement.spacedBy(GoatSpacing.s8)
         ) {
             shades.forEach { (shade, color) ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .size(GoatSizing.xl)
+                            .clip(RoundedCornerShape(GoatRadius.xs))
                             .background(color)
                     )
                     Text(
                         text = shade,
                         style = MaterialTheme.typography.bodySmall,
                         color = colors.onSurfaceVariant,
-                        modifier = Modifier.padding(top = 2.dp)
+                        modifier = Modifier.padding(top = GoatSpacing.s2)
                     )
                 }
             }
@@ -349,21 +349,21 @@ private fun SemanticColorRow(name: String, color: Color) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = GoatSpacing.s4),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .size(24.dp)
-                .clip(RoundedCornerShape(4.dp))
+                .size(GoatSizing.sm)
+                .clip(RoundedCornerShape(GoatRadius.xs))
                 .background(color)
                 .border(
-                    width = 1.dp,
+                    width = GoatStroke.default,
                     color = colors.outline.copy(alpha = 0.3f),
-                    shape = RoundedCornerShape(4.dp)
+                    shape = RoundedCornerShape(GoatRadius.xs)
                 )
         )
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(GoatSpacing.s12))
         Text(
             text = name,
             style = MaterialTheme.typography.bodySmall,
@@ -382,7 +382,7 @@ private fun SemanticColorRow(name: String, color: Color) {
 private fun TypographyRow(name: String, style: TextStyle) {
     val colors = MaterialTheme.goatColors
 
-    Column(modifier = Modifier.padding(vertical = 4.dp)) {
+    Column(modifier = Modifier.padding(vertical = GoatSpacing.s4)) {
         Text(
             text = name,
             style = MaterialTheme.typography.bodySmall,
@@ -403,26 +403,26 @@ private fun SpacingRow(name: String, value: Dp) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = GoatSpacing.s4),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = name,
             style = MaterialTheme.typography.bodySmall,
             color = colors.onSurface,
-            modifier = Modifier.width(40.dp)
+            modifier = Modifier.width(GoatSpacing.s40)
         )
-        Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(GoatSpacing.s8))
         Box(
             modifier = Modifier
                 .width(value.coerceAtMost(280.dp))
-                .height(12.dp)
+                .height(GoatSpacing.s12)
                 .background(
                     color = colors.primary,
-                    shape = RoundedCornerShape(2.dp)
+                    shape = RoundedCornerShape(GoatSpacing.s2)
                 )
         )
-        Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(GoatSpacing.s8))
         Text(
             text = "${value.value.toInt()}dp",
             style = MaterialTheme.typography.bodySmall,
@@ -438,7 +438,7 @@ private fun SizingRow(name: String, value: Dp) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = GoatSpacing.s4),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -459,24 +459,24 @@ private fun SizingRow(name: String, value: Dp) {
 private fun RadiusRow(name: String, value: Dp) {
     val colors = MaterialTheme.goatColors
     // For "full" radius, cap the visual corner radius so the box is visible
-    val visualRadius = if (value > 48.dp) 24.dp else value
+    val visualRadius = if (value > GoatSizing.xl) GoatSizing.sm else value
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = GoatSpacing.s4),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .size(48.dp)
+                .size(GoatSizing.xl)
                 .border(
-                    width = 2.dp,
+                    width = GoatStroke.emphasis,
                     color = colors.primary,
                     shape = RoundedCornerShape(visualRadius)
                 )
         )
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(GoatSpacing.s12))
         Text(
             text = name,
             style = MaterialTheme.typography.bodySmall,
@@ -498,19 +498,19 @@ private fun StrokeRow(name: String, value: Dp) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = GoatSpacing.s4),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .size(48.dp)
+                .size(GoatSizing.xl)
                 .border(
                     width = value,
                     color = colors.primary,
-                    shape = RoundedCornerShape(4.dp)
+                    shape = RoundedCornerShape(GoatRadius.xs)
                 )
         )
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(GoatSpacing.s12))
         Text(
             text = name,
             style = MaterialTheme.typography.bodySmall,

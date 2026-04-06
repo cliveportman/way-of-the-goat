@@ -1,6 +1,5 @@
 package co.theportman.way_of_the_goat.data.scoring
 
-import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.FoodCategory
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
