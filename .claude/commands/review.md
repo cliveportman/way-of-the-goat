@@ -43,7 +43,7 @@ Use the GitHub MCP server:
 Run:
 
 ```bash
-base=$(git merge-base HEAD $(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||') 2>/dev/null || git merge-base HEAD kmp 2>/dev/null || git merge-base HEAD main 2>/dev/null || echo "HEAD~1")
+base=$(git merge-base HEAD $(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||') 2>/dev/null || git merge-base HEAD main 2>/dev/null || echo "HEAD~1")
 git diff "$base"...HEAD --name-only
 ```
 
@@ -76,7 +76,7 @@ If a PR number was given:
 
 1. Run `git fetch origin <branch>` to get the latest remote state
 2. Call `EnterWorktree` (name: `review-<pr-number>-mobile`) — this switches into an isolated worktree
-3. Inside the worktree, run `git reset --hard origin/<branch>` to switch to the PR branch
+3. Inside the worktree, run `git switch --detach origin/<branch>` to switch to the PR branch
 4. From the `mobile/` directory, run `./gradlew detekt`. Note any failures — pass them to Nick Butcher as pre-identified Critical issues.
 5. Dispatch the `nick-butcher` agent (see Agent Dispatch below)
 6. After the agent completes, call `ExitWorktree` with `action: "remove"`
@@ -146,11 +146,15 @@ If a PR number was given:
 
 1. Run `git fetch origin <branch>`
 2. Call `EnterWorktree` (name: `review-<pr-number>-web`)
-3. Inside the worktree, run `git reset --hard origin/<branch>`
+3. Inside the worktree, run `git switch --detach origin/<branch>`
 4. Dispatch the `addy-osmani` agent
 5. After the agent completes, call `ExitWorktree` with `action: "remove"`
 
 If no PR number, dispatch `addy-osmani` in the current working directory.
+
+#### Re-review Mode (`--recheck`)
+
+When `--recheck` is passed, run a full review regardless — there is no scoping to recently-changed files for the web domain. The previous review's follow-up is handled by the orchestrator (see Step 5).
 
 #### Agent Dispatch — addy-osmani
 
@@ -159,6 +163,8 @@ Instruct `addy-osmani` to:
 - Read `.claude/skills/web-review-criteria/SKILL.md` before reviewing
 - Focus on files under `website/` that appear in the changed file list
 - Use the output format defined in its agent file
+
+The web review is **post-and-proceed**: collect the agent's output and include it in the combined Step 5 comment. There is no interactive fix loop — the user applies fixes and runs `/review --recheck` for a follow-up.
 
 ---
 
@@ -170,15 +176,21 @@ If a PR number was given:
 
 1. Run `git fetch origin <branch>`
 2. Call `EnterWorktree` (name: `review-<pr-number>-rust`)
-3. Inside the worktree, run `git reset --hard origin/<branch>`
+3. Inside the worktree, run `git switch --detach origin/<branch>`
 4. Dispatch the `steve-klabnik` agent
 5. After the agent completes, call `ExitWorktree` with `action: "remove"`
 
 If no PR number, dispatch `steve-klabnik` in the current working directory.
 
+#### Re-review Mode (`--recheck`)
+
+When `--recheck` is passed, run a full review regardless — there is no scoping to recently-changed files for the Rust/WASM domain.
+
 #### Agent Dispatch — steve-klabnik
 
 Instruct `steve-klabnik` to focus on `website/**/*.rs` and `website/**/Cargo.toml` files that appear in the changed file list.
+
+The Rust/WASM review is **post-and-proceed**: collect the agent's output and include it in the combined Step 5 comment. There is no interactive fix loop.
 
 ---
 

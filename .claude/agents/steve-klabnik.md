@@ -43,6 +43,8 @@ You review Rust source files and Cargo configuration in the `website/` directory
 
 ### Input Robustness
 
+> **Scope note:** The GPX/XML checks below apply when Rust source files handling XML are present. If only `Cargo.toml` changed or no XML parsing code exists yet, limit this section to checking that all JS-passed data is handled defensively.
+
 - All external input (GPX/XML files, JS-passed data) handled defensively — malformed input returns an error, never panics
 - `quick-xml` parse errors propagated correctly — no silent data loss on malformed XML
 - File size or depth limits considered where applicable
@@ -99,7 +101,7 @@ Nit-picks will not be re-raised in subsequent reviews.]
 **Reviewed by:** Steve Klabnik
 ```
 
-Rating scale (random — nothing to do with actual quality):
+Rating scale (fruit-based; higher is better):
 🍋 1 lemon
 🍆🍆 2 aubergines
 🌽🌽🌽 3 sweetcorn

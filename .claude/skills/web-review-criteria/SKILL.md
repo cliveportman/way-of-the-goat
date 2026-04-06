@@ -1,6 +1,7 @@
 ---
 name: web-review-criteria
 description: Checklist for reviewing static HTML/CSS/JS and WASM loading code. Used by addy-osmani (reviewer).
+user-invocable: false
 ---
 
 # Web Review Criteria
