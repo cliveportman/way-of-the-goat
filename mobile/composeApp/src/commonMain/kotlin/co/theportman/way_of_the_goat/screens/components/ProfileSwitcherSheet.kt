@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import co.theportman.way_of_the_goat.ui.theme.GoatPalette
+import co.theportman.way_of_the_goat.ui.theme.GoatRadius
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
@@ -190,7 +191,7 @@ fun ProfileSwitcherSheet(
                     disabledContainerColor = MaterialTheme.goatColors.surfaceContainerHigh,
                     disabledContentColor = MaterialTheme.goatColors.onSurfaceVariant
                 ),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(GoatRadius.sm)
             ) {
                 Text(
                     text = if (isEmptyPastDay) "Select profile" else "Switch profile",
@@ -242,9 +243,9 @@ private fun ProfileCard(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(GoatRadius.md))
             .background(MaterialTheme.goatColors.surfaceContainerHigh)
-            .border(borderWidth, borderColor, RoundedCornerShape(12.dp))
+            .border(borderWidth, borderColor, RoundedCornerShape(GoatRadius.md))
             .selectable(
                 selected = isSelected,
                 onClick = onClick,
@@ -311,7 +312,7 @@ private fun WarningBanner(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(GoatRadius.sm))
             .background(GoatPalette.Amber950)
             .semantics(mergeDescendants = true) {
                 contentDescription = "Warning: Data will be lost. Switching to $profileName will reset this day's data."

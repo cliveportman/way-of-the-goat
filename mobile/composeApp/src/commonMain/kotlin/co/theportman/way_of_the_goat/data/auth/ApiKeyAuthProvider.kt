@@ -6,11 +6,11 @@ import io.ktor.util.encodeBase64
  * Authentication provider using intervals.icu API key.
  * Uses Basic Auth with username "API_KEY" and the API key as password.
  *
- * TODO: Remove hardcoded API key before committing to version control!
- * This is temporary for development only. Will be replaced with OAuth flow.
+ * The API key must be provided at construction time via BuildConfig or
+ * an untracked local configuration file. Do not hardcode keys here.
  */
 class ApiKeyAuthProvider(
-    private val apiKey: String = "7175zqcded0ia5at5t1tlsq4q"
+    private val apiKey: String = ""
 ) : IntervalsAuthProvider {
 
     override suspend fun getAuthHeader(): String {

@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -35,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import co.theportman.way_of_the_goat.ui.theme.GoatPalette
+import co.theportman.way_of_the_goat.ui.theme.GoatRadius
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
@@ -73,14 +73,14 @@ fun DataLossConfirmationDialog(
                 .shadow(
                     elevation = 24.dp,
                     spotColor = MaterialTheme.goatColors.error.copy(alpha = 0.3f),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(GoatRadius.lg)
                 )
                 .border(
                     width = 1.dp,
                     color = GoatPalette.Red600.copy(alpha = 0.5f),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(GoatRadius.lg)
                 ),
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(GoatRadius.lg),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.goatColors.surfaceContainer)
         ) {
             Column(
@@ -125,12 +125,12 @@ fun DataLossConfirmationDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(GoatRadius.sm))
                         .background(GoatPalette.Red900.copy(alpha = 0.4f))
                         .border(
                             width = 1.dp,
                             color = GoatPalette.Red600.copy(alpha = 0.6f),
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(GoatRadius.sm)
                         )
                         .semantics {
                             contentDescription = "Important: This action cannot be undone. Consider completing today's profile before switching tomorrow."
@@ -159,9 +159,9 @@ fun DataLossConfirmationDialog(
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.goatColors.error,
-                            contentColor = Color.White
+                            contentColor = MaterialTheme.colorScheme.onError
                         ),
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(GoatRadius.sm)
                     ) {
                         Text(
                             text = "Switch anyway",
@@ -180,7 +180,7 @@ fun DataLossConfirmationDialog(
                             contentColor = MaterialTheme.goatColors.onSurfaceVariant
                         ),
                         border = null,
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(GoatRadius.sm)
                     ) {
                         Text(
                             text = "Keep current profile",

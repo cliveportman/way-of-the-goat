@@ -258,7 +258,7 @@ class ServingsRepository(
                 val now = Clock.System.now().toEpochMilliseconds()
 
                 // Get or create daily servings record
-                var existing = queries.getDailyServingsRecordForDate(
+                val existing = queries.getDailyServingsRecordForDate(
                     date.toString()
                 ).executeAsOneOrNull()
 

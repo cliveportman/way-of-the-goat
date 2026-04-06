@@ -15,15 +15,24 @@ class IntervalsRepository {
 
     // TODO: Replace with dependency injection
     private val authProvider = ApiKeyAuthProvider()
-    private val httpClient = HttpClientFactory.create(authProvider)
-    private val apiClient = IntervalsApiClient(httpClient)
+    private var httpClient: io.ktor.client.HttpClient? = null
+    private var apiClient: IntervalsApiClient? = null
+
+    private suspend fun getApiClient(): IntervalsApiClient {
+        if (apiClient == null) {
+            val client = HttpClientFactory.create(authProvider)
+            httpClient = client
+            apiClient = IntervalsApiClient(client)
+        }
+        return apiClient!!
+    }
 
     /**
      * Get wellness data for a date range
      */
     suspend fun getWellness(oldest: String, newest: String): Result<List<WellnessData>> {
         return try {
-            val data = apiClient.getWellness(oldest, newest)
+            val data = getApiClient().getWellness(oldest, newest)
             Result.success(data)
         } catch (e: CancellationException) {
             throw e
@@ -37,7 +46,7 @@ class IntervalsRepository {
      */
     suspend fun getActivities(oldest: String, newest: String): Result<List<Activity>> {
         return try {
-            val data = apiClient.getActivities(oldest, newest)
+            val data = getApiClient().getActivities(oldest, newest)
             Result.success(data)
         } catch (e: CancellationException) {
             throw e
@@ -51,7 +60,7 @@ class IntervalsRepository {
      */
     suspend fun getTodaysWellness(): Result<WellnessData?> {
         return try {
-            val data = apiClient.getTodaysWellness()
+            val data = getApiClient().getTodaysWellness()
             Result.success(data)
         } catch (e: CancellationException) {
             throw e
@@ -65,7 +74,7 @@ class IntervalsRepository {
      */
     suspend fun getRecentActivities(): Result<List<Activity>> {
         return try {
-            val data = apiClient.getRecentActivities()
+            val data = getApiClient().getRecentActivities()
             Result.success(data)
         } catch (e: CancellationException) {
             throw e
@@ -78,6 +87,6 @@ class IntervalsRepository {
      * Clean up resources when done
      */
     fun close() {
-        httpClient.close()
+        httpClient?.close()
     }
 }

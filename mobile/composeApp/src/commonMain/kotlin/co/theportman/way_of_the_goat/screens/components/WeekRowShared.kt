@@ -31,6 +31,11 @@ internal fun BlankTile(
 }
 
 /**
+ * Single-letter day-of-week labels for header rows (Monday-first).
+ */
+internal val dayOfWeekLabels = listOf("M", "T", "W", "T", "F", "S", "S")
+
+/**
  * Fallback day name for tiles with no data, by Monday-first index.
  */
 internal fun dayNameForIndex(index: Int): String {

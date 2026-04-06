@@ -32,12 +32,11 @@ import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
 import co.theportman.way_of_the_goat.screens.components.ScoreWeekRow
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import androidx.compose.ui.text.style.TextAlign
+import co.theportman.way_of_the_goat.screens.components.dayOfWeekLabels
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-private val dayOfWeekLabels = listOf("M", "T", "W", "T", "F", "S", "S")
 
 @Composable
 fun ScoresOverTimeScreen(
@@ -48,7 +47,7 @@ fun ScoresOverTimeScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(Unit) {
         viewModel.errors.collect { message ->
             snackbarHostState.showSnackbar(message)
         }

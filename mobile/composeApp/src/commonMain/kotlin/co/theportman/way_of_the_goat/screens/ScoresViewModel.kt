@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
+import co.theportman.way_of_the_goat.util.logError
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
@@ -375,7 +376,7 @@ class ScoresViewModel : ViewModel() {
                 onFailure = { error ->
                     hasError = true
                     _errorEvent.emit("Failed to switch profile. Please try again.")
-                    println("Error switching profile: ${error.message}")
+                    logError("ScoresViewModel", "Error switching profile: ${error.message}")
                 }
             )
 
@@ -386,7 +387,7 @@ class ScoresViewModel : ViewModel() {
                     onFailure = { error ->
                         hasError = true
                         _errorEvent.emit("Failed to update default profile. Please try again.")
-                        println("Error setting active suite: ${error.message}")
+                        logError("ScoresViewModel", "Error setting active suite: ${error.message}")
                     }
                 )
             }

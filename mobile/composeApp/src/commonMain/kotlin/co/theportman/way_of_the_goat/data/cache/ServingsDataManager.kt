@@ -9,6 +9,7 @@ import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
+import co.theportman.way_of_the_goat.util.logError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -121,7 +122,7 @@ class ServingsDataManager private constructor() : ServingsDataSource {
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
                         onSuccess = { didLoad = true },
-                        onFailure = { /* Log error but don't fail */ }
+                        onFailure = { e -> logError("ServingsDataManager", "Failed to load date range: ${e.message}") }
                     )
                 }
             }
@@ -133,7 +134,7 @@ class ServingsDataManager private constructor() : ServingsDataSource {
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
                         onSuccess = { didLoad = true },
-                        onFailure = { /* Log error but don't fail */ }
+                        onFailure = { e -> logError("ServingsDataManager", "Failed to load date range: ${e.message}") }
                     )
                 }
             }

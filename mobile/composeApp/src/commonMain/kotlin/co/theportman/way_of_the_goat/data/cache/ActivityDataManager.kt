@@ -2,6 +2,7 @@ package co.theportman.way_of_the_goat.data.cache
 
 import co.theportman.way_of_the_goat.data.remote.models.Activity
 import co.theportman.way_of_the_goat.data.repository.IntervalsRepository
+import co.theportman.way_of_the_goat.util.logError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -70,7 +71,7 @@ object ActivityDataManager : ActivityDataSource {
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
                         onSuccess = { didLoad = true },
-                        onFailure = { /* Log error but don't fail */ }
+                        onFailure = { e -> logError("ActivityDataManager", "Failed to load date range: ${e.message}") }
                     )
                 }
             }
@@ -82,7 +83,7 @@ object ActivityDataManager : ActivityDataSource {
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
                         onSuccess = { didLoad = true },
-                        onFailure = { /* Log error but don't fail */ }
+                        onFailure = { e -> logError("ActivityDataManager", "Failed to load date range: ${e.message}") }
                     )
                 }
             }
@@ -146,7 +147,8 @@ object ActivityDataManager : ActivityDataSource {
      * Get activities for a specific date
      */
     fun getActivitiesForDate(date: LocalDate): List<Activity> {
-        return allActivities.filter { activity ->
+        val snapshot = _activitiesFlow.value
+        return snapshot.filter { activity ->
             activity.startDateLocal.isNotEmpty() &&
             activity.startDateLocal.substringBefore('T') == date.toString()
         }
@@ -156,7 +158,8 @@ object ActivityDataManager : ActivityDataSource {
      * Get activities for a date range
      */
     fun getActivitiesForRange(oldest: LocalDate, newest: LocalDate): List<Activity> {
-        return allActivities.filter { activity ->
+        val snapshot = _activitiesFlow.value
+        return snapshot.filter { activity ->
             if (activity.startDateLocal.isEmpty()) return@filter false
             val activityDate = activity.startDateLocal.substringBefore('T')
             activityDate >= oldest.toString() && activityDate <= newest.toString()
@@ -184,9 +187,9 @@ object ActivityDataManager : ActivityDataSource {
 
             result.fold(
                 onSuccess = { newActivities ->
-                    // Add new activities and remove duplicates
-                    val existingIds = allActivities.map { it.id }.toSet()
-                    val uniqueNewActivities = newActivities.filter { it.id !in existingIds }
+                    // Add new activities and remove duplicates (skip null IDs from dedup)
+                    val existingIds = allActivities.mapNotNull { it.id }.toSet()
+                    val uniqueNewActivities = newActivities.filter { it.id == null || it.id !in existingIds }
                     allActivities.addAll(uniqueNewActivities)
 
                     // Update date range
@@ -217,12 +220,14 @@ object ActivityDataManager : ActivityDataSource {
     /**
      * Clear all cached data
      */
-    fun clear() {
-        allActivities.clear()
-        oldestLoadedDate = null
-        newestLoadedDate = null
-        loadingRanges.clear()
-        _activitiesFlow.value = emptyList()
+    suspend fun clear() {
+        mutex.withLock {
+            allActivities.clear()
+            oldestLoadedDate = null
+            newestLoadedDate = null
+            loadingRanges.clear()
+            _activitiesFlow.value = emptyList()
+        }
     }
 
     /**
