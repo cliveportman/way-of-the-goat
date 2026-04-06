@@ -133,29 +133,42 @@ fn local_tag_name(tag: &str) -> &str {
 fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
     let mut points: Vec<TrackPoint> = Vec::new();
     let mut current: Option<TrackPoint> = None;
-    let mut current_tag = "";
 
+    // Work entirely on bytes to avoid slicing mid-codepoint.
+    // Only slice back into `content` when we know we're at ASCII `<` or `>` boundaries.
     let bytes = content.as_bytes();
     let mut i = 0usize;
 
     while i < bytes.len() {
         if bytes[i] == b'<' {
             let tag_start = i + 1;
-            // Handle CDATA and comments gracefully
-            if content[tag_start..].starts_with("![CDATA[") {
-                // skip to ]]>
+            // Handle CDATA — skip to ]]>
+            if bytes.get(tag_start..tag_start + 8) == Some(b"![CDATA[") {
                 if let Some(off) = content[i..].find("]]>") {
                     i += off + 3;
-                    continue;
+                } else {
+                    return Err("Unterminated CDATA section".to_string());
                 }
+                continue;
             }
-            if content[tag_start..].starts_with("!--") {
+            // Handle comments — skip to -->
+            if bytes.get(tag_start..tag_start + 3) == Some(b"!--") {
                 if let Some(off) = content[i..].find("-->") {
                     i += off + 3;
-                    continue;
+                } else {
+                    return Err("Unterminated comment".to_string());
                 }
+                continue;
             }
-            let j = content[tag_start..].find('>').map(|o| tag_start + o).unwrap_or(bytes.len() - 1);
+            // Find closing '>' by scanning bytes (safe: '>' is single-byte ASCII)
+            let mut j = tag_start;
+            while j < bytes.len() && bytes[j] != b'>' {
+                j += 1;
+            }
+            if j >= bytes.len() {
+                break;
+            }
+            // tag_start..j are between '<' and '>' — all tag content is ASCII in valid GPX
             let tag = &content[tag_start..j];
             i = j + 1;
 
@@ -167,22 +180,21 @@ fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
                 if let (Some(lat), Some(lon)) = (lat, lon) {
                     current = Some(TrackPoint { lat, lon, ele: None, time_s: None, hr: None });
                 }
-                current_tag = "trkpt";
             } else if tag.starts_with("/trkpt") || tag == "/trkpt" {
                 if let Some(pt) = current.take() {
                     points.push(pt);
                 }
-                current_tag = "";
             } else if current.is_some() && !local.is_empty() {
                 // Opening a child element — read its text content immediately
                 match local {
                     "ele" | "time" | "hr" => {
-                        // read text until next <
+                        // read text until next '<' (scanning bytes — safe)
                         let text_start = i;
                         while i < bytes.len() && bytes[i] != b'<' {
                             i += 1;
                         }
-                        let text = content[text_start..i].trim();
+                        let text = &content[text_start..i];
+                        let text = text.trim();
                         if !text.is_empty() {
                             if let Some(ref mut pt) = current {
                                 match local {
@@ -193,11 +205,8 @@ fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
                                 }
                             }
                         }
-                        current_tag = local;
                     }
-                    _ => {
-                        current_tag = local;
-                    }
+                    _ => {}
                 }
             }
         } else {
@@ -205,7 +214,6 @@ fn parse_gpx(content: &str) -> Result<Vec<TrackPoint>, String> {
         }
     }
 
-    let _ = current_tag; // suppress unused warning
     Ok(points)
 }
 
@@ -495,7 +503,7 @@ fn best_1km_vo2(segments: &[Segment], effective_max_hr: f64) -> Option<PeakKmRes
     best
 }
 
-fn analyze(points: &[TrackPoint], weight_kg: f64, max_hr_input: u32) -> AnalysisResult {
+fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> AnalysisResult {
     if points.len() < 10 {
         return AnalysisResult {
             total_distance_km: 0.0,
@@ -561,7 +569,6 @@ fn analyze(points: &[TrackPoint], weight_kg: f64, max_hr_input: u32) -> Analysis
         None
     };
     let max_hr_recorded = hr_vals.iter().copied().max();
-    let _min_hr_recorded = hr_vals.iter().copied().min();
 
     // Effective max HR: use user-supplied, fall back to recorded + 5%
     let effective_max_hr = if max_hr_input > 0 {
@@ -606,7 +613,7 @@ fn analyze(points: &[TrackPoint], weight_kg: f64, max_hr_input: u32) -> Analysis
             .collect();
 
         if samples.len() >= 5 {
-            samples.sort_by(|a, b| a.partial_cmp(b).unwrap());
+            samples.sort_by(|a, b| a.total_cmp(b));
             let median = samples[samples.len() / 2];
 
             // Confidence: sample count (saturates at 100) minus a penalty for high variance
@@ -617,7 +624,7 @@ fn analyze(points: &[TrackPoint], weight_kg: f64, max_hr_input: u32) -> Analysis
             let count_score = (samples.len() as f64 / 100.0).min(1.0);
             let cv_penalty = (cv / 0.25).min(1.0) * 15.0;
             let confidence_pct =
-                ((45.0 + count_score * 40.0 - cv_penalty).round() as u32).clamp(20, 85);
+                ((45.0 + count_score * 40.0 - cv_penalty).round() as i32).clamp(20, 85) as u32;
 
             estimates.push(Vo2Estimate {
                 method: "ACSM + Heart Rate (Steady-State)".to_string(),
@@ -837,8 +844,6 @@ fn analyze(points: &[TrackPoint], weight_kg: f64, max_hr_input: u32) -> Analysis
         })
         .collect();
 
-    let _ = weight_kg; // available for future absolute VO2 display
-
     AnalysisResult {
         total_distance_km: round2(total_dist_km),
         total_duration_min: round1(total_duration_min),
@@ -875,7 +880,11 @@ pub fn analyze_gpx(gpx_content: &str, weight_kg: f64, max_hr: u32) -> String {
     let points = match parse_gpx(gpx_content) {
         Ok(p) => p,
         Err(e) => {
-            return format!(r#"{{"error":"Failed to parse GPX: {}","estimates":[],"chart_points":[]}}"#, e);
+            return serde_json::json!({
+                "error": format!("Failed to parse GPX: {}", e),
+                "estimates": [],
+                "chart_points": []
+            }).to_string();
         }
     };
     let result = analyze(&points, weight_kg, max_hr);

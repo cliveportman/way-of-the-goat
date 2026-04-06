@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VO2 Max Calculator</title>
+<title>VO2 Max Calculator — Way of the Goat</title>
+<meta name="description" content="Upload a GPX file to estimate your VO2 max using ACSM, Jack Daniels, and Firstbeat methods.">
 <style>
   :root {
     --bg: #0d0d0d;
@@ -217,7 +218,7 @@
   .estimate-value {
     font-size: 32px; font-weight: 800; line-height: 1;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
   }
   .estimate-unit { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .badge {
@@ -252,7 +253,7 @@
   .fitness-cat-name {
     font-size: 22px; font-weight: 800;
     background: linear-gradient(90deg, var(--accent), #22d3ee);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
   }
   .fitness-cat-desc { font-size: 14px; color: var(--muted); margin-top: 2px; }
 
@@ -305,6 +306,18 @@
     margin-bottom: 10px;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation: none; }
+    .analyze-btn, .upload-area { transition: none; }
+    .input-wrap { transition: none; }
+  }
+
+  .upload-area:focus-within {
+    border-color: var(--accent);
+    outline: 2px solid var(--accent2);
+    outline-offset: 2px;
+  }
+
   @media (max-width: 600px) {
     .inputs { grid-template-columns: 1fr; }
     .header { padding: 16px 20px; }
@@ -316,20 +329,20 @@
 </head>
 <body>
 
-<div class="header">
+<header class="header">
   <div class="header-icon">🫀</div>
   <div>
     <h1>VO2 Max Calculator</h1>
     <p>Upload a GPX file from any GPS device or app</p>
   </div>
-</div>
+</header>
 
-<div class="container">
+<main class="container">
 
   <!-- Upload -->
   <div class="upload-area" id="dropZone">
+    <label for="fileInput" class="upload-icon">📁</label>
     <input type="file" id="fileInput" accept=".gpx">
-    <div class="upload-icon">📁</div>
     <h2>Drop your GPX file here</h2>
     <p>or click to browse — supports Garmin, Polar, Apple Watch, Strava, etc.</p>
   </div>
@@ -343,7 +356,7 @@
   <!-- Inputs -->
   <div class="inputs">
     <div class="input-group">
-      <label>Body Weight</label>
+      <label for="weightInput">Body Weight</label>
       <div class="input-wrap">
         <input type="number" id="weightInput" placeholder="70" min="20" max="300" value="">
         <span class="input-unit">kg</span>
@@ -351,7 +364,7 @@
       <p class="input-hint">Used to calculate absolute VO2 capacity</p>
     </div>
     <div class="input-group">
-      <label>Max Heart Rate</label>
+      <label for="maxHrInput">Max Heart Rate</label>
       <div class="input-wrap">
         <input type="number" id="maxHrInput" placeholder="185" min="100" max="220" value="">
         <span class="input-unit">bpm</span>
@@ -387,7 +400,7 @@
     <div id="chartsContainer"></div>
 
   </div>
-</div>
+</main>
 
 <script type="module">
 // ----------------------------------------------------------------
@@ -403,7 +416,6 @@ let pendingFile = null;
     await init();
     wasmReady = true;
     updateBtn();
-    console.log('WASM loaded');
   } catch (e) {
     console.error('WASM load failed:', e);
     showStatus('error', 'Failed to load WASM module. See console for details.');
@@ -476,8 +488,8 @@ analyzeBtn.addEventListener('click', async () => {
       renderResults(data, weightKg);
     }
   } catch (e) {
-    showStatus('error', 'Unexpected error: ' + e.message);
     console.error(e);
+    showStatus('error', 'Something went wrong analysing the file. Check the console for details.');
   } finally {
     analyzeBtn.disabled = false;
   }
@@ -511,10 +523,18 @@ function renderResults(d, weightKg) {
     if (s.hidden) continue;
     const card = document.createElement('div');
     card.className = 'stat-card';
-    card.innerHTML = `
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-value">${s.value}<span class="stat-unit">${s.unit}</span></div>
-    `;
+    const label = document.createElement('div');
+    label.className = 'stat-label';
+    label.textContent = s.label;
+    const value = document.createElement('div');
+    value.className = 'stat-value';
+    value.textContent = s.value;
+    const unit = document.createElement('span');
+    unit.className = 'stat-unit';
+    unit.textContent = s.unit;
+    value.appendChild(unit);
+    card.appendChild(label);
+    card.appendChild(value);
     grid.appendChild(card);
   }
 
@@ -888,9 +908,15 @@ function smoothArray(arr, window) {
 function showStatus(type, msg) {
   const el = document.getElementById('status');
   el.className = 'status visible ' + type;
-  el.innerHTML = type === 'loading'
-    ? `<div class="spinner"></div><span>${msg}</span>`
-    : `<span>⚠️ ${msg}</span>`;
+  el.innerHTML = '';
+  if (type === 'loading') {
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    el.appendChild(spinner);
+  }
+  const span = document.createElement('span');
+  span.textContent = type === 'loading' ? msg : '\u26A0\uFE0F ' + msg;
+  el.appendChild(span);
 }
 
 function hideStatus() {
