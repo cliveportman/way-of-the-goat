@@ -13,7 +13,7 @@ For code examples, patterns, and detailed conventions, see [`kmp-conventions`](.
 
 ## Static Analysis
 
-Run `./gradlew detekt` from `mobile/` before reviewing. It must pass clean.
+From the `mobile/` directory, run `./gradlew detekt` before reviewing. It must pass clean.
 
 - [ ] `./gradlew detekt` passes with 0 violations
 - [ ] No new `@Suppress("detekt...")` annotations without a comment justifying the suppression

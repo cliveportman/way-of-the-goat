@@ -309,7 +309,10 @@ actual class DatabaseDriverFactory {
 
 ## Build Commands
 
+Run from the `mobile/` directory.
+
 ```bash
+./gradlew detekt                        # Static analysis — must pass with 0 violations
 ./gradlew :composeApp:assembleDebug     # Build Android debug APK
 ./gradlew :composeApp:jvmTest           # Run common tests
 ./gradlew :composeApp:allTests          # Run all tests
