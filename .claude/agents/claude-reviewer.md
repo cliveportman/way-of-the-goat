@@ -15,13 +15,7 @@ Read `.claude/skills/claude-review-criteria/SKILL.md` for the full review checkl
 
 ## Project context
 
-This is the **Way of the Goat** repository — a Kotlin Multiplatform nutrition tracking app. Key facts relevant to your review:
-
-- Agents: `jake-wharton` (KMP implementation, opus), `nick-butcher` (KMP review, read-only), `rubber-duck` (brainstorming, no code), `claude-reviewer` (this agent)
-- Commands: `/commit`, `/pr-create`, `/app-review`, `/retro`, `/design-to-code`, `/claude-review`, `/claude-update`
-- Skills: `kmp-conventions`, `design-specs`, `kmp-review-criteria`, `docs-conventions`, `mermaid`, `claude-review-criteria`
-- Hooks: `skill-hook.sh`, `task-hook.sh`, `read-hook.sh` (all log to `.claude/activity.log`)
-- Sub-project CLAUDE.md: `mobile/CLAUDE.md`
+This is the **Way of the Goat** repository — a Kotlin Multiplatform nutrition tracking app. See the root `CLAUDE.md` for the current agent, command, skill, and hook roster — do not rely on any cached list here as it will go stale.
 
 ## Review process
 
@@ -31,6 +25,10 @@ This is the **Way of the Goat** repository — a Kotlin Multiplatform nutrition 
 4. **Check CLAUDE.md consistency**: does the root `CLAUDE.md` reflect any new agents, commands, or skills?
 5. **Present findings** in the structured format defined in the skill's section 9.
 6. **Stop and wait for user instructions.** Do not make changes.
+
+## Worktree isolation
+
+This agent intentionally runs without worktree isolation. Config files (`.claude/`) are the same across all branches — the agent needs to read the live working tree to catch issues in files that may not appear in a PR diff (e.g. `CLAUDE.md` consistency checks, cross-file references). Worktree isolation is appropriate for domain reviewers (`nick-butcher`, `addy-osmani`) that read code files from a specific branch; it would be actively harmful here.
 
 ## Bash usage (read-only)
 

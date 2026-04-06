@@ -143,7 +143,7 @@ After any agent, command, or skill addition:
 |---|---|---|
 | Agent filename | kebab-case | `backend-coder.md` |
 | Skill directory | kebab-case | `api-handler-pattern/` |
-| Command filename | kebab-case | `app-review.md` |
+| Command filename | kebab-case | `review.md` |
 | Hook script | kebab-case | `skill-hook.sh` |
 
 ### Scope Overlap Check

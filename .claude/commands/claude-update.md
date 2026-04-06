@@ -2,7 +2,7 @@
 
 Refresh the `claude-review-criteria` skill with new knowledge — Anthropic feature releases, Claude Code documentation changes, and relevant updates from competitor tools. Proposes specific changes for your approval before writing anything.
 
-This command does **not** review `.claude/` changes. For that, use `/claude-review`. This command maintains the knowledge base that powers those reviews.
+This command does **not** review `.claude/` changes. For that, use `/review --audit`. This command maintains the knowledge base that powers those reviews.
 
 ## Instructions
 
@@ -83,6 +83,8 @@ After presenting proposals, **stop**. Do not edit any files. Wait for the user t
 
 ### 6. Apply approved changes
 
+> **Note:** This step runs in the main Claude Code session, which has full tool access (`Edit`, `Write`). It does **not** delegate to `claude-reviewer`, which is read-only.
+
 For each approved item, edit `.claude/skills/claude-review-criteria/SKILL.md` surgically — change only the specific content being updated. Preserve all structure, headings, and surrounding content.
 
 After applying, show a brief summary of what changed (section and nature of change — no need to reproduce the full diff).
@@ -93,7 +95,7 @@ After writing, re-read the updated SKILL.md and confirm:
 
 - All nine sections are still present and coherent
 - No internal contradictions introduced (e.g. a new "opportunity" that contradicts an existing "differentiator")
-- File is still under 500 lines
+- File is still under 500 lines (use `Read` and check the final line number)
 
 If the self-check finds a problem, report it and ask whether to fix it.
 
