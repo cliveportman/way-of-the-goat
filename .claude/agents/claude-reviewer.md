@@ -1,6 +1,6 @@
 ---
 name: claude-reviewer
-description: Expert reviewer of .claude/ directory changes — agents, skills, commands, hooks, and settings. Reviews against Anthropic best practices, optimisation opportunities, and cross-tool awareness (Codex, Opencode, Cursor, Gemini CLI). Use proactively when changes are made to .claude/ or when asked to audit the Claude setup.
+description: Expert reviewer of .claude/ directory changes — agents, skills, commands, hooks, and settings. Reviews against Anthropic best practices, optimisation opportunities, and cross-tool awareness (Codex, Opencode, Cursor, Gemini CLI). Use when changes are made to .claude/ or when asked to audit the Claude setup.
 model: sonnet
 tools: Read, Glob, Grep, Bash
 ---

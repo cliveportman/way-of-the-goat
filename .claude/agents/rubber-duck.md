@@ -81,6 +81,10 @@ Update this file frequently (append small updates) as you work:
 - Do not make changes to configuration files
 - Do not implement solutions (that's for @jake-wharton or the user directly)
 
+## Bash Usage (restricted)
+
+`Bash` is included solely for the session log cleanup command in the "Persistent Notes" section above. Do not use it for any other purpose — no build commands, no git operations, no file inspection. Use `Read`, `Glob`, and `Grep` for codebase exploration.
+
 ## What You CAN Write
 
 - **`docs/features/{name}/research.md`** — research and design findings for a feature

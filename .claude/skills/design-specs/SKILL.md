@@ -80,8 +80,8 @@ All specs are created and implemented via `/design-to-code`.
 
 - **Type:** {e.g. Surface, Row, Icon}
 - **Dimensions:** {dp values}
-- **Background:** `MaterialTheme.colorScheme.{token}` ({hex for reference})
-- **Border:** `BorderStroke({n}.dp, MaterialTheme.colorScheme.{token})` or "none"
+- **Background:** `MaterialTheme.goatColors.{token}` ({hex for reference})
+- **Border:** `BorderStroke({n}.dp, MaterialTheme.goatColors.{token})` or "none"
 - **Padding:** `Modifier.padding(...)` values in dp
 - **Corner radius:** `GoatRadius.{size}` or `RoundedCornerShape({n}.dp)`
 - **Content:** {what's inside}
@@ -291,10 +291,10 @@ Specs use semantic token names. Never hardcode hex values in implementation.
 | `onSurface` | `MaterialTheme.goatColors.onSurface` |
 | `surfaceVariant` | `MaterialTheme.goatColors.surfaceVariant` |
 | `onSurfaceVariant` | `MaterialTheme.goatColors.onSurfaceVariant` |
-| `primary` | `MaterialTheme.colorScheme.primary` |
-| `onPrimary` | `MaterialTheme.colorScheme.onPrimary` |
-| `outline` | `MaterialTheme.colorScheme.outline` |
-| `outlineVariant` | `MaterialTheme.colorScheme.outlineVariant` |
+| `primary` | `MaterialTheme.goatColors.primary` |
+| `onPrimary` | `MaterialTheme.goatColors.onPrimary` |
+| `outline` | `MaterialTheme.goatColors.outline` |
+| `outlineVariant` | `MaterialTheme.goatColors.outlineVariant` |
 | Custom (e.g. `scorePlus2`) | `MaterialTheme.goatColors.scorePlus2` |
 
 ### Typography tokens → Compose
