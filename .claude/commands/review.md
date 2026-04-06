@@ -68,8 +68,6 @@ If no files match any known domain, state that and stop.
 
 ### Mobile domain — nick-butcher
 
-Follow the full procedure from the original `/app-review` command:
-
 #### Worktree Setup (PR review only)
 
 If a PR number was given:

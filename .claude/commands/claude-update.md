@@ -2,7 +2,7 @@
 
 Refresh the `claude-review-criteria` skill with new knowledge — Anthropic feature releases, Claude Code documentation changes, and relevant updates from competitor tools. Proposes specific changes for your approval before writing anything.
 
-This command does **not** review `.claude/` changes. For that, use `/claude-review`. This command maintains the knowledge base that powers those reviews.
+This command does **not** review `.claude/` changes. For that, use `/review --audit`. This command maintains the knowledge base that powers those reviews.
 
 ## Instructions
 
