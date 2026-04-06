@@ -15,7 +15,7 @@ way-of-the-goat/
 ├── design-tokens/    # Figma-sourced token JSON (tokens.json)
 ├── references/       # Legacy React Native v1.4.3 (reference only)
 ├── api/              # Go backend (planned)
-└── website/          # Marketing site (planned)
+└── website/          # Static HTML site (active — Vercel deployment)
 ```
 
 ## Agents
