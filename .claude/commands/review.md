@@ -150,6 +150,10 @@ If a PR number was given:
 
 If no PR number, dispatch `addy-osmani` in the current working directory.
 
+#### Re-review Mode (`--recheck`)
+
+When `--recheck` is passed, run a full review regardless — there is no scoping to recently-changed files for the web domain.
+
 #### Agent Dispatch — addy-osmani
 
 Instruct `addy-osmani` to:
@@ -159,6 +163,16 @@ Instruct `addy-osmani` to:
 - Use the output format defined in its agent file
 
 The web review is **post-and-proceed**: collect the agent's output and include it in the combined Step 5 comment. There is no interactive fix loop — the user applies fixes and runs `/review --recheck` for a follow-up.
+
+#### Previous Review Follow-up (PR review only)
+
+After collecting the agent's output (not before — to avoid anchoring bias):
+
+1. Fetch all comments: `gh api repos/{owner}/{repo}/issues/{pr_number}/comments`
+2. Find the most recent comment starting with "Automated code review"
+3. If none exists, skip this section
+4. If one exists, extract all numbered Criticals and Suggestions (not Nit-picks) from the web section of that comment and assess each as: **Resolved**, **Unresolved**, or **No longer applicable**
+5. Append the follow-up section to the web review output before including it in the combined Step 5 comment. Use the same template as the mobile domain.
 
 ---
 
@@ -176,11 +190,25 @@ If a PR number was given:
 
 If no PR number, dispatch `steve-klabnik` in the current working directory.
 
+#### Re-review Mode (`--recheck`)
+
+When `--recheck` is passed, run a full review regardless — there is no scoping to recently-changed files for the Rust/WASM domain.
+
 #### Agent Dispatch — steve-klabnik
 
 Instruct `steve-klabnik` to focus on `website/**/*.rs` and `website/**/Cargo.toml` files that appear in the changed file list.
 
 The Rust/WASM review is **post-and-proceed**: collect the agent's output and include it in the combined Step 5 comment. There is no interactive fix loop.
+
+#### Previous Review Follow-up (PR review only)
+
+After collecting the agent's output (not before — to avoid anchoring bias):
+
+1. Fetch all comments: `gh api repos/{owner}/{repo}/issues/{pr_number}/comments`
+2. Find the most recent comment starting with "Automated code review"
+3. If none exists, skip this section
+4. If one exists, extract all numbered Criticals and Suggestions (not Nit-picks) from the Rust/WASM section of that comment and assess each as: **Resolved**, **Unresolved**, or **No longer applicable**
+5. Append the follow-up section to the Rust/WASM review output before including it in the combined Step 5 comment. Use the same template as the mobile domain.
 
 ---
 
@@ -200,6 +228,15 @@ After receiving findings, **stop and wait for user instructions**. Do not automa
 ---
 
 ## Step 5: Output
+
+### Posting the Combined Review (PR review only)
+
+After collecting all domain reviews, post the combined output as a single PR comment:
+
+1. Run `gh api user --jq '.login'` to get your authenticated username
+2. Post using `gh pr comment <pr-number> --body "..."` with the opening line "Automated code review by [username]"
+
+### Output Format
 
 If multiple domains matched, label each section clearly:
 

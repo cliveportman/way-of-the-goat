@@ -95,7 +95,7 @@ After writing, re-read the updated SKILL.md and confirm:
 
 - All nine sections are still present and coherent
 - No internal contradictions introduced (e.g. a new "opportunity" that contradicts an existing "differentiator")
-- File is still under 500 lines
+- File is still under 500 lines (use `Read` and check the final line number)
 
 If the self-check finds a problem, report it and ask whether to fix it.
 
