@@ -144,7 +144,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun `given partial servings when targetProgress then calculates correctly`() {
+    fun `given partial servings when calculating targetProgress then returns correct ratio`() {
         val dailyServings = createDailyServings(mapOf("fruit" to 2))
         val breakdown = ScoreCalculator.calculateScoreBreakdown(dailyServings, balancedSuite)
 
@@ -156,7 +156,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun `given target reached when targetMet then returns true`() {
+    fun `given target reached when checking targetMet then returns true`() {
         val dailyServings = createDailyServings(mapOf("fruit" to 4))
         val breakdown = ScoreCalculator.calculateScoreBreakdown(dailyServings, balancedSuite)
 

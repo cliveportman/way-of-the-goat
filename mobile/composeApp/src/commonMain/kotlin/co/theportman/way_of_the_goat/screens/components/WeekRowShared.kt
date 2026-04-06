@@ -1,14 +1,20 @@
 package co.theportman.way_of_the_goat.screens.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import co.theportman.way_of_the_goat.ui.theme.GoatSizing
+import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
@@ -34,6 +40,30 @@ internal fun BlankTile(
  * Single-letter day-of-week labels for header rows (Monday-first).
  */
 internal val dayOfWeekLabels = listOf("M", "T", "W", "T", "F", "S", "S")
+
+/**
+ * Row of day-of-week header labels (M T W T F S S) aligned with the tile columns.
+ * Uses the same weight(1f) + s4 gap distribution as the score/distance tiles.
+ */
+@Composable
+internal fun DayOfWeekHeaders(
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(GoatSpacing.s4)
+    ) {
+        dayOfWeekLabels.forEach { label ->
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.goatColors.onSurfaceVariant,
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
 
 /**
  * Fallback day name for tiles with no data, by Monday-first index.

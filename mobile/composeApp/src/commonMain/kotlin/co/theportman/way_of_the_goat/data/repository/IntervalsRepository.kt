@@ -6,6 +6,8 @@ import co.theportman.way_of_the_goat.data.remote.IntervalsApiClient
 import co.theportman.way_of_the_goat.data.remote.models.Activity
 import co.theportman.way_of_the_goat.data.remote.models.WellnessData
 import kotlin.coroutines.cancellation.CancellationException
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
  * Repository for intervals.icu data
@@ -15,16 +17,18 @@ class IntervalsRepository {
 
     // TODO: Replace with dependency injection
     private val authProvider = ApiKeyAuthProvider()
+    private val mutex = Mutex()
     private var httpClient: io.ktor.client.HttpClient? = null
     private var apiClient: IntervalsApiClient? = null
 
     private suspend fun getApiClient(): IntervalsApiClient {
-        if (apiClient == null) {
-            val client = HttpClientFactory.create(authProvider)
-            httpClient = client
-            apiClient = IntervalsApiClient(client)
+        return mutex.withLock {
+            apiClient ?: run {
+                val client = HttpClientFactory.create(authProvider)
+                httpClient = client
+                IntervalsApiClient(client).also { apiClient = it }
+            }
         }
-        return apiClient!!
     }
 
     /**

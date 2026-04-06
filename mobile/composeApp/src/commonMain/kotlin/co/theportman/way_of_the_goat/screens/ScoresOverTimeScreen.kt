@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,10 +28,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import co.theportman.way_of_the_goat.data.scoring.model.DayScore
 import co.theportman.way_of_the_goat.data.scoring.model.WeekScoreData
+import co.theportman.way_of_the_goat.screens.components.DayOfWeekHeaders
 import co.theportman.way_of_the_goat.screens.components.ScoreWeekRow
 import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
-import androidx.compose.ui.text.style.TextAlign
-import co.theportman.way_of_the_goat.screens.components.dayOfWeekLabels
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.datetime.LocalDate
@@ -157,30 +155,6 @@ private fun ScoresOverTimeContent(
                     )
                 }
             }
-        }
-    }
-}
-
-/**
- * Row of day-of-week header labels (M T W T F S S) aligned with the tile columns.
- * Uses the same weight(1f) + s4 gap distribution as the score tiles.
- */
-@Composable
-private fun DayOfWeekHeaders(
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(GoatSpacing.s4)
-    ) {
-        dayOfWeekLabels.forEach { label ->
-            Text(
-                text = label,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.goatColors.onSurfaceVariant,
-                modifier = Modifier.weight(1f),
-                textAlign = TextAlign.Center
-            )
         }
     }
 }

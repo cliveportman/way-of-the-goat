@@ -65,9 +65,10 @@ object ActivityDataManager : ActivityDataSource {
             var didLoad = false
 
             // Check if we need to load older data
-            if (oldestLoadedDate == null || requiredOldest < oldestLoadedDate!!) {
+            val currentOldest = oldestLoadedDate
+            if (currentOldest == null || requiredOldest < currentOldest) {
                 val loadOldest = requiredOldest
-                val loadNewest = oldestLoadedDate?.minus(1, DateTimeUnit.DAY) ?: date
+                val loadNewest = currentOldest?.minus(1, DateTimeUnit.DAY) ?: date
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
                         onSuccess = { didLoad = true },
@@ -77,8 +78,9 @@ object ActivityDataManager : ActivityDataSource {
             }
 
             // Check if we need to load newer data
-            if (newestLoadedDate == null || requiredNewest > newestLoadedDate!!) {
-                val loadOldest = newestLoadedDate?.plus(1, DateTimeUnit.DAY) ?: date
+            val currentNewest = newestLoadedDate
+            if (currentNewest == null || requiredNewest > currentNewest) {
+                val loadOldest = currentNewest?.plus(1, DateTimeUnit.DAY) ?: date
                 val loadNewest = requiredNewest
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
@@ -137,10 +139,9 @@ object ActivityDataManager : ActivityDataSource {
      * Check if a specific date is loaded
      */
     fun isDateLoaded(date: LocalDate): Boolean {
-        return oldestLoadedDate != null &&
-                newestLoadedDate != null &&
-                date >= oldestLoadedDate!! &&
-                date <= newestLoadedDate!!
+        val oldest = oldestLoadedDate ?: return false
+        val newest = newestLoadedDate ?: return false
+        return date in oldest..newest
     }
 
     /**
@@ -193,10 +194,12 @@ object ActivityDataManager : ActivityDataSource {
                     allActivities.addAll(uniqueNewActivities)
 
                     // Update date range
-                    if (oldestLoadedDate == null || oldest < oldestLoadedDate!!) {
+                    val prevOldest = oldestLoadedDate
+                    if (prevOldest == null || oldest < prevOldest) {
                         oldestLoadedDate = oldest
                     }
-                    if (newestLoadedDate == null || newest > newestLoadedDate!!) {
+                    val prevNewest = newestLoadedDate
+                    if (prevNewest == null || newest > prevNewest) {
                         newestLoadedDate = newest
                     }
 

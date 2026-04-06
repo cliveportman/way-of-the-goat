@@ -27,14 +27,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import co.theportman.way_of_the_goat.ui.theme.GoatPalette
 import co.theportman.way_of_the_goat.ui.theme.GoatRadius
+import co.theportman.way_of_the_goat.ui.theme.GoatSizing
+import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
+import co.theportman.way_of_the_goat.ui.theme.GoatStroke
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
@@ -71,12 +71,12 @@ fun DataLossConfirmationDialog(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .shadow(
-                    elevation = 24.dp,
+                    elevation = GoatSpacing.s24,
                     spotColor = MaterialTheme.goatColors.error.copy(alpha = 0.3f),
                     shape = RoundedCornerShape(GoatRadius.lg)
                 )
                 .border(
-                    width = 1.dp,
+                    width = GoatStroke.default,
                     color = GoatPalette.Red600.copy(alpha = 0.5f),
                     shape = RoundedCornerShape(GoatRadius.lg)
                 ),
@@ -86,7 +86,7 @@ fun DataLossConfirmationDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(24.dp),
+                    .padding(GoatSpacing.s24),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Warning icon
@@ -94,32 +94,30 @@ fun DataLossConfirmationDialog(
                     imageVector = Icons.Filled.Warning,
                     contentDescription = null, // Dialog title provides context
                     tint = GoatPalette.Amber400,
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(GoatSizing.Icon.lg)
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s16))
 
                 // Title
                 Text(
                     text = "Data will be lost",
                     color = MaterialTheme.goatColors.onSurface,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.headlineSmall,
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s8))
 
                 // Dynamic text
                 Text(
                     text = "Switching to $profileName will reset today's data.",
                     color = MaterialTheme.goatColors.onSurfaceVariant,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 20.sp
+                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s20))
 
                 // Warning box
                 Row(
@@ -128,25 +126,24 @@ fun DataLossConfirmationDialog(
                         .clip(RoundedCornerShape(GoatRadius.sm))
                         .background(GoatPalette.Red900.copy(alpha = 0.4f))
                         .border(
-                            width = 1.dp,
+                            width = GoatStroke.default,
                             color = GoatPalette.Red600.copy(alpha = 0.6f),
                             shape = RoundedCornerShape(GoatRadius.sm)
                         )
                         .semantics {
                             contentDescription = "Important: This action cannot be undone. Consider completing today's profile before switching tomorrow."
                         }
-                        .padding(12.dp),
+                        .padding(GoatSpacing.s12),
                     verticalAlignment = Alignment.Top
                 ) {
                     Text(
                         text = "This action cannot be undone. Consider completing today's profile before switching tomorrow.",
                         color = MaterialTheme.goatColors.onSurface,
-                        fontSize = 13.sp,
-                        lineHeight = 18.sp
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s24))
 
                 // Actions
                 Column(
@@ -165,12 +162,11 @@ fun DataLossConfirmationDialog(
                     ) {
                         Text(
                             text = "Switch anyway",
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.padding(vertical = 4.dp)
+                            modifier = Modifier.padding(vertical = GoatSpacing.s4)
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(GoatSpacing.s12))
 
                     // Safe action - Keep current profile
                     OutlinedButton(
@@ -184,8 +180,7 @@ fun DataLossConfirmationDialog(
                     ) {
                         Text(
                             text = "Keep current profile",
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier.padding(vertical = 4.dp)
+                            modifier = Modifier.padding(vertical = GoatSpacing.s4)
                         )
                     }
                 }

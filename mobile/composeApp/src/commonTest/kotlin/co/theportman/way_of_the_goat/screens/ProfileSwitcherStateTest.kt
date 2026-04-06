@@ -15,7 +15,7 @@ class ProfileSwitcherStateTest {
     }
 
     @Test
-    fun `given default state when checked then has no selection or dialog`() {
+    fun `given default state when inspecting properties then has no selection or dialog`() {
         val state = ProfileSwitcherState()
         assertFalse(state.showConfirmationDialog)
         assertTrue(state.selectedSuiteId == null)
