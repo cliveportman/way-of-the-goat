@@ -83,6 +83,8 @@ After presenting proposals, **stop**. Do not edit any files. Wait for the user t
 
 ### 6. Apply approved changes
 
+> **Note:** This step runs in the main Claude Code session, which has full tool access (`Edit`, `Write`). It does **not** delegate to `claude-reviewer`, which is read-only.
+
 For each approved item, edit `.claude/skills/claude-review-criteria/SKILL.md` surgically — change only the specific content being updated. Preserve all structure, headings, and surrounding content.
 
 After applying, show a brief summary of what changed (section and nature of change — no need to reproduce the full diff).

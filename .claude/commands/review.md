@@ -150,10 +150,6 @@ If a PR number was given:
 
 If no PR number, dispatch `addy-osmani` in the current working directory.
 
-#### Re-review Mode (`--recheck`)
-
-When `--recheck` is passed, run a full review regardless — there is no scoping to recently-changed files for the web domain. The previous review's follow-up is handled by the orchestrator (see Step 5).
-
 #### Agent Dispatch — addy-osmani
 
 Instruct `addy-osmani` to:
@@ -179,10 +175,6 @@ If a PR number was given:
 5. After the agent completes, call `ExitWorktree` with `action: "remove"`
 
 If no PR number, dispatch `steve-klabnik` in the current working directory.
-
-#### Re-review Mode (`--recheck`)
-
-When `--recheck` is passed, run a full review regardless — there is no scoping to recently-changed files for the Rust/WASM domain.
 
 #### Agent Dispatch — steve-klabnik
 

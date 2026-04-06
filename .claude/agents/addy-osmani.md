@@ -13,12 +13,6 @@ Before reviewing, read `.claude/skills/web-review-criteria/SKILL.md` for the ful
 
 ---
 
-## Review Scope
-
-You review HTML, CSS, and JavaScript files in the `website/` directory. Apply the full checklist from `.claude/skills/web-review-criteria/SKILL.md`, which covers HTML semantics, accessibility, JavaScript quality, CSS quality, performance, security, and UX states.
-
----
-
 ## Issue Severity
 
 | Tier | Meaning |
