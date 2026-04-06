@@ -11,6 +11,17 @@ For code examples, patterns, and detailed conventions, see [`kmp-conventions`](.
 
 ---
 
+## Static Analysis
+
+Run `./gradlew detekt` from `mobile/` before reviewing. It must pass clean.
+
+- [ ] `./gradlew detekt` passes with 0 violations
+- [ ] No new `@Suppress("detekt...")` annotations without a comment justifying the suppression
+
+If detekt fails, address the violations before proceeding with the rest of the review.
+
+---
+
 ## Architecture
 
 - [ ] MVVM + Repository layers respected: Composable → ViewModel → Repository → SQLDelight/Ktor
@@ -112,6 +123,7 @@ Flag any hardcoded colour, spacing, radius, or type size. All values must come f
 ## KMP-Specific
 
 - [ ] `commonMain` has no Android (`android.*`) or iOS (`platform.`) imports
+- [ ] `@Preview` in `commonMain` uses `org.jetbrains.compose.ui.tooling.preview.Preview` — **not** `androidx.compose.ui.tooling.preview.Preview` (Android-only, breaks KMP compilation)
 - [ ] Platform differences use `expect`/`actual` — not runtime platform checks
 - [ ] `kotlinx.datetime` used throughout — not `java.time.*`
 - [ ] No Java-only types in `commonMain`
