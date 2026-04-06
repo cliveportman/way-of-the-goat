@@ -327,7 +327,7 @@ private fun PaletteRow(familyName: String, shades: List<Pair<String, Color>>) {
                     Box(
                         modifier = Modifier
                             .size(48.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .clip(RoundedCornerShape(GoatRadius.xs))
                             .background(color)
                     )
                     Text(
@@ -355,12 +355,12 @@ private fun SemanticColorRow(name: String, color: Color) {
         Box(
             modifier = Modifier
                 .size(24.dp)
-                .clip(RoundedCornerShape(4.dp))
+                .clip(RoundedCornerShape(GoatRadius.xs))
                 .background(color)
                 .border(
                     width = 1.dp,
                     color = colors.outline.copy(alpha = 0.3f),
-                    shape = RoundedCornerShape(4.dp)
+                    shape = RoundedCornerShape(GoatRadius.xs)
                 )
         )
         Spacer(Modifier.width(12.dp))
@@ -419,7 +419,7 @@ private fun SpacingRow(name: String, value: Dp) {
                 .height(12.dp)
                 .background(
                     color = colors.primary,
-                    shape = RoundedCornerShape(2.dp)
+                    shape = RoundedCornerShape(GoatSpacing.s2)
                 )
         )
         Spacer(Modifier.width(8.dp))
@@ -507,7 +507,7 @@ private fun StrokeRow(name: String, value: Dp) {
                 .border(
                     width = value,
                     color = colors.primary,
-                    shape = RoundedCornerShape(4.dp)
+                    shape = RoundedCornerShape(GoatRadius.xs)
                 )
         )
         Spacer(Modifier.width(12.dp))

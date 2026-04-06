@@ -21,9 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.ui.components.ContinueButton
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 import kotlinx.coroutines.launch
@@ -130,10 +128,7 @@ private fun IntroPageContent(content: IntroContent) {
         // Heading
         Text(
             text = content.heading,
-            style = MaterialTheme.typography.headlineLarge.copy(
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            ),
+            style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.goatColors.onSurface
         )
 
@@ -143,10 +138,7 @@ private fun IntroPageContent(content: IntroContent) {
         content.bodyParagraphs.forEachIndexed { index, paragraph ->
             Text(
                 text = paragraph,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontSize = 16.sp,
-                    lineHeight = 22.sp
-                ),
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.goatColors.onSurface
             )
 

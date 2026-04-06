@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.ui.components.ContinueButton
 import co.theportman.way_of_the_goat.ui.icons.GoatMoon
 import co.theportman.way_of_the_goat.ui.theme.goatColors
@@ -116,8 +115,7 @@ fun HomeScreen(
                     },
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.goatColors.onSurface,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 22.sp
+                    textAlign = TextAlign.Center
                 )
             }
 

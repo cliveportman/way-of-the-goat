@@ -119,6 +119,6 @@ Compose:
   UnstableCollections:
     active: false
   ViewModelForwarding:
-    active: false
+    active: true
   ViewModelInjection:
     active: false

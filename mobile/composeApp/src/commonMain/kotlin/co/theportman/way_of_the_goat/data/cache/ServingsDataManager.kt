@@ -69,12 +69,13 @@ class ServingsDataManager private constructor() : ServingsDataSource {
 
                 val driver = driverFactory.createDriver()
                 val database = WayOfTheGoatDatabase(driver)
-                repository = ServingsRepository(database)
+                val repo = ServingsRepository(database)
+                repository = repo
 
                 // Initialize repository (loads user preferences)
-                repository!!.initialize().fold(
+                repo.initialize().fold(
                     onSuccess = {
-                        _activeSuite.value = repository!!.activeSuite.value
+                        _activeSuite.value = repo.activeSuite.value
                         _isInitialized.value = true
                         Result.success(Unit)
                     },

@@ -273,6 +273,7 @@ private fun HelpScreenPreviewLight() {
 @Preview(name = "FoodCategoryGuideEntry")
 @Composable
 private fun FoodCategoryGuideEntryPreview() {
+    // safe: BALANCED always contains the "fruit" category
     val fruitCategory = SuiteDefinitions.BALANCED.getCategoryById(CategoryId("fruit"))!!
     WayOfTheGoatTheme(darkTheme = true) {
         FoodCategoryGuideEntry(
