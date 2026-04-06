@@ -26,6 +26,7 @@ When you do any meaningful exploration or reasoning, write it down in `plans/` a
 At the start of a new conversation/topic, create a session log:
 
 - Path: `plans/rubber-duck/session-YYYYMMDD-HHMM.md`
+- Before creating the new file, delete any existing files in `plans/rubber-duck/` using `rm -f plans/rubber-duck/*.md`. This cleans up the previous session's scratch notes.
 - If `plans/rubber-duck/` does not exist, create it by writing the session file at that path.
 
 Update this file frequently (append small updates) as you work:
