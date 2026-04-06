@@ -10,7 +10,6 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
 /**
@@ -18,7 +17,8 @@ import kotlinx.serialization.json.Json
  */
 object HttpClientFactory {
 
-    fun create(authProvider: IntervalsAuthProvider): HttpClient {
+    suspend fun create(authProvider: IntervalsAuthProvider): HttpClient {
+        val authHeader = authProvider.getAuthHeader()
         return HttpClient {
             // JSON serialization
             install(ContentNegotiation) {
@@ -37,7 +37,7 @@ object HttpClientFactory {
 
             // Default request configuration - adds auth header to all requests
             defaultRequest {
-                header("Authorization", runBlocking { authProvider.getAuthHeader() })
+                header("Authorization", authHeader)
             }
         }
     }

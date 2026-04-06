@@ -188,7 +188,7 @@ data class DailyTotalsForDisplay(
     }
 
     val hasData: Boolean
-        get() = healthy != "---"
+        get() = healthy != NO_DATA
 }
 
 /**

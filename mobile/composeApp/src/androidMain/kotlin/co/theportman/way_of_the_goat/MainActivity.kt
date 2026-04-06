@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import co.theportman.way_of_the_goat.data.cache.ServingsDataManager
 import co.theportman.way_of_the_goat.data.database.DatabaseDriverFactory
+import co.theportman.way_of_the_goat.util.logError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             ServingsDataManager.instance.initialize(driverFactory)
                 .onFailure { error ->
-                    println("ServingsDataManager initialization failed: ${error.message}")
+                    logError("MainActivity", "ServingsDataManager initialization failed: ${error.message}")
                 }
         }
 
@@ -35,5 +36,7 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 private fun AppAndroidPreview() {
-    App()
+    co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme {
+        App()
+    }
 }

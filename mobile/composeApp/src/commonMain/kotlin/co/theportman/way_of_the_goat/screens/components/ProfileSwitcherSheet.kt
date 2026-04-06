@@ -37,12 +37,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import co.theportman.way_of_the_goat.ui.theme.GoatPalette
+import co.theportman.way_of_the_goat.ui.theme.GoatRadius
+import co.theportman.way_of_the_goat.ui.theme.GoatSizing
+import co.theportman.way_of_the_goat.ui.theme.GoatSpacing
+import co.theportman.way_of_the_goat.ui.theme.GoatStroke
 import co.theportman.way_of_the_goat.ui.theme.goatColors
 
 /**
@@ -97,59 +98,57 @@ fun ProfileSwitcherSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 24.dp)
+                .padding(horizontal = GoatSpacing.s20, vertical = GoatSpacing.s24)
         ) {
             // Header
             Text(
                 text = "Select Profile",
                 color = MaterialTheme.goatColors.onSurface,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.headlineMedium
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s4))
             Text(
                 text = "Choose a scoring profile that matches your goals",
                 color = MaterialTheme.goatColors.onSurfaceVariant,
-                fontSize = 14.sp
+                style = MaterialTheme.typography.bodySmall
             )
 
             // "Last used" hint for empty past days
             if (lastUsedSuiteId != null) {
                 val lastUsedName = profiles.find { it.id == lastUsedSuiteId }?.name
                 if (lastUsedName != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(GoatSpacing.s8))
                     Text(
                         text = "Last used: $lastUsedName",
                         color = MaterialTheme.goatColors.primary,
-                        fontSize = 13.sp
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s24))
 
             // Profile cards
             profiles.forEach { profile ->
                 val isSelected = profile.id == selectedProfileId
-                val isCurrent = profile.id == currentProfileId
 
                 ProfileCard(
                     profile = profile,
                     isSelected = isSelected,
                     onClick = { onProfileSelected(profile.id) }
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s12))
             }
 
             // Checkbox for future use (only shown for today)
             if (isToday) {
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s8))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable { onUseFutureChanged(!useFutureChecked) }
-                        .padding(vertical = 8.dp)
+                        .padding(vertical = GoatSpacing.s8)
                 ) {
                     Checkbox(
                         checked = useFutureChecked,
@@ -160,24 +159,24 @@ fun ProfileSwitcherSheet(
                             checkmarkColor = MaterialTheme.goatColors.surfaceContainer
                         )
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(GoatSpacing.s8))
                     Text(
                         text = "Continue using this profile in future",
                         color = MaterialTheme.goatColors.onSurface,
-                        fontSize = 14.sp
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
             }
 
             // Warning banner (shown when switching with existing data)
             if (showWarning) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(GoatSpacing.s16))
                 WarningBanner(
                     profileName = profiles.find { it.id == selectedProfileId }?.name ?: "selected profile"
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s24))
 
             // Actions
             Button(
@@ -190,16 +189,15 @@ fun ProfileSwitcherSheet(
                     disabledContainerColor = MaterialTheme.goatColors.surfaceContainerHigh,
                     disabledContentColor = MaterialTheme.goatColors.onSurfaceVariant
                 ),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(GoatRadius.sm)
             ) {
                 Text(
                     text = if (isEmptyPastDay) "Select profile" else "Switch profile",
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = GoatSpacing.s8)
                 )
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s12))
 
             // Cancel link
             Box(
@@ -209,18 +207,18 @@ fun ProfileSwitcherSheet(
                 Text(
                     text = "Cancel",
                     color = MaterialTheme.goatColors.onSurfaceVariant,
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier
                         .clickable(
                             onClick = onCancel,
                             role = Role.Button
                         )
                         .semantics { contentDescription = "Cancel profile selection" }
-                        .padding(8.dp)
+                        .padding(GoatSpacing.s8)
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s16))
         }
     }
 }
@@ -236,15 +234,15 @@ private fun ProfileCard(
     modifier: Modifier = Modifier
 ) {
     val borderColor = if (isSelected) MaterialTheme.goatColors.primary else MaterialTheme.goatColors.outline
-    val borderWidth = if (isSelected) 2.dp else 1.dp
+    val borderWidth = if (isSelected) GoatStroke.emphasis else GoatStroke.default
     val selectionState = if (isSelected) "Selected" else "Not selected"
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(GoatRadius.md))
             .background(MaterialTheme.goatColors.surfaceContainerHigh)
-            .border(borderWidth, borderColor, RoundedCornerShape(12.dp))
+            .border(borderWidth, borderColor, RoundedCornerShape(GoatRadius.md))
             .selectable(
                 selected = isSelected,
                 onClick = onClick,
@@ -253,17 +251,17 @@ private fun ProfileCard(
             .semantics {
                 contentDescription = "${profile.name}. ${profile.description}. $selectionState"
             }
-            .padding(16.dp),
+            .padding(GoatSpacing.s16),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Radio indicator
         Box(
             modifier = Modifier
-                .size(24.dp)
+                .size(GoatSizing.sm)
                 .clip(CircleShape)
                 .background(if (isSelected) MaterialTheme.goatColors.primary else Color.Transparent)
                 .border(
-                    width = if (isSelected) 0.dp else 2.dp,
+                    width = if (isSelected) GoatStroke.none else GoatStroke.emphasis,
                     color = if (isSelected) Color.Transparent else MaterialTheme.goatColors.outline,
                     shape = CircleShape
                 ),
@@ -274,27 +272,25 @@ private fun ProfileCard(
                     imageVector = Icons.Filled.Check,
                     contentDescription = null, // Handled by parent semantics
                     tint = MaterialTheme.goatColors.surfaceContainer,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(GoatSizing.Icon.sm)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(GoatSpacing.s16))
 
         // Profile info
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = profile.name,
                 color = if (isSelected) MaterialTheme.goatColors.primary else MaterialTheme.goatColors.onSurface,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold
+                style = MaterialTheme.typography.labelMedium
             )
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s2))
             Text(
                 text = profile.description,
                 color = MaterialTheme.goatColors.onSurfaceVariant,
-                fontSize = 13.sp,
-                lineHeight = 18.sp
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }
@@ -311,34 +307,32 @@ private fun WarningBanner(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(GoatRadius.sm))
             .background(GoatPalette.Amber950)
             .semantics(mergeDescendants = true) {
                 contentDescription = "Warning: Data will be lost. Switching to $profileName will reset this day's data."
             }
-            .padding(12.dp),
+            .padding(GoatSpacing.s12),
         verticalAlignment = Alignment.Top
     ) {
         Icon(
             imageVector = Icons.Filled.Warning,
             contentDescription = null, // Handled by parent semantics
             tint = GoatPalette.Amber400,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(GoatSizing.Icon.md)
         )
-        Spacer(modifier = Modifier.width(12.dp))
+        Spacer(modifier = Modifier.width(GoatSpacing.s12))
         Column {
             Text(
                 text = "Data will be lost",
                 color = GoatPalette.Amber400,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
+                style = MaterialTheme.typography.labelSmall
             )
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(GoatSpacing.s2))
             Text(
                 text = "Switching to $profileName will reset this day's data.",
                 color = MaterialTheme.goatColors.onSurface,
-                fontSize = 13.sp,
-                lineHeight = 18.sp
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }

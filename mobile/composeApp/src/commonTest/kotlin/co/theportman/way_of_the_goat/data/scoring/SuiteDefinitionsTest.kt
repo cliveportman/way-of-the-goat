@@ -10,12 +10,12 @@ import kotlin.test.assertTrue
 class SuiteDefinitionsTest {
 
     @Test
-    fun allSuites_containsFourSuites() {
+    fun `given suite definitions when allSuites then contains four suites`() {
         assertEquals(4, SuiteDefinitions.allSuites.size)
     }
 
     @Test
-    fun allSuites_containsExpectedSuites() {
+    fun `given suite definitions when allSuites then contains all expected suite names`() {
         val suiteNames = SuiteDefinitions.allSuites.map { it.name }
 
         assertTrue(suiteNames.contains("Balanced"))
@@ -25,13 +25,13 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun defaultSuite_isBalanced() {
+    fun `given suite definitions when defaultSuite then is the balanced suite`() {
         assertEquals(SuiteDefinitions.BALANCED_ID, SuiteDefinitions.defaultSuite.id)
         assertEquals("Balanced", SuiteDefinitions.defaultSuite.name)
     }
 
     @Test
-    fun getSuiteById_existingSuite_returnsSuite() {
+    fun `given existing suite id when getSuiteById then returns that suite`() {
         val balanced = SuiteDefinitions.getSuiteById(SuiteDefinitions.BALANCED_ID)
         assertNotNull(balanced)
         assertEquals("Balanced", balanced.name)
@@ -42,19 +42,19 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun getSuiteById_unknownSuite_returnsNull() {
+    fun `given unknown suite id when getSuiteById then returns null`() {
         val result = SuiteDefinitions.getSuiteById(SuiteId("nonexistent"))
         assertNull(result)
     }
 
     @Test
-    fun balancedSuite_hasCorrectCategoryCount() {
+    fun `given balanced suite when categories then has correct category count`() {
         // Balanced: 6 healthy + 4 unhealthy = 10 categories
         assertEquals(10, SuiteDefinitions.BALANCED.categories.size)
     }
 
     @Test
-    fun balancedSuite_hasCorrectHealthyCategories() {
+    fun `given balanced suite when healthyCategories then contains all expected categories`() {
         val healthyCategories = SuiteDefinitions.BALANCED.healthyCategories
 
         assertEquals(6, healthyCategories.size)
@@ -69,7 +69,7 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun balancedSuite_hasCorrectUnhealthyCategories() {
+    fun `given balanced suite when unhealthyCategories then contains all expected categories`() {
         val unhealthyCategories = SuiteDefinitions.BALANCED.unhealthyCategories
 
         assertEquals(4, unhealthyCategories.size)
@@ -82,13 +82,13 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun racingWeightSuite_hasCorrectCategoryCount() {
+    fun `given racing weight suite when categories then has correct category count`() {
         // Racing Weight: 6 healthy + 4 unhealthy = 10 categories
         assertEquals(10, SuiteDefinitions.RACING_WEIGHT.categories.size)
     }
 
     @Test
-    fun allSuites_haveUniqueIds() {
+    fun `given all suites when ids then are all unique`() {
         val ids = SuiteDefinitions.allSuites.map { it.id }
         val uniqueIds = ids.toSet()
 
@@ -96,14 +96,14 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun allSuites_haveNonEmptyCategories() {
+    fun `given all suites when categories then are all non-empty`() {
         for (suite in SuiteDefinitions.allSuites) {
             assertTrue(suite.categories.isNotEmpty(), "Suite ${suite.name} should have categories")
         }
     }
 
     @Test
-    fun allSuites_categoriesHaveUniqueDisplayOrder() {
+    fun `given all suites when displayOrder then is unique within each suite`() {
         for (suite in SuiteDefinitions.allSuites) {
             val displayOrders = suite.categories.map { it.displayOrder }
             val uniqueOrders = displayOrders.toSet()
@@ -117,7 +117,7 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun maxPossibleDailyScore_isPositive() {
+    fun `given all suites when maxPossibleDailyScore then is positive`() {
         for (suite in SuiteDefinitions.allSuites) {
             assertTrue(
                 suite.maxPossibleDailyScore > 0,
@@ -127,7 +127,7 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun minPossibleDailyScore_isNegativeOrZero() {
+    fun `given all suites when minPossibleDailyScore then is negative or zero`() {
         for (suite in SuiteDefinitions.allSuites) {
             assertTrue(
                 suite.minPossibleDailyScore <= 0,
@@ -137,14 +137,14 @@ class SuiteDefinitionsTest {
     }
 
     @Test
-    fun balancedSuite_fruitCategory_hasCorrectTargetServings() {
+    fun `given balanced suite fruit category when targetServings then is correct`() {
         val fruitCategory = SuiteDefinitions.BALANCED.categories.find { it.name == "Fruit" }
         assertNotNull(fruitCategory)
         assertEquals(4, fruitCategory.scoringRule.targetServings)
     }
 
     @Test
-    fun balancedSuite_sweetsCategory_hasZeroTargetServings() {
+    fun `given balanced suite sweets category when targetServings then is zero`() {
         val sweetsCategory = SuiteDefinitions.BALANCED.categories.find { it.name == "Sweets" }
         assertNotNull(sweetsCategory)
         assertEquals(0, sweetsCategory.scoringRule.targetServings)

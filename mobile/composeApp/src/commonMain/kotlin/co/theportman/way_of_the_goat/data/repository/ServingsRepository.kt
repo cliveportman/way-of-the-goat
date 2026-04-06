@@ -127,7 +127,7 @@ class ServingsRepository(
                 val firstRow = rows.first()
                 val servingsMap = rows
                     .filter { it.category_id != null && it.serving_count != null }
-                    .associate { CategoryId(it.category_id!!) to it.serving_count!!.toInt() }
+                    .associate { CategoryId(it.category_id!!) to it.serving_count!!.toInt() } // Safe: filtered to non-null above
 
                 Result.success(
                     DailyServings(
@@ -167,7 +167,7 @@ class ServingsRepository(
                 val firstRow = rowList.first()
                 val servingsMap = rowList
                     .filter { it.category_id != null && it.serving_count != null }
-                    .associate { CategoryId(it.category_id!!) to it.serving_count!!.toInt() }
+                    .associate { CategoryId(it.category_id!!) to it.serving_count!!.toInt() } // Safe: filtered to non-null above
 
                 DailyServings(
                     id = firstRow.id,
@@ -258,7 +258,7 @@ class ServingsRepository(
                 val now = Clock.System.now().toEpochMilliseconds()
 
                 // Get or create daily servings record
-                var existing = queries.getDailyServingsRecordForDate(
+                val existing = queries.getDailyServingsRecordForDate(
                     date.toString()
                 ).executeAsOneOrNull()
 

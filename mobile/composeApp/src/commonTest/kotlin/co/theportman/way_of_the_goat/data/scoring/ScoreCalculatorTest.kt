@@ -28,7 +28,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateDailyScore_emptyServings_returnsZero() {
+    fun `given empty servings when calculateDailyScore then returns zero`() {
         val dailyServings = createDailyServings(emptyMap())
         val score = ScoreCalculator.calculateDailyScore(dailyServings, balancedSuite)
 
@@ -36,7 +36,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateDailyScore_singleCategory_calculatesCorrectly() {
+    fun `given single category when calculateDailyScore then calculates correctly`() {
         // 3 servings of fruit: 2 + 2 + 2 = 6
         val dailyServings = createDailyServings(mapOf("fruit" to 3))
         val score = ScoreCalculator.calculateDailyScore(dailyServings, balancedSuite)
@@ -45,7 +45,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateDailyScore_multipleCategories_sumsCorrectly() {
+    fun `given multiple categories when calculateDailyScore then sums correctly`() {
         // 4 fruit: 2+2+2+1 = 7, 3 veg: 2+2+2 = 6, 2 protein: 2+2 = 4
         val dailyServings = createDailyServings(
             mapOf(
@@ -60,7 +60,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateDailyScore_withUnhealthyCategories_subtractsCorrectly() {
+    fun `given unhealthy categories when calculateDailyScore then subtracts correctly`() {
         // 2 fruit: 2+2 = 4, 2 sweets: -1 + -2 = -3
         val dailyServings = createDailyServings(
             mapOf(
@@ -74,7 +74,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateDailyScore_withWrongSuite_returnsNull() {
+    fun `given mismatched suite when calculateScore then returns null`() {
         val dailyServings = createDailyServings(
             mapOf("fruit" to 3),
             suiteId = SuiteDefinitions.RACING_WEIGHT_ID
@@ -90,7 +90,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateHealthyScore_onlyCountsHealthyCategories() {
+    fun `given mixed categories when calculateHealthyScore then only counts healthy`() {
         val dailyServings = createDailyServings(
             mapOf(
                 "fruit" to 2,     // 2 + 2 = 4
@@ -103,7 +103,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateUnhealthyScore_onlyCountsUnhealthyCategories() {
+    fun `given mixed categories when calculateUnhealthyScore then only counts unhealthy`() {
         val dailyServings = createDailyServings(
             mapOf(
                 "fruit" to 2,     // ignored for unhealthy score
@@ -116,7 +116,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateScoreBreakdown_returnsCorrectBreakdown() {
+    fun `given servings when calculateScoreBreakdown then returns correct breakdown`() {
         val dailyServings = createDailyServings(
             mapOf(
                 "fruit" to 3,
@@ -144,7 +144,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun categoryScoreBreakdown_targetProgress_calculatesCorrectly() {
+    fun `given partial servings when calculating targetProgress then returns correct ratio`() {
         val dailyServings = createDailyServings(mapOf("fruit" to 2))
         val breakdown = ScoreCalculator.calculateScoreBreakdown(dailyServings, balancedSuite)
 
@@ -156,7 +156,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun categoryScoreBreakdown_targetMet_trueWhenTargetReached() {
+    fun `given target reached when checking targetMet then returns true`() {
         val dailyServings = createDailyServings(mapOf("fruit" to 4))
         val breakdown = ScoreCalculator.calculateScoreBreakdown(dailyServings, balancedSuite)
 
@@ -166,7 +166,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun categoryScoreBreakdown_targetMet_forUnhealthyCategory() {
+    fun `given unhealthy category when zero servings then targetMet is true`() {
         // Sweets target is 0, so targetMet is true when servingCount is 0
         val dailyServingsNoSweets = createDailyServings(emptyMap())
         val breakdownNoSweets = ScoreCalculator.calculateScoreBreakdown(dailyServingsNoSweets, balancedSuite)
@@ -183,7 +183,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateTotalsForDisplay_withServings_formatsCorrectly() {
+    fun `given servings when calculateTotalsForDisplay then formats correctly`() {
         val dailyServings = createDailyServings(
             mapOf(
                 "fruit" to 3,   // +6
@@ -201,7 +201,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateTotalsForDisplay_emptyServings_returnsEmptyState() {
+    fun `given empty servings when calculateTotalsForDisplay then returns empty state`() {
         val dailyServings = createDailyServings(emptyMap())
         val totals = ScoreCalculator.calculateTotalsForDisplay(dailyServings, balancedSuite)
 
@@ -213,7 +213,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateTotalsForMaths_returnsIntegerValues() {
+    fun `given servings when calculateTotalsForMaths then returns integer values`() {
         val dailyServings = createDailyServings(
             mapOf(
                 "fruit" to 3,   // +6
@@ -229,7 +229,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateWeeklyScore_emptyList_returnsZeros() {
+    fun `given empty list when calculateWeeklyScore then returns zeros`() {
         val summary = ScoreCalculator.calculateWeeklyScore(emptyList())
 
         assertEquals(0, summary.totalScore)
@@ -239,7 +239,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateWeeklyScore_singleDay_calculatesCorrectly() {
+    fun `given single day when calculateWeeklyScore then calculates correctly`() {
         val dailyResults = listOf(
             DailyScoreResult(
                 date = LocalDate(2025, 1, 15),
@@ -258,7 +258,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateWeeklyScore_multipleDays_calculatesAverage() {
+    fun `given multiple days when calculateWeeklyScore then calculates average`() {
         val dailyResults = listOf(
             DailyScoreResult(
                 date = LocalDate(2025, 1, 15),
@@ -283,7 +283,7 @@ class ScoreCalculatorTest {
     }
 
     @Test
-    fun calculateWeeklyScore_multipleSuites_detectsCorrectly() {
+    fun `given multiple suites when calculateWeeklyScore then detects correctly`() {
         val dailyResults = listOf(
             DailyScoreResult(
                 date = LocalDate(2025, 1, 15),

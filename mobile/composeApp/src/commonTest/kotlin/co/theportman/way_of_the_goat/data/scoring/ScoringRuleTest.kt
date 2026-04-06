@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 class ScoringRuleTest {
 
     @Test
-    fun calculateScore_withZeroServings_returnsZero() {
+    fun `given zero servings when calculateScore then returns zero`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)
@@ -17,7 +17,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun calculateScore_withNegativeServings_returnsZero() {
+    fun `given negative servings when calculateScore then returns zero`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)
@@ -28,7 +28,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun calculateScore_withOneServing_returnsFirstScore() {
+    fun `given one serving when calculateScore then returns first score`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)
@@ -38,7 +38,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun calculateScore_withTargetServings_returnsCumulativeScore() {
+    fun `given target number of servings when calculateScore then returns cumulative score`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)
@@ -49,7 +49,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun calculateScore_withExcessServings_capsAtMaxTracked() {
+    fun `given excess servings when calculateScore then caps at max tracked`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)
@@ -63,7 +63,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun calculateScore_withPartialServings_returnsCumulativeScore() {
+    fun `given partial servings when calculateScore then returns cumulative score`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)
@@ -76,7 +76,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun calculateScore_unhealthyCategory_returnsNegativeScore() {
+    fun `given unhealthy category rule when calculateScore then returns negative score`() {
         // Sweets category scoring rule
         val rule = ScoringRule(
             targetServings = 0,
@@ -90,7 +90,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun calculateScore_alcoholCategory_zeroForFirstServing() {
+    fun `given alcohol category rule when calculateScore then returns zero for first serving`() {
         // Alcohol category: first drink is "free"
         val rule = ScoringRule(
             targetServings = 0,
@@ -103,7 +103,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun maxPossibleScore_returnsOnlyPositiveSum() {
+    fun `given mixed score per serving when maxPossibleScore then returns only positive sum`() {
         val rule = ScoringRule(
             targetServings = 3,
             scorePerServing = listOf(2, 2, 1, 0, -1, -2)
@@ -114,7 +114,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun maxPossibleScore_unhealthyCategory_returnsZero() {
+    fun `given unhealthy category rule when maxPossibleScore then returns zero`() {
         val rule = ScoringRule(
             targetServings = 0,
             scorePerServing = listOf(-2, -2, -2, -2, -2, -2)
@@ -124,7 +124,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun minPossibleScore_returnsOnlyNegativeSum() {
+    fun `given mixed score per serving when minPossibleScore then returns only negative sum`() {
         val rule = ScoringRule(
             targetServings = 3,
             scorePerServing = listOf(2, 2, 1, 0, -1, -2)
@@ -135,7 +135,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun getScoreForServing_returnsCorrectValue() {
+    fun `given valid serving index when getScoreForServing then returns correct value`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)
@@ -150,7 +150,7 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun getScoreForServing_outOfRange_returnsZero() {
+    fun `given out of range serving index when getScoreForServing then returns zero`() {
         val rule = ScoringRule(
             targetServings = 4,
             scorePerServing = listOf(2, 2, 2, 1, 0, 0)

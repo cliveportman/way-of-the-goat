@@ -21,7 +21,6 @@ import co.theportman.way_of_the_goat.screens.IntroFlowScreen
 import co.theportman.way_of_the_goat.screens.RunsOverTimeScreen
 import co.theportman.way_of_the_goat.screens.ScoresOverTimeScreen
 import co.theportman.way_of_the_goat.screens.ScoresScreen
-import co.theportman.way_of_the_goat.screens.SecondPage
 import co.theportman.way_of_the_goat.ui.theme.WayOfTheGoatTheme
 
 @Composable
@@ -79,9 +78,6 @@ fun App(modifier: Modifier = Modifier) {
                             }
                         }
                     )
-                }
-                composable(Screen.SecondPage.route) {
-                    SecondPage()
                 }
                 composable(Screen.RunsOverTime.route) {
                     RunsOverTimeScreen()

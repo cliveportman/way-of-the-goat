@@ -3,27 +3,29 @@ package co.theportman.way_of_the_goat.screens
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ProfileSwitcherStateTest {
 
     @Test
-    fun defaultState_sheetIsClosed() {
+    fun `given default state when isSheetOpen then is false`() {
         val state = ProfileSwitcherState()
         assertFalse(state.isSheetOpen)
     }
 
     @Test
-    fun defaultState_noSelectionOrDialog() {
+    fun `given default state when inspecting properties then has no selection or dialog`() {
         val state = ProfileSwitcherState()
         assertFalse(state.showConfirmationDialog)
-        assertTrue(state.selectedSuiteId == null)
-        assertTrue(state.targetDate == null)
+        assertNull(state.selectedSuiteId)
+        assertNull(state.targetDate)
     }
 
     @Test
-    fun isNewProfileSelected_sameProfile_returnsFalse() {
+    fun `given same profile selected when isNewProfileSelected then returns false`() {
         val currentId = SuiteDefinitions.BALANCED_ID
         val state = ProfileSwitcherState(
             selectedSuiteId = currentId,
@@ -34,7 +36,7 @@ class ProfileSwitcherStateTest {
     }
 
     @Test
-    fun isNewProfileSelected_differentProfile_returnsTrue() {
+    fun `given different profile selected when isNewProfileSelected then returns true`() {
         val currentId = SuiteDefinitions.BALANCED_ID
         val state = ProfileSwitcherState(
             selectedSuiteId = SuiteDefinitions.RACING_WEIGHT_ID,
@@ -45,7 +47,7 @@ class ProfileSwitcherStateTest {
     }
 
     @Test
-    fun isNewProfileSelected_noSelection_returnsFalse() {
+    fun `given no selection when isNewProfileSelected then returns false`() {
         val currentId = SuiteDefinitions.BALANCED_ID
         val state = ProfileSwitcherState(
             selectedSuiteId = null,
@@ -56,7 +58,7 @@ class ProfileSwitcherStateTest {
     }
 
     @Test
-    fun isNewProfileSelected_emptyPastDay_anySelectionIsNew() {
+    fun `given empty past day and any selection when isNewProfileSelected then returns true`() {
         val currentId = SuiteDefinitions.BALANCED_ID
         val state = ProfileSwitcherState(
             selectedSuiteId = SuiteDefinitions.BALANCED_ID, // Same as current
@@ -68,7 +70,7 @@ class ProfileSwitcherStateTest {
     }
 
     @Test
-    fun isNewProfileSelected_emptyPastDayNoSelection_returnsFalse() {
+    fun `given empty past day with no selection when isNewProfileSelected then returns false`() {
         val currentId = SuiteDefinitions.BALANCED_ID
         val state = ProfileSwitcherState(
             selectedSuiteId = null,
@@ -80,7 +82,7 @@ class ProfileSwitcherStateTest {
     }
 
     @Test
-    fun stateWithOpenSheet_containsTargetDate() {
+    fun `given open sheet state when targetDate then matches the given date`() {
         val targetDate = LocalDate(2025, 1, 15)
         val state = ProfileSwitcherState(
             isSheetOpen = true,
@@ -89,11 +91,11 @@ class ProfileSwitcherStateTest {
         )
 
         assertTrue(state.isSheetOpen)
-        assertTrue(state.targetDate == targetDate)
+        assertEquals(targetDate, state.targetDate)
     }
 
     @Test
-    fun useFutureChecked_defaultsToTrue() {
+    fun `given default state when useFutureChecked then is true`() {
         val state = ProfileSwitcherState()
         assertTrue(state.useFutureChecked)
     }

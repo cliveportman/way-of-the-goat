@@ -9,6 +9,7 @@ import co.theportman.way_of_the_goat.data.scoring.model.CategoryId
 import co.theportman.way_of_the_goat.data.scoring.model.DailyServings
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
+import co.theportman.way_of_the_goat.util.logError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -115,25 +116,27 @@ class ServingsDataManager private constructor() : ServingsDataSource {
             var didLoad = false
 
             // Check if we need to load older data
-            if (oldestLoadedDate == null || requiredOldest < oldestLoadedDate!!) {
+            val currentOldest = oldestLoadedDate
+            if (currentOldest == null || requiredOldest < currentOldest) {
                 val loadOldest = requiredOldest
-                val loadNewest = oldestLoadedDate?.minus(1, DateTimeUnit.DAY) ?: date
+                val loadNewest = currentOldest?.minus(1, DateTimeUnit.DAY) ?: date
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
                         onSuccess = { didLoad = true },
-                        onFailure = { /* Log error but don't fail */ }
+                        onFailure = { e -> logError("ServingsDataManager", "Failed to load date range: ${e.message}") }
                     )
                 }
             }
 
             // Check if we need to load newer data
-            if (newestLoadedDate == null || requiredNewest > newestLoadedDate!!) {
-                val loadOldest = newestLoadedDate?.plus(1, DateTimeUnit.DAY) ?: date
+            val currentNewest = newestLoadedDate
+            if (currentNewest == null || requiredNewest > currentNewest) {
+                val loadOldest = currentNewest?.plus(1, DateTimeUnit.DAY) ?: date
                 val loadNewest = requiredNewest
                 if (loadOldest <= loadNewest) {
                     loadDateRangeInternal(loadOldest, loadNewest).fold(
                         onSuccess = { didLoad = true },
-                        onFailure = { /* Log error but don't fail */ }
+                        onFailure = { e -> logError("ServingsDataManager", "Failed to load date range: ${e.message}") }
                     )
                 }
             }
@@ -147,15 +150,15 @@ class ServingsDataManager private constructor() : ServingsDataSource {
      * Returns null if not loaded or no data exists for that date.
      */
     fun getServingsForDate(date: LocalDate): DailyServings? {
-        return cachedServings[date]
+        return _servingsFlow.value[date]
     }
 
     /**
      * Get servings for a specific date, loading from DB if needed.
      */
     suspend fun getServingsForDateAsync(date: LocalDate): Result<DailyServings?> {
-        // Check cache first
-        cachedServings[date]?.let { return Result.success(it) }
+        // Check cache first (read from immutable snapshot for thread safety)
+        _servingsFlow.value[date]?.let { return Result.success(it) }
 
         // Load from database
         val repo = repository ?: return Result.failure(IllegalStateException("Not initialized"))
@@ -327,17 +330,16 @@ class ServingsDataManager private constructor() : ServingsDataSource {
      * Check if a specific date is loaded.
      */
     fun isDateLoaded(date: LocalDate): Boolean {
-        return oldestLoadedDate != null &&
-                newestLoadedDate != null &&
-                date >= oldestLoadedDate!! &&
-                date <= newestLoadedDate!!
+        val oldest = oldestLoadedDate ?: return false
+        val newest = newestLoadedDate ?: return false
+        return date in oldest..newest
     }
 
     /**
      * Get servings for a date range (from cache).
      */
     fun getServingsForRange(oldest: LocalDate, newest: LocalDate): List<DailyServings> {
-        return cachedServings.filter { (date, _) ->
+        return _servingsFlow.value.filter { (date, _) ->
             date >= oldest && date <= newest
         }.values.sortedByDescending { it.date }
     }
@@ -366,10 +368,12 @@ class ServingsDataManager private constructor() : ServingsDataSource {
                     }
 
                     // Update loaded date range
-                    if (oldestLoadedDate == null || oldest < oldestLoadedDate!!) {
+                    val prevOldest = oldestLoadedDate
+                    if (prevOldest == null || oldest < prevOldest) {
                         oldestLoadedDate = oldest
                     }
-                    if (newestLoadedDate == null || newest > newestLoadedDate!!) {
+                    val prevNewest = newestLoadedDate
+                    if (prevNewest == null || newest > prevNewest) {
                         newestLoadedDate = newest
                     }
 
@@ -393,12 +397,14 @@ class ServingsDataManager private constructor() : ServingsDataSource {
     /**
      * Clear all cached data.
      */
-    fun clearCache() {
-        cachedServings.clear()
-        oldestLoadedDate = null
-        newestLoadedDate = null
-        loadingRanges.clear()
-        _servingsFlow.value = emptyMap()
+    suspend fun clearCache() {
+        mutex.withLock {
+            cachedServings.clear()
+            oldestLoadedDate = null
+            newestLoadedDate = null
+            loadingRanges.clear()
+            _servingsFlow.value = emptyMap()
+        }
     }
 
     /**
@@ -440,7 +446,7 @@ class ServingsDataManager private constructor() : ServingsDataSource {
      * Check if a date has any servings data.
      */
     fun hasServingsForDate(date: LocalDate): Boolean {
-        val servings = cachedServings[date]
+        val servings = _servingsFlow.value[date]
         return servings != null && servings.servings.values.any { it > 0 }
     }
 
