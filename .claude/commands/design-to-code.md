@@ -169,7 +169,7 @@ Would you like to plan the implementation before coding?
 
 1. Use the Agent tool to invoke the **`rubber-duck`** agent, passing:
    - The confirmed spec file path(s)
-   - The instruction to read the specs and create an implementation plan at `docs/features/{name}/plan.md` — write only this file, no session log
+   - The instruction to read the specs and create an implementation plan at `docs/features/{name}/plan.md` — write only this file, no session log. Override the default session log behaviour — do not create a session log or run the `rm -f` cleanup for this invocation.
    - A note to follow the `plan.md` format in `.claude/skills/docs-conventions/SKILL.md`
    - The scope: architecture decisions, ViewModel design, data layer changes, navigation wiring, testing strategy, and phased tasks
 2. Present the plan to the user for review. Iterate until confirmed.

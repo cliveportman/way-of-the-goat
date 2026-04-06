@@ -90,8 +90,8 @@ composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/
 MaterialTheme.goatColors.scorePlus2
 MaterialTheme.goatColors.surface
 
-// ✅ M3 colour (picked up by Material components automatically)
-MaterialTheme.colorScheme.primary
+// ✅ M3 colour via goatColors extension
+MaterialTheme.goatColors.primary
 
 // ✅ Spacing, sizing, radius, stroke
 GoatSpacing.s16
@@ -112,14 +112,14 @@ Color(0xFF9AE600)
 
 | Spec token | Compose value |
 |---|---|
-| `surface` | `MaterialTheme.colorScheme.surface` |
-| `onSurface` | `MaterialTheme.colorScheme.onSurface` |
-| `surfaceVariant` | `MaterialTheme.colorScheme.surfaceVariant` |
-| `onSurfaceVariant` | `MaterialTheme.colorScheme.onSurfaceVariant` |
-| `primary` | `MaterialTheme.colorScheme.primary` |
-| `onPrimary` | `MaterialTheme.colorScheme.onPrimary` |
-| `outline` | `MaterialTheme.colorScheme.outline` |
-| `outlineVariant` | `MaterialTheme.colorScheme.outlineVariant` |
+| `surface` | `MaterialTheme.goatColors.surface` |
+| `onSurface` | `MaterialTheme.goatColors.onSurface` |
+| `surfaceVariant` | `MaterialTheme.goatColors.surfaceVariant` |
+| `onSurfaceVariant` | `MaterialTheme.goatColors.onSurfaceVariant` |
+| `primary` | `MaterialTheme.goatColors.primary` |
+| `onPrimary` | `MaterialTheme.goatColors.onPrimary` |
+| `outline` | `MaterialTheme.goatColors.outline` |
+| `outlineVariant` | `MaterialTheme.goatColors.outlineVariant` |
 | Custom tokens (e.g. `scorePlus2`) | `MaterialTheme.goatColors.scorePlus2` |
 | Spacing (e.g. `16dp`) | `GoatSpacing.s16` |
 | Radius (e.g. `8dp`) | `GoatRadius.md` |

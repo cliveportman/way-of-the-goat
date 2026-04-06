@@ -57,7 +57,7 @@ RoundedCornerShape(8.dp)  // should use GoatRadius.*
 ```kotlin
 // ✅ Correct usage
 MaterialTheme.goatColors.scorePlus2
-MaterialTheme.colorScheme.primary
+MaterialTheme.goatColors.primary
 GoatSpacing.s16
 GoatRadius.md
 MaterialTheme.typography.bodyMedium

@@ -19,4 +19,8 @@ elif echo "$file" | grep -q '/.claude/commands/'; then
 elif echo "$file" | grep -qE '[^/]+/CLAUDE\.md$' && ! echo "$file" | grep -q '/.claude/'; then
   label=$(echo "$file" | sed 's|.*/way-of-the-goat/||;s|/CLAUDE\.md$||;s|^CLAUDE\.md$|root|')
   printf '%s [%s] 📋 CLAUDE.md  %s\n' "$ts" "$branch" "$label" >> "$log"
+
+else
+  short=$(echo "$file" | sed 's|.*/way-of-the-goat/||')
+  [ -n "$short" ] && printf '%s [%s] 📄 FILE  %s\n' "$ts" "$branch" "$short" >> "$log"
 fi

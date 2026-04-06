@@ -7,7 +7,7 @@ description: Checklist for reviewing KMP and Compose Multiplatform code — arch
 
 Checklist for reviewing Kotlin Multiplatform and Compose Multiplatform code in the Way of the Goat mobile app. Used by `nick-butcher` (reviewer) and `jake-wharton` (implementer).
 
-For code examples, patterns, and detailed conventions, see [`kmp-conventions`](../kmp-conventions/SKILL.md).
+For code examples, patterns, and detailed conventions, see the `kmp-conventions` skill (`kmp-conventions/SKILL.md`).
 
 ---
 

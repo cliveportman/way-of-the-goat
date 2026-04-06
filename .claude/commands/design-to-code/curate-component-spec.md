@@ -167,8 +167,8 @@ If Figma doesn't use named styles, use size/weight to match the closest M3 slot.
 
 - **Type:** Surface (clickable)
 - **Dimensions:** Full width × 72dp
-- **Background:** `MaterialTheme.colorScheme.surfaceVariant` (#1C2538)
-- **Border:** `BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)`
+- **Background:** `MaterialTheme.goatColors.surfaceVariant` (#1C2538)
+- **Border:** `BorderStroke(1.dp, MaterialTheme.goatColors.outlineVariant)`
 - **Padding:** 16dp horizontal, 12dp vertical
 - **Corner radius:** `GoatRadius.md` (8dp)
 - **States:**

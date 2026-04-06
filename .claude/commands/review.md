@@ -51,7 +51,7 @@ git diff "$base"...HEAD --name-only
 
 ## Step 3: Route to Agents
 
-Evaluate the changed file list against these rules. A single run can match multiple domains — run all that match, sequentially.
+Evaluate the changed file list against these rules. A single run can match multiple domains — run all that match. Mobile, web, and Rust/WASM domains are independent — dispatch them in parallel (multiple Agent tool calls in a single message). Config (claude-reviewer) runs without a worktree so can also run in parallel.
 
 | File pattern | Domain | Agent |
 |---|---|---|
