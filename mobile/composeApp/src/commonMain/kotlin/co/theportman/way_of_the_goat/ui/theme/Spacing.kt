@@ -48,6 +48,7 @@ object GoatRadius {
 }
 
 object GoatStroke {
+    val none = 0.dp
     val default = 1.dp
     val emphasis = 2.dp
     val strong = 5.dp

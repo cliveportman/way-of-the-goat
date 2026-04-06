@@ -3,7 +3,9 @@ package co.theportman.way_of_the_goat.screens
 import co.theportman.way_of_the_goat.data.scoring.SuiteDefinitions
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ProfileSwitcherStateTest {
@@ -18,8 +20,8 @@ class ProfileSwitcherStateTest {
     fun `given default state when inspecting properties then has no selection or dialog`() {
         val state = ProfileSwitcherState()
         assertFalse(state.showConfirmationDialog)
-        assertTrue(state.selectedSuiteId == null)
-        assertTrue(state.targetDate == null)
+        assertNull(state.selectedSuiteId)
+        assertNull(state.targetDate)
     }
 
     @Test
@@ -89,7 +91,7 @@ class ProfileSwitcherStateTest {
         )
 
         assertTrue(state.isSheetOpen)
-        assertTrue(state.targetDate == targetDate)
+        assertEquals(targetDate, state.targetDate)
     }
 
     @Test

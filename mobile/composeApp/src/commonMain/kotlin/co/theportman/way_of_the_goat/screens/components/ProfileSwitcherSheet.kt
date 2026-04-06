@@ -37,7 +37,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.dp
 import co.theportman.way_of_the_goat.data.scoring.model.ScoringSuite
 import co.theportman.way_of_the_goat.data.scoring.model.SuiteId
 import co.theportman.way_of_the_goat.ui.theme.GoatPalette
@@ -262,7 +261,7 @@ private fun ProfileCard(
                 .clip(CircleShape)
                 .background(if (isSelected) MaterialTheme.goatColors.primary else Color.Transparent)
                 .border(
-                    width = if (isSelected) 0.dp else GoatStroke.emphasis,
+                    width = if (isSelected) GoatStroke.none else GoatStroke.emphasis,
                     color = if (isSelected) Color.Transparent else MaterialTheme.goatColors.outline,
                     shape = CircleShape
                 ),

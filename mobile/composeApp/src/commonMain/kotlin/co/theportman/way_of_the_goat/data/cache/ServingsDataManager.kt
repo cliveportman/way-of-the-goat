@@ -150,15 +150,15 @@ class ServingsDataManager private constructor() : ServingsDataSource {
      * Returns null if not loaded or no data exists for that date.
      */
     fun getServingsForDate(date: LocalDate): DailyServings? {
-        return cachedServings[date]
+        return _servingsFlow.value[date]
     }
 
     /**
      * Get servings for a specific date, loading from DB if needed.
      */
     suspend fun getServingsForDateAsync(date: LocalDate): Result<DailyServings?> {
-        // Check cache first
-        cachedServings[date]?.let { return Result.success(it) }
+        // Check cache first (read from immutable snapshot for thread safety)
+        _servingsFlow.value[date]?.let { return Result.success(it) }
 
         // Load from database
         val repo = repository ?: return Result.failure(IllegalStateException("Not initialized"))
@@ -339,7 +339,7 @@ class ServingsDataManager private constructor() : ServingsDataSource {
      * Get servings for a date range (from cache).
      */
     fun getServingsForRange(oldest: LocalDate, newest: LocalDate): List<DailyServings> {
-        return cachedServings.filter { (date, _) ->
+        return _servingsFlow.value.filter { (date, _) ->
             date >= oldest && date <= newest
         }.values.sortedByDescending { it.date }
     }
@@ -446,7 +446,7 @@ class ServingsDataManager private constructor() : ServingsDataSource {
      * Check if a date has any servings data.
      */
     fun hasServingsForDate(date: LocalDate): Boolean {
-        val servings = cachedServings[date]
+        val servings = _servingsFlow.value[date]
         return servings != null && servings.servings.values.any { it > 0 }
     }
 
