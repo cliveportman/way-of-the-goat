@@ -1,22 +1,51 @@
-# Diet Score App
+# Way of the Goat
 
-## What is it?
-A React Native app that allows endurance athletes to track their Diet Quality Score (DQS) as they eat throughout the day.
+A multi-platform nutrition tracking application that helps endurance athletes monitor their daily food intake and scoring.
 
-The DQS comes from a book called "Racing Weight" by Matt Fitzgerald. The book is written for serious endurance athletes wanting to manage their weight for better performance. There is already an official app in the Play Store and App Store, but I wanted to make my own version, because:
+## Project Structure
 
-- It annoys me that the official app requires creating an account. I believe just saving data to the device will be enough for most users.
-- I think I can do a much better job with the user interface.
-- Some of the food groups vary slightly from the book in a way I do not like, e.g. I don't think you should be rewarded two points just for drinking two cups of unsweetened tea, nor do I think your first alcoholic drink of the day should avoid a penalty.
+This repository contains multiple implementations of the same core application:
 
-## What's the tech?
-![react](https://img.shields.io/badge/React-brown)
-![react native](https://img.shields.io/badge/React_Native-brown)
-![expo](https://img.shields.io/badge/Expo-brown)
-![tailwind](https://img.shields.io/badge/Tailwind/Nativewind-brown)
-![javascript](https://img.shields.io/badge/Javascript-blue)
-![typescript](https://img.shields.io/badge/Typescript-blue)
-![jsx](https://img.shields.io/badge/JSX-blue)
+```
+way-of-the-goat/
+├── mobile/           # Native mobile apps
+│   ├── androidApp/   # Native Android app (Jetpack Compose)
+│   └── iosApp/       # Native iOS app (SwiftUI - future)
+├── website/          # Simple website (future)
+├── api/              # Go backend API (future)
+└── global-assets/    # Shared assets across platforms
+```
+
+## About the App
+
+The scoring methodology comes from "Racing Weight" by Matt Fitzgerald, designed for serious endurance athletes managing weight for performance. This implementation offers:
+
+- **Local-first approach**: No account required - data stays on your device
+- **Improved UX**: Clean, intuitive interface optimized for daily use
+- **Customized scoring**: Refined food group scoring based on practical usage
+- **Multi-platform**: Native performance on Android and iOS
+
+## Technology Stack
+
+### Native Mobile Apps (Current Focus)
+![kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat&logo=kotlin&logoColor=white)
+![android](https://img.shields.io/badge/Android-3DDC84?style=flat&logo=android&logoColor=white)
+![ios](https://img.shields.io/badge/iOS-000000?style=flat&logo=ios&logoColor=white)
+![jetpack-compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=flat&logo=jetpackcompose&logoColor=white)
+![swiftui](https://img.shields.io/badge/SwiftUI-FA7343?style=flat&logo=swift&logoColor=white)
+
+## Getting Started
+
+### Prerequisites
+- IntelliJ IDEA (Community Edition works fine)
+- Android SDK
+- Java 17+ (Azul Zulu recommended)
+
+### Running the Android App
+1. Open the `mobile/` directory in IntelliJ IDEA
+2. Let Gradle sync complete
+3. Create "Android App" run configuration
+4. Run on emulator or connected device
 
 ## User interface
 

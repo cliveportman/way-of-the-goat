@@ -1,0 +1,178 @@
+-- Way of the Goat Database Schema
+-- Multi-suite food scoring system
+
+-- User preferences (single row table)
+CREATE TABLE user_preferences (
+    id INTEGER PRIMARY KEY NOT NULL DEFAULT 1,
+    active_suite_id TEXT NOT NULL DEFAULT 'racing_weight',
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+-- Daily servings records (one row per date)
+-- Each record is tied to the suite that was active when recorded
+CREATE TABLE daily_servings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    date TEXT NOT NULL UNIQUE,      -- ISO 8601 date: YYYY-MM-DD
+    suite_id TEXT NOT NULL,         -- References SuiteId
+    created_at INTEGER NOT NULL,    -- Epoch millis
+    updated_at INTEGER NOT NULL     -- Epoch millis
+);
+
+-- Category servings (normalized - flexible categories per suite)
+CREATE TABLE category_servings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    daily_servings_id INTEGER NOT NULL,
+    category_id TEXT NOT NULL,      -- References CategoryId
+    serving_count INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (daily_servings_id) REFERENCES daily_servings(id) ON DELETE CASCADE,
+    UNIQUE(daily_servings_id, category_id)
+);
+
+-- Indexes for common queries
+CREATE INDEX idx_daily_servings_date ON daily_servings(date);
+CREATE INDEX idx_daily_servings_suite ON daily_servings(suite_id);
+CREATE INDEX idx_category_servings_daily ON category_servings(daily_servings_id);
+
+-- =============================================================================
+-- User Preferences Queries
+-- =============================================================================
+
+-- Get user preferences
+getPreferences:
+SELECT * FROM user_preferences WHERE id = 1;
+
+-- Upsert user preferences (insert or replace)
+upsertPreferences:
+INSERT OR REPLACE INTO user_preferences (id, active_suite_id, created_at, updated_at)
+VALUES (1, ?, ?, ?);
+
+-- Update active suite only
+updateActiveSuite:
+UPDATE user_preferences SET active_suite_id = ?, updated_at = ? WHERE id = 1;
+
+-- =============================================================================
+-- Daily Servings Queries
+-- =============================================================================
+
+-- Get daily servings for a specific date (with all category servings)
+getDailyServingsForDate:
+SELECT ds.*, cs.category_id, cs.serving_count
+FROM daily_servings ds
+LEFT JOIN category_servings cs ON ds.id = cs.daily_servings_id
+WHERE ds.date = ?;
+
+-- Get daily servings for a date range (for Progress screen)
+getDailyServingsForRange:
+SELECT ds.*, cs.category_id, cs.serving_count
+FROM daily_servings ds
+LEFT JOIN category_servings cs ON ds.id = cs.daily_servings_id
+WHERE ds.date >= ? AND ds.date <= ?
+ORDER BY ds.date DESC;
+
+-- Get daily servings record only (without categories)
+getDailyServingsRecordForDate:
+SELECT * FROM daily_servings WHERE date = ?;
+
+-- Get all dates with records (for history/stats)
+getAllDatesWithRecords:
+SELECT DISTINCT date FROM daily_servings ORDER BY date DESC;
+
+-- Get dates with records in a range
+getDatesWithRecordsInRange:
+SELECT DISTINCT date FROM daily_servings
+WHERE date >= ? AND date <= ?
+ORDER BY date DESC;
+
+-- Insert new daily servings record
+insertDailyServings:
+INSERT INTO daily_servings (date, suite_id, created_at, updated_at)
+VALUES (?, ?, ?, ?);
+
+-- Update daily servings record (e.g., if suite changes)
+updateDailyServings:
+UPDATE daily_servings
+SET suite_id = ?, updated_at = ?
+WHERE id = ?;
+
+-- Delete daily servings (cascades to category_servings)
+deleteDailyServings:
+DELETE FROM daily_servings WHERE id = ?;
+
+-- Delete daily servings by date
+deleteDailyServingsByDate:
+DELETE FROM daily_servings WHERE date = ?;
+
+-- Get last insert row ID
+lastInsertRowId:
+SELECT last_insert_rowid();
+
+-- =============================================================================
+-- Category Servings Queries
+-- =============================================================================
+
+-- Get all category servings for a daily record
+getCategoryServingsForDaily:
+SELECT * FROM category_servings WHERE daily_servings_id = ?;
+
+-- Get specific category serving
+getCategoryServing:
+SELECT * FROM category_servings
+WHERE daily_servings_id = ? AND category_id = ?;
+
+-- Insert category servings
+insertCategoryServings:
+INSERT INTO category_servings (daily_servings_id, category_id, serving_count)
+VALUES (?, ?, ?);
+
+-- Update category servings
+updateCategoryServings:
+UPDATE category_servings
+SET serving_count = ?
+WHERE daily_servings_id = ? AND category_id = ?;
+
+-- Upsert category servings (insert or replace)
+upsertCategoryServings:
+INSERT OR REPLACE INTO category_servings (daily_servings_id, category_id, serving_count)
+VALUES (?, ?, ?);
+
+-- Delete category servings (when count goes to 0)
+deleteCategoryServings:
+DELETE FROM category_servings
+WHERE daily_servings_id = ? AND category_id = ?;
+
+-- Delete all category servings for a daily record
+deleteAllCategoryServingsForDaily:
+DELETE FROM category_servings WHERE daily_servings_id = ?;
+
+-- =============================================================================
+-- Aggregate Queries
+-- =============================================================================
+
+-- Count days tracked
+countDaysTracked:
+SELECT COUNT(*) FROM daily_servings;
+
+-- Count days tracked for a specific suite
+countDaysTrackedForSuite:
+SELECT COUNT(*) FROM daily_servings WHERE suite_id = ?;
+
+-- Get most recent tracking date
+getMostRecentDate:
+SELECT date FROM daily_servings ORDER BY date DESC LIMIT 1;
+
+-- Get oldest tracking date
+getOldestDate:
+SELECT date FROM daily_servings ORDER BY date ASC LIMIT 1;
+
+-- =============================================================================
+-- Last Used Profile Query (for "last used" hint)
+-- =============================================================================
+
+-- Get the most recent daily_servings record before a given date
+-- Used to show "Last used: [profile]" hint when selecting profile for empty day
+getLastServingsBeforeDate:
+SELECT * FROM daily_servings
+WHERE date < ?
+ORDER BY date DESC
+LIMIT 1;
