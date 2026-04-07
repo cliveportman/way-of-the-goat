@@ -1,0 +1,15 @@
+{
+  "name": "vo2",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "vo2_bg.wasm",
+    "vo2.js",
+    "vo2.d.ts"
+  ],
+  "main": "vo2.js",
+  "types": "vo2.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
