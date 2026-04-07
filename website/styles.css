@@ -108,6 +108,26 @@ li {
     outline-offset: 3px;
 }
 
+/* Landing page */
+
+.tagline {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.description {
+    color: var(--color-muted);
+    max-width: 52ch;
+    margin-bottom: 2rem;
+}
+
+.link-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
 footer {
     max-width: 800px;
     margin: 0 auto;
