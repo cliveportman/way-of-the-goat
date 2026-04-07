@@ -1,0 +1,242 @@
+package co.theportman.way_of_the_goat.data.cache
+
+import co.theportman.way_of_the_goat.data.remote.models.Activity
+import co.theportman.way_of_the_goat.data.repository.IntervalsRepository
+import co.theportman.way_of_the_goat.util.logError
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+
+/**
+ * Shared singleton cache for activity data
+ * Used by ViewModels to avoid duplicate API calls
+ */
+object ActivityDataManager : ActivityDataSource {
+
+    private val repository = IntervalsRepository()
+    private val mutex = Mutex()
+
+    // All loaded activities
+    private val allActivities = mutableListOf<Activity>()
+
+    // Track loaded date ranges
+    private var oldestLoadedDate: LocalDate? = null
+    private var newestLoadedDate: LocalDate? = null
+
+    // Track currently loading dates to prevent duplicates
+    private val loadingRanges = mutableSetOf<Pair<LocalDate, LocalDate>>()
+
+    // Expose activities as StateFlow for reactive updates
+    private val _activitiesFlow = MutableStateFlow<List<Activity>>(emptyList())
+    override val activitiesFlow: StateFlow<List<Activity>> = _activitiesFlow.asStateFlow()
+
+    /**
+     * Load initial data around a specific date
+     * Loads targetDate ± bufferDays
+     */
+    override suspend fun loadInitialData(aroundDate: LocalDate, bufferDays: Int): Result<Unit> {
+        return mutex.withLock {
+            try {
+                val oldest = aroundDate.minus(bufferDays, DateTimeUnit.DAY)
+                val newest = aroundDate.plus(bufferDays, DateTimeUnit.DAY)
+
+                loadDateRangeInternal(oldest, newest)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    /**
+     * Ensure a specific date + buffer is loaded
+     * Returns true if new data was loaded, false if already present
+     */
+    suspend fun ensureDateLoaded(date: LocalDate, bufferDays: Int = 30): Boolean {
+        return mutex.withLock {
+            val requiredOldest = date.minus(bufferDays, DateTimeUnit.DAY)
+            val requiredNewest = date.plus(bufferDays, DateTimeUnit.DAY)
+
+            var didLoad = false
+
+            // Check if we need to load older data
+            val currentOldest = oldestLoadedDate
+            if (currentOldest == null || requiredOldest < currentOldest) {
+                val loadOldest = requiredOldest
+                val loadNewest = currentOldest?.minus(1, DateTimeUnit.DAY) ?: date
+                if (loadOldest <= loadNewest) {
+                    loadDateRangeInternal(loadOldest, loadNewest).fold(
+                        onSuccess = { didLoad = true },
+                        onFailure = { e -> logError("ActivityDataManager", "Failed to load date range: ${e.message}") }
+                    )
+                }
+            }
+
+            // Check if we need to load newer data
+            val currentNewest = newestLoadedDate
+            if (currentNewest == null || requiredNewest > currentNewest) {
+                val loadOldest = currentNewest?.plus(1, DateTimeUnit.DAY) ?: date
+                val loadNewest = requiredNewest
+                if (loadOldest <= loadNewest) {
+                    loadDateRangeInternal(loadOldest, loadNewest).fold(
+                        onSuccess = { didLoad = true },
+                        onFailure = { e -> logError("ActivityDataManager", "Failed to load date range: ${e.message}") }
+                    )
+                }
+            }
+
+            didLoad
+        }
+    }
+
+    /**
+     * Refresh data for a specific date range
+     * Removes cached activities in the range and fetches fresh data from API
+     * Updates existing activities by ID (handles edits) and adds new ones
+     */
+    suspend fun refreshDateRange(oldest: LocalDate, newest: LocalDate): Result<Unit> {
+        return mutex.withLock {
+            try {
+                // Fetch fresh data from API
+                val result = repository.getActivities(
+                    oldest = oldest.toString(),
+                    newest = newest.toString()
+                )
+
+                result.fold(
+                    onSuccess = { freshActivities ->
+                        // Remove activities in this date range from cache
+                        allActivities.removeAll { activity ->
+                            if (activity.startDateLocal.isEmpty()) return@removeAll false
+                            val activityDate = activity.startDateLocal.substringBefore('T')
+                            activityDate >= oldest.toString() && activityDate <= newest.toString()
+                        }
+
+                        // Add all fresh activities (new ones and updated ones)
+                        allActivities.addAll(freshActivities)
+
+                        // Emit updated activities
+                        _activitiesFlow.value = allActivities.toList()
+
+                        Result.success(Unit)
+                    },
+                    onFailure = { error ->
+                        Result.failure(error)
+                    }
+                )
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    /**
+     * Check if a specific date is loaded
+     */
+    fun isDateLoaded(date: LocalDate): Boolean {
+        val oldest = oldestLoadedDate ?: return false
+        val newest = newestLoadedDate ?: return false
+        return date in oldest..newest
+    }
+
+    /**
+     * Get activities for a specific date
+     */
+    fun getActivitiesForDate(date: LocalDate): List<Activity> {
+        val snapshot = _activitiesFlow.value
+        return snapshot.filter { activity ->
+            activity.startDateLocal.isNotEmpty() &&
+            activity.startDateLocal.substringBefore('T') == date.toString()
+        }
+    }
+
+    /**
+     * Get activities for a date range
+     */
+    fun getActivitiesForRange(oldest: LocalDate, newest: LocalDate): List<Activity> {
+        val snapshot = _activitiesFlow.value
+        return snapshot.filter { activity ->
+            if (activity.startDateLocal.isEmpty()) return@filter false
+            val activityDate = activity.startDateLocal.substringBefore('T')
+            activityDate >= oldest.toString() && activityDate <= newest.toString()
+        }
+    }
+
+    /**
+     * Internal method to load a date range
+     * Must be called within mutex lock
+     */
+    private suspend fun loadDateRangeInternal(oldest: LocalDate, newest: LocalDate): Result<Unit> {
+        // Check if this range is already being loaded
+        val range = Pair(oldest, newest)
+        if (loadingRanges.contains(range)) {
+            return Result.success(Unit)
+        }
+
+        loadingRanges.add(range)
+
+        return try {
+            val result = repository.getActivities(
+                oldest = oldest.toString(),
+                newest = newest.toString()
+            )
+
+            result.fold(
+                onSuccess = { newActivities ->
+                    // Add new activities and remove duplicates (skip null IDs from dedup)
+                    val existingIds = allActivities.mapNotNull { it.id }.toSet()
+                    val uniqueNewActivities = newActivities.filter { it.id == null || it.id !in existingIds }
+                    allActivities.addAll(uniqueNewActivities)
+
+                    // Update date range
+                    val prevOldest = oldestLoadedDate
+                    if (prevOldest == null || oldest < prevOldest) {
+                        oldestLoadedDate = oldest
+                    }
+                    val prevNewest = newestLoadedDate
+                    if (prevNewest == null || newest > prevNewest) {
+                        newestLoadedDate = newest
+                    }
+
+                    // Emit updated activities
+                    _activitiesFlow.value = allActivities.toList()
+
+                    loadingRanges.remove(range)
+                    Result.success(Unit)
+                },
+                onFailure = { error ->
+                    loadingRanges.remove(range)
+                    Result.failure(error)
+                }
+            )
+        } catch (e: Exception) {
+            loadingRanges.remove(range)
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Clear all cached data
+     */
+    suspend fun clear() {
+        mutex.withLock {
+            allActivities.clear()
+            oldestLoadedDate = null
+            newestLoadedDate = null
+            loadingRanges.clear()
+            _activitiesFlow.value = emptyList()
+        }
+    }
+
+    /**
+     * Clean up resources
+     */
+    fun close() {
+        repository.close()
+    }
+}
