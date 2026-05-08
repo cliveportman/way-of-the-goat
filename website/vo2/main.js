@@ -427,6 +427,52 @@ function renderResults(d, weightKg) {
       chartsEl.appendChild(c.wrapper);
       drawElevationChart(c.canvas, d.chart_points);
     }
+
+    // Cardiac drift chart
+    if (d.cardiac_drift && d.cardiac_drift.length > 10) {
+      const label = d.decoupling_pct != null
+        ? `Cardiac Drift — ${d.decoupling_pct.toFixed(1)}% aerobic decoupling`
+        : 'Cardiac Drift';
+      const c = createChartContainer(label);
+      chartsEl.appendChild(c.wrapper);
+      const note = document.createElement('div');
+      note.className = 'chart-note';
+      note.textContent = 'Speed/HR efficiency, normalised to opening baseline (1.0). ' +
+        'Falling values mean your heart is working progressively harder for the same pace.';
+      c.wrapper.appendChild(note);
+      drawDriftChart(c.canvas, d.cardiac_drift, d.decoupling_pct);
+    }
+
+    // Descent rate scatter chart
+    if (d.descent_points && d.descent_points.length > 5) {
+      const c = createChartContainer('Descent Rate by Gradient');
+      chartsEl.appendChild(c.wrapper);
+      const legend = document.createElement('div');
+      legend.className = 'legend';
+      const earlyItem = document.createElement('div');
+      earlyItem.className = 'legend-item';
+      const earlyDot = document.createElement('div');
+      earlyDot.className = 'legend-dot';
+      earlyDot.style.background = 'hsl(120,65%,50%)';
+      earlyItem.appendChild(earlyDot);
+      earlyItem.appendChild(document.createTextNode('Early'));
+      const lateItem = document.createElement('div');
+      lateItem.className = 'legend-item';
+      const lateDot = document.createElement('div');
+      lateDot.className = 'legend-dot';
+      lateDot.style.background = 'hsl(0,65%,55%)';
+      lateItem.appendChild(lateDot);
+      lateItem.appendChild(document.createTextNode('Late'));
+      legend.appendChild(earlyItem);
+      legend.appendChild(lateItem);
+      c.wrapper.appendChild(legend);
+      const note = document.createElement('div');
+      note.className = 'chart-note';
+      note.textContent = 'Each dot is a downhill segment. Colour shifts green → red through the activity. ' +
+        'A lower cloud late in the run indicates leg fatigue on descents.';
+      c.wrapper.appendChild(note);
+      drawDescentChart(c.canvas, d.descent_points);
+    }
   }
 }
 
@@ -615,6 +661,179 @@ function drawElevationChart(canvas, points) {
     ctx.textAlign = 'center';
     ctx.fillText(d + 'km', xScale(d), H - 5);
   }
+}
+
+function drawDriftChart(canvas, driftPoints, decouplingPct) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 200;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 14, right: 20, bottom: 30, left: 52 };
+  const iw = W - pad.left - pad.right;
+  const ih = H - pad.top - pad.bottom;
+
+  const maxDist = driftPoints[driftPoints.length - 1].distance_km || 1;
+  const effVals = driftPoints.map(p => p.efficiency);
+  const rawMin = Math.min(...effVals);
+  const rawMax = Math.max(...effVals);
+  const yMin = Math.min(rawMin * 0.97, 0.85);
+  const yMax = Math.max(rawMax * 1.03, 1.12);
+
+  const xScale = d => pad.left + (d / maxDist) * iw;
+  const yScale = v => pad.top + (1 - (v - yMin) / (yMax - yMin)) * ih;
+
+  // Grid lines
+  ctx.strokeStyle = '#222';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (ih / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + iw, y); ctx.stroke();
+  }
+
+  // Baseline at efficiency = 1.0 (dashed)
+  const baseY = yScale(1.0);
+  ctx.save();
+  ctx.setLineDash([4, 4]);
+  ctx.strokeStyle = '#445';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad.left, baseY); ctx.lineTo(pad.left + iw, baseY); ctx.stroke();
+  ctx.restore();
+
+  // Midpoint vertical divider (dashed)
+  const midX = xScale(maxDist / 2);
+  ctx.save();
+  ctx.setLineDash([4, 4]);
+  ctx.strokeStyle = '#445';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(midX, pad.top); ctx.lineTo(midX, pad.top + ih); ctx.stroke();
+  ctx.restore();
+  ctx.fillStyle = '#556';
+  ctx.font = '10px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('½', midX, pad.top + 10);
+
+  // Subtle fill beneath the baseline in the drift zone
+  ctx.beginPath();
+  ctx.moveTo(xScale(driftPoints[0].distance_km), yScale(driftPoints[0].efficiency));
+  for (const p of driftPoints) ctx.lineTo(xScale(p.distance_km), yScale(p.efficiency));
+  ctx.lineTo(xScale(driftPoints[driftPoints.length - 1].distance_km), baseY);
+  ctx.lineTo(xScale(driftPoints[0].distance_km), baseY);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(167,139,250,0.07)';
+  ctx.fill();
+
+  // Efficiency line
+  ctx.beginPath();
+  ctx.moveTo(xScale(driftPoints[0].distance_km), yScale(driftPoints[0].efficiency));
+  for (const p of driftPoints) ctx.lineTo(xScale(p.distance_km), yScale(p.efficiency));
+  ctx.strokeStyle = '#a78bfa';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Axes
+  ctx.fillStyle = '#666';
+  ctx.font = '11px -apple-system, sans-serif';
+
+  // X axis (distance)
+  const distStep = maxDist <= 5 ? 1 : maxDist <= 15 ? 2 : maxDist <= 25 ? 5 : 10;
+  for (let d = 0; d <= maxDist; d += distStep) {
+    ctx.textAlign = 'center';
+    ctx.fillText(d + 'km', xScale(d), H - 6);
+  }
+
+  // Y axis (efficiency)
+  ctx.fillStyle = '#a78bfa';
+  for (let i = 0; i <= 4; i++) {
+    const v = yMin + (yMax - yMin) * (i / 4);
+    ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(2), pad.left - 6, yScale(v) + 4);
+  }
+}
+
+function drawDescentChart(canvas, points) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 200;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 10, right: 20, bottom: 38, left: 50 };
+  const iw = W - pad.left - pad.right;
+  const ih = H - pad.top - pad.bottom;
+
+  // grade_pct is negative; display as absolute gradient on x-axis
+  const grades = points.map(p => Math.abs(p.grade_pct));
+  const speeds = points.map(p => p.speed_kmh);
+
+  const gradeMin = 0;
+  const gradeMax = Math.min(50, Math.max(...grades) * 1.05);
+  const speedMin = Math.max(0, Math.min(...speeds) * 0.9);
+  const speedMax = Math.max(...speeds) * 1.05;
+
+  const xScale = g => pad.left + ((g - gradeMin) / (gradeMax - gradeMin || 1)) * iw;
+  const yScale = s => pad.top + (1 - (s - speedMin) / (speedMax - speedMin || 1)) * ih;
+
+  // Grid lines
+  ctx.strokeStyle = '#222';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (ih / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + iw, y); ctx.stroke();
+  }
+
+  // Scatter points — colour by progress (green=early, red=late)
+  for (const pt of points) {
+    const x = xScale(Math.abs(pt.grade_pct));
+    const y = yScale(pt.speed_kmh);
+    const hue = Math.round((1 - pt.progress) * 120); // 120=green, 0=red
+    ctx.beginPath();
+    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue},65%,52%,0.65)`;
+    ctx.fill();
+  }
+
+  // Axes
+  ctx.fillStyle = '#666';
+  ctx.font = '11px -apple-system, sans-serif';
+
+  // X axis (gradient %)
+  const gradeStep = gradeMax <= 15 ? 5 : gradeMax <= 30 ? 10 : 15;
+  const startGrade = Math.ceil(gradeMin / gradeStep) * gradeStep;
+  for (let g = startGrade; g <= gradeMax; g += gradeStep) {
+    ctx.textAlign = 'center';
+    ctx.fillText(g + '%', xScale(g), H - 20);
+  }
+  ctx.textAlign = 'center';
+  ctx.fillText('Gradient', pad.left + iw / 2, H - 4);
+
+  // Y axis (speed km/h)
+  const speedRange = speedMax - speedMin;
+  const speedStep = speedRange <= 6 ? 2 : speedRange <= 15 ? 3 : 5;
+  const startSpeed = Math.ceil(speedMin / speedStep) * speedStep;
+  for (let s = startSpeed; s <= speedMax; s += speedStep) {
+    ctx.textAlign = 'right';
+    ctx.fillText(s.toFixed(0), pad.left - 6, yScale(s) + 4);
+  }
+
+  // Y axis label
+  ctx.save();
+  ctx.translate(12, pad.top + ih / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillText('km/h', 0, 0);
+  ctx.restore();
 }
 
 // ----------------------------------------------------------------

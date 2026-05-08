@@ -279,6 +279,7 @@ body {
   margin-bottom: 12px;
 }
 .chart-title { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 14px; }
+.chart-note { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
 canvas { display: block; width: 100%; }
 
 .legend {

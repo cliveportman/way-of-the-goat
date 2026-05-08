@@ -47,6 +47,24 @@ pub(crate) struct PeakKmResult {
 }
 
 #[derive(Debug, Serialize)]
+pub(crate) struct DriftPoint {
+    pub(crate) distance_km: f64,
+    /// Normalised speed/HR efficiency (1.0 = opening baseline).
+    /// Falling values mean the heart is working harder for the same pace —
+    /// the hallmark of cardiovascular drift during prolonged effort.
+    pub(crate) efficiency: f64,
+}
+
+#[derive(Debug, Serialize)]
+pub(crate) struct DescentPoint {
+    pub(crate) grade_pct: f64,   // negative: e.g. -15.0 for a 15% descent
+    pub(crate) speed_kmh: f64,
+    /// Fractional position through the activity (0.0 = start, 1.0 = finish).
+    /// Used by the frontend to colour points by fatigue stage.
+    pub(crate) progress: f64,
+}
+
+#[derive(Debug, Serialize)]
 pub(crate) struct AnalysisResult {
     pub(crate) total_distance_km: f64,
     pub(crate) total_duration_min: f64,
@@ -63,6 +81,17 @@ pub(crate) struct AnalysisResult {
     pub(crate) fitness_description: Option<String>,
     pub(crate) peak_1km: Option<PeakKmResult>,
     pub(crate) chart_points: Vec<ChartPoint>,
+    /// Smoothed speed/HR efficiency series for the cardiac drift chart.
+    /// Empty when HR or time data is absent.
+    pub(crate) cardiac_drift: Vec<DriftPoint>,
+    /// Aerobic decoupling: percentage by which speed/HR efficiency declined
+    /// from the first half to the second half of the activity.
+    /// Positive = drift (expected on long efforts); negative = improving (unusual).
+    /// None when insufficient HR or time data is available.
+    pub(crate) decoupling_pct: Option<f64>,
+    /// Downhill segments as scatter data for the descent rate chart.
+    /// Empty when elevation or time data is absent.
+    pub(crate) descent_points: Vec<DescentPoint>,
     pub(crate) error: Option<String>,
 }
 
@@ -532,6 +561,119 @@ fn best_1km_vo2(segments: &[Segment], effective_max_hr: f64) -> Option<PeakKmRes
     best
 }
 
+/// Compute a smoothed speed/HR efficiency series and aerobic decoupling percentage.
+///
+/// Efficiency = speed_mpm / HR per steady-state segment, smoothed with a rolling
+/// average and normalised so the opening window = 1.0.  Aerobic decoupling compares
+/// mean efficiency in the first half vs the second half:
+///
+///   decoupling % = (mean_1st − mean_2nd) / mean_1st × 100
+///
+/// Positive = drift (heart working harder for the same pace).
+/// Requires both HR and time data; returns empty vecs otherwise.
+fn compute_drift(segs: &[Segment]) -> (Vec<DriftPoint>, Option<f64>) {
+    let skip_s = 180.0; // skip 3-min warmup
+
+    // Collect (cum_dist_m, efficiency) for every steady-state segment
+    let raw: Vec<(f64, f64)> = segs
+        .iter()
+        .filter(|s| {
+            s.elapsed_s > skip_s
+                && s.speed_mpm > 50.0 // > ~3 km/h — exclude stops and near-stops
+                && s.hr.map(|h| h > 50).unwrap_or(false)
+        })
+        .filter_map(|s| {
+            let hr = s.hr? as f64;
+            let eff = s.speed_mpm / hr;
+            if eff > 0.0 { Some((s.cum_dist_m, eff)) } else { None }
+        })
+        .collect();
+
+    if raw.len() < 20 {
+        return (vec![], None);
+    }
+
+    // Rolling average window (~10 min at 1 Hz; clamped to 5–60 samples)
+    let win = (raw.len() / 8).clamp(5, 60);
+    let half = win / 2;
+
+    let smoothed: Vec<(f64, f64)> = (0..raw.len())
+        .map(|i| {
+            let s = i.saturating_sub(half);
+            let e = (i + half + 1).min(raw.len());
+            let avg = raw[s..e].iter().map(|(_, v)| v).sum::<f64>() / (e - s) as f64;
+            (raw[i].0, avg)
+        })
+        .collect();
+
+    // Normalise to the opening smoothed value
+    let baseline = smoothed[0].1;
+    if baseline <= 0.0 {
+        return (vec![], None);
+    }
+
+    // Sample to ≤300 output points for the chart
+    let step = (smoothed.len() / 300).max(1);
+    let drift_points: Vec<DriftPoint> = smoothed
+        .iter()
+        .step_by(step)
+        .map(|(dist, eff)| DriftPoint {
+            distance_km: round_to(dist / 1000.0, 2),
+            efficiency: round_to(eff / baseline, 3),
+        })
+        .collect();
+
+    // Aerobic decoupling: compare mean efficiency in each half by sample count
+    let mid = smoothed.len() / 2;
+    let m1 = smoothed[..mid].iter().map(|(_, e)| e).sum::<f64>() / mid as f64;
+    let m2 = smoothed[mid..].iter().map(|(_, e)| e).sum::<f64>()
+        / (smoothed.len() - mid) as f64;
+    let decoupling = if m1 > 0.0 {
+        Some(round_to((m1 - m2) / m1 * 100.0, 1))
+    } else {
+        None
+    };
+
+    (drift_points, decoupling)
+}
+
+/// Extract downhill segments as scatter data for the descent rate chart.
+///
+/// Each point carries the gradient, speed, and fractional position through
+/// the activity so the frontend can colour by fatigue stage.
+/// Requires time data for meaningful speed values.
+fn compute_descent_points(segs: &[Segment]) -> Vec<DescentPoint> {
+    let total_dist = segs.last().map(|s| s.cum_dist_m).unwrap_or(1.0).max(1.0);
+
+    let mut pts: Vec<DescentPoint> = segs
+        .iter()
+        .filter(|s| s.grade < -0.03 && s.speed_mpm > 30.0) // >3% downhill, moving
+        .filter_map(|s| {
+            let speed_kmh = s.speed_mpm * 60.0 / 1000.0;
+            if !(0.5..=35.0).contains(&speed_kmh) {
+                return None;
+            }
+            let grade_pct = round_to(s.grade * 100.0, 1);
+            if grade_pct < -50.0 {
+                return None; // GPS elevation noise artefact
+            }
+            Some(DescentPoint {
+                grade_pct,
+                speed_kmh: round_to(speed_kmh, 2),
+                progress: round_to(s.cum_dist_m / total_dist, 3),
+            })
+        })
+        .collect();
+
+    // Cap at 2 000 points — sample evenly if the activity is very dense
+    if pts.len() > 2000 {
+        let step = pts.len() / 2000;
+        pts = pts.into_iter().step_by(step).collect();
+    }
+
+    pts
+}
+
 /// `weight_kg` is accepted for a future energy-expenditure calculation but is not
 /// used by the current VO2 estimation methods (ACSM VO2 is per-kg, so weight cancels out).
 fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> AnalysisResult {
@@ -552,6 +694,9 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
             fitness_description: None,
             peak_1km: None,
             chart_points: vec![],
+            cardiac_drift: vec![],
+            decoupling_pct: None,
+            descent_points: vec![],
             error: Some(format!(
                 "Not enough track points (found {}, need at least 10). Is this a valid GPX file?",
                 points.len()
@@ -608,6 +753,19 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
         mhr as f64 * 1.05
     } else {
         0.0
+    };
+
+    // ---- Movement analysis ----
+    let (cardiac_drift, decoupling_pct) = if has_hr && has_time {
+        compute_drift(&segs)
+    } else {
+        (vec![], None)
+    };
+
+    let descent_points = if has_time && has_elevation {
+        compute_descent_points(&segs)
+    } else {
+        vec![]
     };
 
     // ---- VO2max estimates ----
@@ -891,6 +1049,9 @@ fn analyze(points: &[TrackPoint], _weight_kg: f64, max_hr_input: u32) -> Analysi
         fitness_description: if has_best { Some(desc.to_string()) } else { None },
         peak_1km: if has_time { best_1km_vo2(&segs, effective_max_hr) } else { None },
         chart_points,
+        cardiac_drift,
+        decoupling_pct,
+        descent_points,
         error: None,
     }
 }
