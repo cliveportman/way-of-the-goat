@@ -593,8 +593,16 @@ fn compute_drift(segs: &[Segment]) -> (Vec<DriftPoint>, Option<f64>) {
         return (vec![], None);
     }
 
-    // Rolling average window (~10 min at 1 Hz; clamped to 5–60 samples)
-    let win = (raw.len() / 8).clamp(5, 60);
+    // Rolling average window targeting ~10 min of activity, derived from the
+    // actual sample interval rather than sample count (recording rates vary
+    // widely, 1–10 s is common).
+    let span_s = segs
+        .last()
+        .map(|s| s.elapsed_s)
+        .unwrap_or(0.0)
+        .max(1.0);
+    let samples_per_sec = raw.len() as f64 / span_s;
+    let win = ((samples_per_sec * 600.0).round() as usize).clamp(5, 600).min(raw.len());
     let half = win / 2;
 
     let smoothed: Vec<(f64, f64)> = (0..raw.len())
@@ -1097,6 +1105,9 @@ pub fn analyze_gpx(gpx_content: &str, weight_kg: f64, max_hr: u32) -> String {
             "fitness_description": null,
             "peak_1km": null,
             "chart_points": [],
+            "cardiac_drift": [],
+            "decoupling_pct": null,
+            "descent_points": [],
             "error": "Serialization failed"
         }).to_string())
 }

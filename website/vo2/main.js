@@ -384,7 +384,7 @@ function renderResults(d, weightKg) {
   // ---- Charts ----
   const chartsTitle = document.getElementById('chartsTitle');
   const chartsEl = document.getElementById('chartsContainer');
-  chartsEl.innerHTML = '';
+  chartsEl.replaceChildren();
 
   if (d.chart_points && d.chart_points.length > 1) {
     chartsTitle.hidden = false;
@@ -433,7 +433,10 @@ function renderResults(d, weightKg) {
       const label = d.decoupling_pct != null
         ? `Cardiac Drift — ${d.decoupling_pct.toFixed(1)}% aerobic decoupling`
         : 'Cardiac Drift';
-      const c = createChartContainer(label);
+      const aria = d.decoupling_pct != null
+        ? `Cardiac drift chart, aerobic decoupling ${d.decoupling_pct.toFixed(1)}%`
+        : 'Cardiac drift chart';
+      const c = createChartContainer(label, aria);
       chartsEl.appendChild(c.wrapper);
       const note = document.createElement('div');
       note.className = 'chart-note';
@@ -445,7 +448,10 @@ function renderResults(d, weightKg) {
 
     // Descent rate scatter chart
     if (d.descent_points && d.descent_points.length > 5) {
-      const c = createChartContainer('Descent Rate by Gradient');
+      const c = createChartContainer(
+        'Descent Rate by Gradient',
+        'Descent rate scatter plot, speed versus gradient, coloured by activity progress'
+      );
       chartsEl.appendChild(c.wrapper);
       const legend = document.createElement('div');
       legend.className = 'legend';
@@ -476,14 +482,15 @@ function renderResults(d, weightKg) {
   }
 }
 
-function createChartContainer(title) {
+function createChartContainer(title, ariaLabel) {
   const wrapper = document.createElement('div');
   wrapper.className = 'chart-container';
   const titleEl = document.createElement('div');
   titleEl.className = 'chart-title';
   titleEl.textContent = title;
   const canvas = document.createElement('canvas');
-  canvas.height = 200;
+  canvas.setAttribute('role', 'img');
+  canvas.setAttribute('aria-label', ariaLabel || title);
   wrapper.appendChild(titleEl);
   wrapper.appendChild(canvas);
   return { wrapper, canvas };
@@ -793,14 +800,17 @@ function drawDescentChart(canvas, points) {
     ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + iw, y); ctx.stroke();
   }
 
-  // Scatter points — colour by progress (green=early, red=late)
+  // Scatter points — colour, radius, and opacity all encode progress
+  // (redundant cues for colour-vision deficiency)
   for (const pt of points) {
     const x = xScale(Math.abs(pt.grade_pct));
     const y = yScale(pt.speed_kmh);
     const hue = Math.round((1 - pt.progress) * 120); // 120=green, 0=red
+    const radius = 2 + pt.progress * 2.5;            // 2.0 → 4.5 px
+    const alpha = 0.45 + pt.progress * 0.4;          // 0.45 → 0.85
     ctx.beginPath();
-    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-    ctx.fillStyle = `hsla(${hue},65%,52%,0.65)`;
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue},65%,52%,${alpha})`;
     ctx.fill();
   }
 
@@ -854,8 +864,8 @@ function fmtDuration(totalMin) {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
-function smoothArray(arr, window) {
-  const half = Math.floor(window / 2);
+function smoothArray(arr, windowSize) {
+  const half = Math.floor(windowSize / 2);
   return arr.map((_, i) => {
     const start = Math.max(0, i - half);
     const end = Math.min(arr.length - 1, i + half);
