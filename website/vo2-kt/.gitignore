@@ -1,0 +1,9 @@
+.gradle/
+build/
+kotlin-js-store/
+local.properties
+*.iml
+.idea/
+
+# Ship dist/ so the page works without a Gradle rebuild, but skip source maps.
+dist/*.map
