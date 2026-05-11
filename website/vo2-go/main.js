@@ -89,14 +89,16 @@ analyzeBtn.addEventListener('click', async () => {
     // Run in a microtask so the loading UI renders
     await new Promise(r => setTimeout(r, 10));
 
+    const t0 = performance.now();
     const json = analyze_gpx(text, weightKg, maxHr);
+    const elapsedMs = performance.now() - t0;
     const data = JSON.parse(json);
 
     if (data.error) {
       showStatus('error', data.error);
     } else {
       hideStatus();
-      renderResults(data, weightKg);
+      renderResults(data, weightKg, elapsedMs);
     }
   } catch (e) {
     console.error(e);
@@ -109,7 +111,7 @@ analyzeBtn.addEventListener('click', async () => {
 // ----------------------------------------------------------------
 // Render
 // ----------------------------------------------------------------
-function renderResults(d, weightKg) {
+function renderResults(d, weightKg, elapsedMs) {
   const results = document.getElementById('results');
   results.classList.add('visible');
 
@@ -128,6 +130,7 @@ function renderResults(d, weightKg) {
     { label: 'Points', value: d.point_count.toLocaleString(), unit: '' },
     { label: 'Avg HR', value: d.avg_hr ? Math.round(d.avg_hr) : '–', unit: d.avg_hr ? 'bpm' : '', hidden: !d.has_hr_data },
     { label: 'Max HR', value: d.max_hr_recorded ?? '–', unit: d.max_hr_recorded ? 'bpm' : '', hidden: !d.has_hr_data },
+    { label: 'Compute', value: fmtElapsed(elapsedMs), unit: '', hidden: elapsedMs == null },
   ];
 
   for (const s of stats) {
@@ -867,6 +870,13 @@ function fmtPace(minPerKm) {
   const m = Math.floor(minPerKm);
   const s = Math.round((minPerKm - m) * 60);
   return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function fmtElapsed(ms) {
+  if (ms == null || !isFinite(ms)) return '–';
+  if (ms < 1) return ms.toFixed(2) + ' ms';
+  if (ms < 1000) return ms.toFixed(0) + ' ms';
+  return (ms / 1000).toFixed(2) + ' s';
 }
 
 function fmtDuration(totalMin) {
