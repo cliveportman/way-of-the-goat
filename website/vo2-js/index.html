@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VO2 Max Calculator (JS build) — Way of the Goat</title>
+<meta name="description" content="Upload a GPX file to estimate your VO2 max using ACSM, Jack Daniels, and Firstbeat methods.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-icon">🫀</div>
+  <div>
+    <h1>VO2 Max Calculator <span class="build-badge">JS</span></h1>
+    <p>Upload a GPX file from any GPS device or app</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Upload -->
+  <div class="upload-area" id="dropZone">
+    <label for="fileInput" class="upload-icon">📁</label>
+    <input type="file" id="fileInput" accept=".gpx">
+    <h2>Drop your GPX file here</h2>
+    <p>or click to browse — supports Garmin, Polar, Apple Watch, Strava, etc.</p>
+  </div>
+
+  <div class="file-selected" id="fileInfo">
+    <span class="file-check-icon">✅</span>
+    <span class="file-name" id="fileName"></span>
+    <span class="file-size" id="fileSize"></span>
+  </div>
+
+  <!-- Inputs -->
+  <div class="inputs">
+    <div class="input-group">
+      <label for="weightInput">Body Weight</label>
+      <div class="input-wrap">
+        <input type="number" id="weightInput" placeholder="70" min="20" max="300" value="">
+        <span class="input-unit">kg</span>
+      </div>
+      <p class="input-hint">Used to calculate absolute VO2 capacity</p>
+    </div>
+    <div class="input-group">
+      <label for="maxHrInput">Max Heart Rate</label>
+      <div class="input-wrap">
+        <input type="number" id="maxHrInput" placeholder="185" min="100" max="220" value="">
+        <span class="input-unit">bpm</span>
+      </div>
+      <p class="input-hint">Leave blank to estimate from recorded data</p>
+    </div>
+  </div>
+
+  <button class="analyze-btn" id="analyzeBtn" disabled>
+    Analyze GPX File
+  </button>
+
+  <div class="status loading" id="status">
+    <div class="spinner"></div>
+    <span id="statusText">Analyzing…</span>
+  </div>
+
+  <!-- Results -->
+  <div id="results">
+
+    <div class="section-title">Activity Summary</div>
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="section-title" id="vo2Title" hidden>VO2 Max Estimates</div>
+    <div id="estimatesContainer"></div>
+
+    <div id="fitnessSection"></div>
+
+    <div class="section-title" id="peak1kmTitle" hidden>Peak 1 km</div>
+    <div id="peak1kmSection"></div>
+
+    <div class="section-title" id="chartsTitle" hidden>Charts</div>
+    <div id="chartsContainer"></div>
+
+  </div>
+</main>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
