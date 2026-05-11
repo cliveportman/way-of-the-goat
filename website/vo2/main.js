@@ -800,17 +800,14 @@ function drawDescentChart(canvas, points) {
     ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + iw, y); ctx.stroke();
   }
 
-  // Scatter points — colour, radius, and opacity all encode progress
-  // (redundant cues for colour-vision deficiency)
+  // Scatter points — uniform small radius so late (red) points don't occlude early (green)
   for (const pt of points) {
     const x = xScale(Math.abs(pt.grade_pct));
     const y = yScale(pt.speed_kmh);
     const hue = Math.round((1 - pt.progress) * 120); // 120=green, 0=red
-    const radius = 2 + pt.progress * 2.5;            // 2.0 → 4.5 px
-    const alpha = 0.45 + pt.progress * 0.4;          // 0.45 → 0.85
     ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.fillStyle = `hsla(${hue},65%,52%,${alpha})`;
+    ctx.arc(x, y, 2, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue},65%,52%,0.7)`;
     ctx.fill();
   }
 
