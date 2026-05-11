@@ -6,6 +6,9 @@
 // `main` blocks forever via select{} so go.run never resolves — we
 // only await long enough to know analyze_gpx has been registered.
 // ----------------------------------------------------------------
+// Size of pkg/vo2.wasm in bytes. Update if the binary changes (build.sh prints it).
+const WASM_SIZE_BYTES = 457_421;
+
 let wasmReady = false;
 let pendingFile = null;
 let analyze_gpx = null;
@@ -131,6 +134,7 @@ function renderResults(d, weightKg, elapsedMs) {
     { label: 'Avg HR', value: d.avg_hr ? Math.round(d.avg_hr) : '–', unit: d.avg_hr ? 'bpm' : '', hidden: !d.has_hr_data },
     { label: 'Max HR', value: d.max_hr_recorded ?? '–', unit: d.max_hr_recorded ? 'bpm' : '', hidden: !d.has_hr_data },
     { label: 'Compute', value: fmtElapsed(elapsedMs), unit: '', hidden: elapsedMs == null },
+    { label: 'WASM Size', value: formatBytes(WASM_SIZE_BYTES), unit: '' },
   ];
 
   for (const s of stats) {

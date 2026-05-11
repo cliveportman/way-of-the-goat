@@ -18,4 +18,6 @@ tinygo build -o pkg/vo2.wasm -target wasm -no-debug -opt=2 ./cmd/wasm
 # Copy the wasm_exec.js shim that pairs with this TinyGo version.
 cp "$(tinygo env TINYGOROOT)/targets/wasm_exec.js" pkg/wasm_exec.js
 
-echo "Built pkg/vo2.wasm ($(du -h pkg/vo2.wasm | cut -f1))"
+size=$(stat -f "%z" pkg/vo2.wasm 2>/dev/null || stat -c "%s" pkg/vo2.wasm)
+echo "Built pkg/vo2.wasm — $size bytes ($(du -h pkg/vo2.wasm | cut -f1))"
+echo "If this changed, update WASM_SIZE_BYTES at the top of main.js."

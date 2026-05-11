@@ -3,6 +3,9 @@
 // ----------------------------------------------------------------
 import init, { analyze_gpx } from './pkg/vo2.js';
 
+// Size of pkg/vo2_bg.wasm in bytes. Update if the binary changes.
+const WASM_SIZE_BYTES = 130_096;
+
 let wasmReady = false;
 let pendingFile = null;
 
@@ -115,6 +118,7 @@ function renderResults(d, weightKg, elapsedMs) {
     { label: 'Avg HR', value: d.avg_hr ? Math.round(d.avg_hr) : '–', unit: d.avg_hr ? 'bpm' : '', hidden: !d.has_hr_data },
     { label: 'Max HR', value: d.max_hr_recorded ?? '–', unit: d.max_hr_recorded ? 'bpm' : '', hidden: !d.has_hr_data },
     { label: 'Compute', value: fmtElapsed(elapsedMs), unit: '', hidden: elapsedMs == null },
+    { label: 'WASM Size', value: formatBytes(WASM_SIZE_BYTES), unit: '' },
   ];
 
   for (const s of stats) {
