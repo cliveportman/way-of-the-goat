@@ -35,6 +35,20 @@ body {
   font-size: 20px;
 }
 .header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+.build-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #dea584;
+  background: rgba(222, 165, 132, 0.14);
+  border: 1px solid rgba(222, 165, 132, 0.45);
+  border-radius: 4px;
+  vertical-align: middle;
+}
 .header p { font-size: 13px; color: var(--muted); margin-top: 1px; }
 
 .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
