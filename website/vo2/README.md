@@ -31,15 +31,20 @@ This compiles the Rust source in `src/` and outputs the WebAssembly binary and J
 
 ## Serving
 
-Any static HTTP server works. From this directory:
+The whole `/vo2` URL space (Rust + every other implementation under
+`/vo2/<slug>`) is served from `website/`. From the repo root:
 
 ```bash
-python3 -m http.server 8080
+cd website && python3 -m http.server 8000
 ```
 
-Then open `http://localhost:8080`.
+Then open `http://localhost:8000/vo2/` for the Rust build, or click
+through the language nav at the bottom of the page to compare against
+the other implementations.
 
-> **Note:** The calculator must be served over HTTP — opening `index.html` directly as a `file://` URL will not work because browsers block WebAssembly module imports on the file protocol.
+> **Note:** The calculator must be served over HTTP — opening `index.html`
+> directly as a `file://` URL won't work because browsers block
+> WebAssembly module imports on the file protocol.
 
 ## Project structure
 
