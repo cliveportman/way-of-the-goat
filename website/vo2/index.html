@@ -6,13 +6,14 @@
 <title>VO2 Max Calculator (Rust build) — Way of the Goat</title>
 <meta name="description" content="Upload a GPX file to estimate your VO2 max using ACSM, Jack Daniels, and Firstbeat methods.">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="_languages.css">
 </head>
 <body>
 
 <header class="header">
   <div class="header-icon">🫀</div>
   <div>
-    <h1>VO2 Max Calculator <span class="build-badge">Rust</span></h1>
+    <h1>VO2 Max Calculator <span class="lang-token lang-rust">Rust</span></h1>
     <p>Upload a GPX file from any GPS device or app</p>
   </div>
 </header>
@@ -80,6 +81,16 @@
     <div id="chartsContainer"></div>
 
   </div>
+
+  <nav class="lang-nav" aria-label="Other implementations">
+    <a class="lang-token lang-rust" href="/vo2"     aria-current="page">Rust</a>
+    <a class="lang-token lang-go"   href="/vo2/go">Go</a>
+    <a class="lang-token lang-cs"   href="/vo2/cs">.NET</a>
+    <a class="lang-token lang-js"   href="/vo2/js">JS</a>
+    <a class="lang-token lang-as"   href="/vo2/as">AS</a>
+    <a class="lang-token lang-kt"   href="/vo2/kt">Kotlin</a>
+    <a class="lang-token lang-zig"  href="/vo2/zig">Zig</a>
+  </nav>
 </main>
 
 <script type="module" src="main.js"></script>

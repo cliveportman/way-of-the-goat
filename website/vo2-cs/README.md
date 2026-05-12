@@ -37,19 +37,23 @@ dotnet new install Microsoft.NET.Runtime.WebAssembly.Templates
 ./build.sh
 ```
 
-This publishes to `./dist/wwwroot/`. AOT publish takes a few minutes the
-first time; subsequent builds are faster.
+This publishes to `./dist/wwwroot/` and then stages the files into
+`../vo2/cs/` (which is tracked in git so the page works without a
+rebuild). AOT publish takes a few minutes the first time; subsequent
+builds are faster.
 
 ## Serving
 
+`build.sh` stages the publish output into `../vo2/cs/`, which is served
+as part of the unified `/vo2/...` URL space. From the repo root:
+
 ```bash
-cd dist/wwwroot
-python3 -m http.server 8082
+cd website && python3 -m http.server 8000
 ```
 
-Then open `http://localhost:8082`. The page must be served over HTTP; the
-.NET runtime fetches additional files at startup that the browser will
-block on the `file://` protocol.
+Then open `http://localhost:8000/vo2/cs/`. The page must be served over
+HTTP; the .NET runtime fetches additional files at startup that the
+browser will block on the `file://` protocol.
 
 ## Layout
 

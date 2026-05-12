@@ -1,0 +1,51 @@
+/* Shared across every /vo2/<slug> page.
+ *
+ * Defines the brand-coloured "token" used both as the build badge in
+ * the page header and as a link in the bottom navigation that lets you
+ * jump between implementations.
+ */
+
+.lang-token {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border: 1px solid;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+/* Per-language brand colour. Each rule sets foreground, a soft
+ * translucent background, and a matching border. */
+.lang-rust { color: #dea584; background: rgba(222, 165, 132, 0.14); border-color: rgba(222, 165, 132, 0.45); }
+.lang-go   { color: #00add8; background: rgba(  0, 173, 216, 0.14); border-color: rgba(  0, 173, 216, 0.45); }
+.lang-cs   { color: #9b59b6; background: rgba(155,  89, 182, 0.14); border-color: rgba(155,  89, 182, 0.45); }
+.lang-js   { color: #f7df1e; background: rgba(247, 223,  30, 0.14); border-color: rgba(247, 223,  30, 0.45); }
+.lang-as   { color: #3178c6; background: rgba( 49, 120, 198, 0.14); border-color: rgba( 49, 120, 198, 0.45); }
+.lang-kt   { color: #c084fc; background: rgba(192, 132, 252, 0.14); border-color: rgba(192, 132, 252, 0.45); }
+.lang-zig  { color: #f7a41d; background: rgba(247, 164,  29, 0.14); border-color: rgba(247, 164,  29, 0.45); }
+
+/* Bottom-of-page horizontal nav between implementations. */
+.lang-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 48px auto 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border, #222);
+}
+.lang-nav a.lang-token {
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+.lang-nav a.lang-token:hover { opacity: 1; }
+.lang-nav .lang-token[aria-current="page"] {
+  opacity: 1;
+  outline: 1px dashed currentColor;
+  outline-offset: 2px;
+}
