@@ -1,0 +1,64 @@
+[versions]
+agp = "8.12.0"
+kotlin = "2.2.20"
+ksp = "2.2.20-2.0.2"                 # must track the Kotlin version; confirm on first Gradle sync
+composeBom = "2025.06.00"            # confirm latest stable on first sync
+androidx-activity = "1.11.0"
+androidx-lifecycle = "2.9.4"
+androidx-navigation = "2.9.4"
+androidx-core = "1.17.0"
+kotlinx-datetime = "0.6.1"
+kotlinx-coroutines = "1.9.0"
+room = "2.7.1"
+turbine = "1.2.0"
+junit = "4.13.2"
+detekt = "1.23.8"
+detekt-compose = "0.4.28"
+
+# Android SDK levels — must match the live Play listing
+android-compileSdk = "36"
+android-minSdk = "24"
+android-targetSdk = "36"
+
+[libraries]
+# Compose (versions come from the BOM)
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+
+# AndroidX runtime
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+
+# Date/time
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# Room (persistence — see ADR 002; ratify before Phase 4 wiring)
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+# Test
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+junit = { module = "junit:junit", version.ref = "junit" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+# Detekt Compose rules
+detekt-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt-compose" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

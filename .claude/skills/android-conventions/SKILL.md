@@ -35,10 +35,10 @@ The app is **single-module, Android-only, local and offline** — no accounts, n
 
 ## Module Structure
 
-Single Gradle module: `app/`.
+Single Gradle module: `:app`, at `android/app/`. The `android/` directory is the Gradle root; `ios/` is reserved for the future native iOS app.
 
 ```
-app/src/main/kotlin/co/theportman/way_of_the_goat/
+android/app/src/main/kotlin/co/theportman/way_of_the_goat/
 ├── screens/           # *Screen.kt composables + *ViewModel.kt
 ├── data/
 │   ├── scoring/       # ScoreCalculator, SuiteDefinitions, FoodCategory (pure Kotlin)
@@ -48,7 +48,7 @@ app/src/main/kotlin/co/theportman/way_of_the_goat/
 └── ui/theme/          # Color.kt, Spacing.kt, Typography.kt, Theme.kt
 ```
 
-Local JVM unit tests live in `app/src/test/kotlin/` mirroring the source structure. Instrumented tests, if any, live in `app/src/androidTest/kotlin/`.
+Local JVM unit tests live in `android/app/src/test/kotlin/` mirroring the source structure. Instrumented tests, if any, live in `android/app/src/androidTest/kotlin/`.
 
 ---
 
@@ -250,7 +250,7 @@ abstract class WayOfTheGoatDatabase : RoomDatabase() {
 
 ## Testing
 
-Tests mirror the source directory structure in `app/src/test/kotlin/`.
+Tests mirror the source directory structure in `android/app/src/test/kotlin/`.
 
 ```kotlin
 // Suspend function test
@@ -284,7 +284,7 @@ Run tests:
 
 ## Build Commands
 
-Run from the repository root (where the Gradle wrapper lives).
+Run from the `android/` directory (the Gradle root).
 
 ```bash
 ./gradlew detekt                    # Static analysis — must pass with 0 violations

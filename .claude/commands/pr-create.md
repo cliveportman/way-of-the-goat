@@ -26,11 +26,11 @@ Create a Pull Request from the current branch.
 
    | Files changed in | Label |
    |---|---|
-   | `mobile/` | `mobile` |
+   | `android/` | `mobile` |
    | `design-specs/` only | `spec` |
    | `design-tokens/` only | `tokens` |
    | `.claude/` only | `chore` |
-   | Mix of `mobile/` and `design-specs/` | `mobile` |
+   | Mix of `android/` and `design-specs/` | `mobile` |
 
 5. **Push to remote** if the branch is not yet tracking or is ahead:
    - Run `git push -u origin [current-branch]` if needed
@@ -66,8 +66,8 @@ Create a Pull Request from the current branch.
    ```
 
    The test plan should be specific. For `mobile` changes, include:
-   - Build verification (`./gradlew :composeApp:assembleDebug`)
-   - Test run (`./gradlew :composeApp:jvmTest`)
+   - Build verification (`./gradlew :app:assembleDebug`)
+   - Test run (`./gradlew :app:testDebugUnitTest`)
    - Any manual steps needed to verify the feature or fix on device/simulator
 
    **Execute**:
@@ -91,4 +91,4 @@ Create a Pull Request from the current branch.
 - Analyse ALL commits in the branch, not just the latest one
 - The summary should reflect the overall purpose, not a list of files changed
 - Create as a draft — the author promotes it when ready for review
-- If the branch touches both `design-specs/` and `mobile/`, label it `mobile` — the spec change is context for the implementation
+- If the branch touches both `design-specs/` and `android/`, label it `mobile` — the spec change is context for the implementation

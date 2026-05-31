@@ -12,6 +12,7 @@ The mobile app is a **native Android** app (Kotlin + Jetpack Compose), scoped to
 ```
 way-of-the-goat/
 ├── .claude/          # Agents, commands, skills (see below)
+├── android/          # Native Android app (Kotlin + Jetpack Compose) — Gradle root, module :app
 ├── references/       # Frozen porting references — not active builds
 │   ├── kmp/          # Previous Kotlin Multiplatform app (Gradle build, has its own CLAUDE.md)
 │   └── react-native/ # Original React Native v1.4.3 app
@@ -21,7 +22,7 @@ way-of-the-goat/
 └── website/          # Static HTML site (active — Vercel deployment)
 ```
 
-The new native Android module has not been scaffolded yet (Phase 3 of the [rewrite plan](docs/features/native-android-rewrite/plan.md)); until then the only mobile code in the tree lives under `references/` for porting.
+The `android/` module is the Gradle root (run `./gradlew` from there); the app module is `:app` at `android/app/`. A native iOS app (Swift/SwiftUI) is planned and will live at `ios/`. The Android module is currently a buildable skeleton — the scoring core (Phase 4) and the scoring-only UI/navigation (Phase 5) are still to be ported from `references/kmp` per the [rewrite plan](docs/features/native-android-rewrite/plan.md).
 
 ## Agents
 
