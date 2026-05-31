@@ -98,8 +98,6 @@ class WeeklyScoreBuilder(
                 DayOfWeek.FRIDAY -> 4
                 DayOfWeek.SATURDAY -> 5
                 DayOfWeek.SUNDAY -> 6
-                // Required: DayOfWeek is an expect enum in KMP; compiler requires else branch
-                else -> 0
             }
             return date.minus(daysFromMonday, DateTimeUnit.DAY)
         }
@@ -146,8 +144,6 @@ class WeeklyScoreBuilder(
                 DayOfWeek.FRIDAY -> "Friday"
                 DayOfWeek.SATURDAY -> "Saturday"
                 DayOfWeek.SUNDAY -> "Sunday"
-                // Required: DayOfWeek is an expect enum in KMP; compiler requires else branch
-                else -> "Day"
             }
         }
     }
