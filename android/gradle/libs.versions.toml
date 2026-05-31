@@ -9,6 +9,7 @@ androidx-navigation = "2.9.4"
 androidx-core = "1.17.0"
 kotlinx-datetime = "0.6.1"
 kotlinx-coroutines = "1.9.0"
+kotlinx-serialization = "1.8.0"
 room = "2.7.1"
 turbine = "1.2.0"
 junit = "4.13.2"
@@ -39,6 +40,7 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 
 # Date/time
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 # Room (persistence — see ADR 002; ratify before Phase 4 wiring)
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
@@ -60,5 +62,6 @@ detekt-compose = { module = "io.nlopez.compose.rules:detekt", version.ref = "det
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
