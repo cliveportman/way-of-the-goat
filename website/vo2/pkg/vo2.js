@@ -1,6 +1,8 @@
 /* @ts-self-types="./vo2.d.ts" */
 
 /**
+ * Returns JSON as a `String` rather than a `JsValue` via `serde-wasm-bindgen` to keep binary
+ * size small — the extra serialise/parse round-trip is negligible for the payload sizes here.
  * @param {string} gpx_content
  * @param {number} weight_kg
  * @param {number} max_hr

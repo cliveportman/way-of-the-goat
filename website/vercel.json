@@ -1,6 +1,12 @@
 {
   "framework": null,
   "cleanUrls": true,
+  "trailingSlash": true,
+  "rewrites": [
+    { "source": "/vo2/rust", "destination": "/vo2" },
+    { "source": "/vo2/rust/", "destination": "/vo2/" },
+    { "source": "/vo2/rust/:path*", "destination": "/vo2/:path*" }
+  ],
   "headers": [
     {
       "source": "/(.*)\\.wasm",

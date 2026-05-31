@@ -1,0 +1,4 @@
+# Track the small artefacts so the page can be served without a build step.
+# Drop the .wat disassembly (large, regenerable) and source maps.
+*.wat
+*.map
