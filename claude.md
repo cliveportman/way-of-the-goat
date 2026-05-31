@@ -6,14 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Way of the Goat is a nutrition tracking app for endurance athletes, implementing food quality scoring based on the Racing Weight methodology by Matt Fitzgerald.
 
+The mobile app is a **native Android** app (Kotlin + Jetpack Compose), scoped to food scoring only and fully local/offline. It is being migrated from the earlier Kotlin Multiplatform build — see [ADR 001](docs/decisions/001-kmp-to-native-android-food-scoring.md) and [the rewrite plan](docs/features/native-android-rewrite/plan.md).
+
 **Repository Structure:**
 ```
 way-of-the-goat/
 ├── .claude/          # Agents, commands, skills (see below)
-├── mobile/           # Kotlin Multiplatform app (active development) - has its own CLAUDE.md
+├── mobile/           # App module — migrating from Kotlin Multiplatform to native Android (Kotlin + Jetpack Compose); has its own CLAUDE.md
 ├── design-specs/     # Design specs and Figma JSON exports (shared across all sub-projects)
 ├── design-tokens/    # Figma-sourced token JSON (tokens.json)
-├── references/       # Legacy React Native v1.4.3 (reference only)
 ├── api/              # Go backend (planned)
 └── website/          # Static HTML site (active — Vercel deployment)
 ```
@@ -24,8 +25,8 @@ All agents are in `.claude/agents/`. Use the appropriate agent for the task:
 
 | Agent | Use For | Model |
 |-------|---------|-------|
-| `jake-wharton` | KMP/Compose implementation from design specs | opus |
-| `nick-butcher` | Compose/KMP code review (read-only) | inherits |
+| `jake-wharton` | Native Android (Kotlin + Compose) implementation from design specs | opus |
+| `nick-butcher` | Native Android / Compose code review (read-only) | inherits |
 | `rubber-duck` | Brainstorming, planning, architecture discussion (no production code) | sonnet |
 | `claude-reviewer` | Review .claude/ changes — agents, skills, commands, hooks (read-only) | sonnet |
 | `steve-klabnik` | Rust/WASM code review — correctness, safety, wasm-bindgen (read-only) | inherits |
@@ -64,9 +65,9 @@ Skills are in `.claude/skills/`. Agents read these before working:
 
 | Skill | Contents |
 |-------|----------|
-| `kmp-conventions` | Architecture, state management, file naming, error handling, testing |
+| `android-conventions` | Architecture, state management, file naming, Room, error handling, testing |
 | `design-specs` | Spec file formats, Figma token → Compose mapping |
-| `kmp-review-criteria` | Review checklist for KMP/Compose code |
+| `android-review-criteria` | Review checklist for native Android / Compose code |
 | `web-review-criteria` | Review checklist for static HTML/CSS/JS and WASM loading code |
 | `docs-conventions` | Documentation formats for `docs/` — features, issues, ADRs |
 | `mermaid` | Mermaid flowchart conventions and colour scheme |
@@ -87,15 +88,17 @@ See `.claude/skills/docs-conventions/SKILL.md` for formats, naming, and which ag
 
 **Key rule:** `jake-wharton` and `nick-butcher` do **not** browse `docs/` proactively. They only read `plan.md` (or `fix-plan.md`) when a feature or issue is mentioned by name. The `rubber-duck` agent is the primary author of documentation.
 
-## References Directory
+## Reference Codebases
 
-The `references/` directory contains the production React Native v1.4.3 codebase. Use it as reference when migrating business logic to KMP:
+Two earlier codebases are kept for porting reference only — do not develop in them:
 
-- `references/core/` - Business logic, scoring algorithms, database schema
-- `references/app/` - Screen components (Expo Router)
-- `references/features/` - Feature-specific UI components
+- **Kotlin Multiplatform app** — the previous Compose Multiplatform build under `mobile/`. The native Android rewrite ports its scoring engine and Compose UI near-verbatim. During the rewrite it is frozen as the primary porting source (see [the rewrite plan](docs/features/native-android-rewrite/plan.md)).
+- **React Native v1.4.3** — the original codebase at `mobile/references/`. Use it for the original business logic and scoring algorithms:
+  - `mobile/references/core/` — business logic, scoring algorithms, database schema
+  - `mobile/references/app/` — screen components (Expo Router)
+  - `mobile/references/features/` — feature-specific UI components
 
-**Pattern mappings:**
+**RN → native Android pattern mappings:**
 - TypeScript interfaces → Kotlin data classes
 - React hooks → ViewModels with StateFlow
 - `useEffect` → `LaunchedEffect`

@@ -55,7 +55,7 @@ Evaluate the changed file list against these rules. A single run can match multi
 
 | File pattern | Domain | Agent |
 |---|---|---|
-| `mobile/**/*.kt`, `mobile/**/*.kts` | Mobile (KMP) | `nick-butcher` |
+| `mobile/**/*.kt`, `mobile/**/*.kts` | Mobile (Android) | `nick-butcher` |
 | `website/**/*.html`, `website/**/*.css`, `website/**/*.js` | Web | `addy-osmani` |
 | `website/**/*.rs`, `website/**/Cargo.toml` | Rust/WASM | `steve-klabnik` |
 | `.claude/**` | Config | `claude-reviewer` |
@@ -97,8 +97,8 @@ When `--recheck` is passed for the mobile domain:
 
 Instruct `nick-butcher` to consult:
 
-- `.claude/skills/kmp-review-criteria/SKILL.md`
-- `.claude/skills/kmp-conventions/SKILL.md`
+- `.claude/skills/android-review-criteria/SKILL.md`
+- `.claude/skills/android-conventions/SKILL.md`
 - `mobile/CLAUDE.md`
 
 Pass any detekt violations as pre-identified Critical issues.

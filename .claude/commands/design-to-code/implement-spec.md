@@ -1,10 +1,10 @@
-Implement a Compose Multiplatform spec from: $ARGUMENTS
+Implement a Jetpack Compose spec from: $ARGUMENTS
 
 # Task: Implement from Design Spec
 
 ## Purpose
 
-Transform a curated design spec (`.md`) into production-ready Compose Multiplatform code. The spec's **Type** field determines the scope:
+Transform a curated design spec (`.md`) into production-ready Jetpack Compose code. The spec's **Type** field determines the scope:
 
 - **Component** → `@Composable` function + `@Preview` + `kotlin-test` tests
 - **Screen** → Screen composable + ViewModel + `@Preview` + tests
@@ -129,7 +129,7 @@ Wait for user confirmation before writing any code.
 #### Component Implementation
 
 1. Create the composable file in `mobile/composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/`
-2. Follow all conventions from `.claude/skills/kmp-conventions/SKILL.md`:
+2. Follow all conventions from `.claude/skills/android-conventions/SKILL.md`:
    - Parameters: data → callbacks → `modifier: Modifier = Modifier`
    - All colours via `MaterialTheme.colorScheme.*` or `MaterialTheme.goatColors.*`
    - All spacing via `GoatSpacing.*`
