@@ -247,7 +247,7 @@ Read these skill files when relevant:
 | `.claude/skills/docs-conventions/SKILL.md` | **Always** before writing anything to `docs/` |
 | `.claude/skills/android-conventions/SKILL.md` | Architecture, patterns, naming |
 | `.claude/skills/design-specs/SKILL.md` | Design spec format, token mapping |
-| `mobile/CLAUDE.md` | Build commands, project structure |
+| `references/kmp/CLAUDE.md` | Build commands, project structure |
 
 ## When to Suggest Other Agents
 

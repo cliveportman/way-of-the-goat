@@ -12,12 +12,16 @@ The mobile app is a **native Android** app (Kotlin + Jetpack Compose), scoped to
 ```
 way-of-the-goat/
 ├── .claude/          # Agents, commands, skills (see below)
-├── mobile/           # App module — migrating from Kotlin Multiplatform to native Android (Kotlin + Jetpack Compose); has its own CLAUDE.md
+├── references/       # Frozen porting references — not active builds
+│   ├── kmp/          # Previous Kotlin Multiplatform app (Gradle build, has its own CLAUDE.md)
+│   └── react-native/ # Original React Native v1.4.3 app
 ├── design-specs/     # Design specs and Figma JSON exports (shared across all sub-projects)
 ├── design-tokens/    # Figma-sourced token JSON (tokens.json)
 ├── api/              # Go backend (planned)
 └── website/          # Static HTML site (active — Vercel deployment)
 ```
+
+The new native Android module has not been scaffolded yet (Phase 3 of the [rewrite plan](docs/features/native-android-rewrite/plan.md)); until then the only mobile code in the tree lives under `references/` for porting.
 
 ## Agents
 
@@ -92,11 +96,11 @@ See `.claude/skills/docs-conventions/SKILL.md` for formats, naming, and which ag
 
 Two earlier codebases are kept for porting reference only — do not develop in them:
 
-- **Kotlin Multiplatform app** — the previous Compose Multiplatform build under `mobile/`. The native Android rewrite ports its scoring engine and Compose UI near-verbatim. During the rewrite it is frozen as the primary porting source (see [the rewrite plan](docs/features/native-android-rewrite/plan.md)).
-- **React Native v1.4.3** — the original codebase at `mobile/references/`. Use it for the original business logic and scoring algorithms:
-  - `mobile/references/core/` — business logic, scoring algorithms, database schema
-  - `mobile/references/app/` — screen components (Expo Router)
-  - `mobile/references/features/` — feature-specific UI components
+- **Kotlin Multiplatform app** — the previous Compose Multiplatform build at `references/kmp/` (self-contained Gradle project, frozen out of the active build). The native Android rewrite ports its scoring engine and Compose UI near-verbatim, so this is the primary porting source (see [the rewrite plan](docs/features/native-android-rewrite/plan.md)).
+- **React Native v1.4.3** — the original codebase at `references/react-native/`. Use it for the original business logic and scoring algorithms:
+  - `references/react-native/core/` — business logic, scoring algorithms, database schema
+  - `references/react-native/app/` — screen components (Expo Router)
+  - `references/react-native/features/` — feature-specific UI components
 
 **RN → native Android pattern mappings:**
 - TypeScript interfaces → Kotlin data classes
