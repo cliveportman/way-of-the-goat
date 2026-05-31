@@ -56,7 +56,7 @@ Do this first — implementation/review agents read these skills, so they must d
 ### Phase 4: Port the scoring core
 
 - [ ] Lift `data/scoring/**` verbatim (pure Kotlin: `ScoreCalculator`, `SuiteDefinitions`, `WeeklyActivityBuilder`, `model/*`).
-- [ ] Port food persistence: `ServingsRepository`, `ServingsDataManager`/`ServingsDataSource`, and the DB layer. Persistence tech proposed as **Room** ([ADR 002](../../decisions/002-room-over-sqldelight.md), Proposed — ratify before building this phase); keep the `ServingsRepository` interface stable and swap the implementation.
+- [ ] Port food persistence: `ServingsRepository`, `ServingsDataManager`/`ServingsDataSource`, and the DB layer. Persistence tech is **Room** ([ADR 002](../../decisions/002-room-over-sqldelight.md), Accepted); keep the `ServingsRepository` interface stable and swap the implementation.
 - [ ] Drop the activity-side cache/repository.
 
 **Files to create/modify:**
@@ -90,7 +90,7 @@ Do this first — implementation/review agents read these skills, so they must d
 
 ## Dependencies
 
-- ADR 001 (accepted). [ADR 002](../../decisions/002-room-over-sqldelight.md) proposes **Room** — ratify before Phase 4 is finalised.
+- ADR 001 (accepted). [ADR 002](../../decisions/002-room-over-sqldelight.md) (accepted) — **Room** is the persistence layer.
 - `design-tokens/` and `design-specs/` for UI fidelity.
 - Existing Play Store listing details: **applicationId and signing keystore** must match.
 

@@ -1,7 +1,7 @@
 # 002. Use Room for persistence in the native Android app
 
 **Date:** 2026-05-31
-**Status:** Proposed
+**Status:** Accepted (ratified 2026-05-31)
 
 > Follows [ADR 001](001-kmp-to-native-android-food-scoring.md), which leaves the persistence technology open.
 
@@ -22,7 +22,7 @@ Adopt **Room** for the native Android app.
 
 The `ServingsRepository` interface stays stable; only its implementation changes. The existing SQLDelight schema is small enough to re-express as Room entities + DAOs at low cost, and the scoring engine (pure Kotlin) is unaffected by the persistence choice either way.
 
-This is a recommendation pending ratification — if minimising porting effort outweighs idiomatic fit for you, keeping SQLDelight is a reasonable alternative and this ADR can be flipped.
+Ratified on 2026-05-31. (The alternative considered was keeping SQLDelight to minimise porting effort; Room was chosen for idiomatic fit now that the app is permanently Android-only.)
 
 ## Consequences
 
