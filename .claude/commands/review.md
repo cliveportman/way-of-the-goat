@@ -13,7 +13,7 @@ Reviews changed code by auto-routing to the right agent(s) based on which files 
 | `/review` | Auto-detect changed files vs. base branch; run relevant reviewers |
 | `/review <pr-number>` | Fetch PR from GitHub; auto-route based on changed files |
 | `/review <pr-number> --recheck` | Re-review mode for mobile domain; full review for all other domains |
-| `/review --audit` | Full audit of entire `.claude/` directory (delegates to `claude-reviewer`) |
+| `/review --audit [dir]` | Full audit of every file in a directory (defaults to `.claude/`); auto-routes by domain |
 | `/review --file <path>` | Review a single `.claude/` file (delegates to `claude-reviewer`) |
 
 ---
@@ -22,7 +22,7 @@ Reviews changed code by auto-routing to the right agent(s) based on which files 
 
 Parse `$ARGUMENTS`:
 
-- If `--audit` is present → jump to [Audit Mode](#audit-mode)
+- If `--audit` is present → jump to [Audit Mode](#audit-mode); capture the optional directory that follows it (defaults to `.claude/`)
 - If `--file <path>` is present → jump to [Single File Mode](#single-file-mode)
 - If a number is present → it is `<pr-number>`; note whether `--recheck` is also present
 - Otherwise → no PR number; use local git diff
@@ -266,9 +266,33 @@ If multiple domains matched, label each section clearly:
 
 ## Audit Mode
 
-When `--audit` is passed:
+When `--audit` is passed, review **every** file in a target directory — not just files changed vs. a base branch. The audit runs against the local working tree (no PR, no worktree).
 
-Delegate to `claude-reviewer` with instruction to review all files under `.claude/` (use Glob). Present findings, then stop and wait for user instructions (same interactive flow as the Config domain above).
+### Step A1: Determine the target directory
+
+- If a path follows `--audit` (e.g. `/review --audit website/`), use it as the target directory.
+- If no path is given (`/review --audit`), default to `.claude/`.
+
+### Step A2: List the files
+
+Use Glob to list all files under the target directory (e.g. `<dir>/**`).
+
+### Step A3: Route by domain
+
+Apply the same routing rules as [Step 3](#step-3-route-to-agents) to the full file list. A directory can match multiple domains — run all that match, in parallel (multiple Agent calls in one message):
+
+| File pattern under `<dir>` | Agent |
+|---|---|
+| `.claude/**` | `claude-reviewer` |
+| `**/*.html`, `**/*.css`, `**/*.js` (under `website/`) | `addy-osmani` |
+| `**/*.rs`, `**/Cargo.toml` (under `website/`) | `steve-klabnik` |
+| `**/*.kt`, `**/*.kts` (under `mobile/`) | `nick-butcher` |
+
+If no files match any known domain, state that and stop.
+
+### Step A4: Dispatch and report
+
+Dispatch each matching reviewer over the files under the target directory, instructing it to read its usual review-criteria skill first (see the per-domain Agent Dispatch notes in Step 4). Then present findings using the [Step 5 output format](#output-format) and **stop and wait for user instructions** — do not auto-apply fixes (same interactive flow as the Config domain above).
 
 ---
 
