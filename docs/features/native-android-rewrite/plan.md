@@ -1,10 +1,19 @@
 # Native Android Rewrite (Food Scoring Only) — Implementation Plan
 
-**Status:** Planning
+**Status:** In progress — Phases 1–4 complete; Phase 5 (UI) next
 **Date:** 2026-05-31
-**Branch:** TBD (suggest `feature/native-android-rewrite`)
+**Branch:** `docs/adr-native-android-pivot` (Phases 1–4 landed here)
 
 > Decision context: see [ADR 001](../../decisions/001-kmp-to-native-android-food-scoring.md). This plan is the implementation contract; the ADR is the rationale.
+
+## Progress
+
+- **Phase 1 ✅** `.claude` tooling retargeted to native Android (`android-conventions`/`android-review-criteria` skills, `jake-wharton`/`nick-butcher` agents, CLAUDE.md).
+- **Phase 2 ✅** KMP frozen at `references/kmp/`; RN v1.4.3 lifted to `references/react-native/`. No active Gradle root references KMP.
+- **Phase 3 ✅** `android/` Gradle root + `:app` module scaffolded; `applicationId`/SDKs matched to the live listing; no `INTERNET` permission; runs on emulator (placeholder UI).
+- **Phase 4 ✅** Scoring core ported verbatim (parity tests pass); Room persistence ([ADR 002](../../decisions/002-room-over-sqldelight.md)) behind the stable `ServingsRepository` interface, with fake-DAO unit tests; activity stack dropped. `:app:testDebugUnitTest` and `:app:assembleDebug` both green; Room schema v1 exported to `android/app/schemas/`.
+- **Phase 5 ⬜ (next)** Scoring-only UI. Port source: `references/kmp/.../screens/` (Compose Multiplatform → Jetpack Compose is near-1:1). Needs `design-specs/` + `design-tokens/tokens.json` as the source of truth, and the full Goat theme/token port (the current `ui/theme/Theme.kt` is a minimal Material 3 placeholder). Drop `RunWeekRow`, `RunsOverTimeScreen`, `HomeScreen`, `DesignTokensScreen` per ADR 001.
+- **Phase 6 ⬜** Release prep — versioning, release signing keystore (see the TODO in `android/app/build.gradle.kts`), AAB, internal testing track.
 
 ## Goal
 
