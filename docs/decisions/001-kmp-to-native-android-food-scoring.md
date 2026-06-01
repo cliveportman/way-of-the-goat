@@ -24,8 +24,10 @@ Several forces motivate a change:
 
 3. **Drastically reduce scope to food scoring only.**
    - **Keep:** the scoring engine and all suites (Racing Weight, Body composition, …); daily food-serving logging (`ServingsRepository` + local database); the Scores screen as the app's launch surface; Score history (Scores Over Time); Help / user guide; the first-run onboarding/intro flow.
-   - **Cut:** the entire Intervals.icu stack (`data/auth`, `data/remote`, `ActivityDataManager`, `IntervalsRepository`, Runs Over Time). The app becomes **fully local and offline — no accounts, no sync, no networking.** Also cut `HomeScreen` (the Scores screen replaces it) and `DesignTokensScreen` (an internal dev tool).
-   - **App shape:** launch straight into the Scores screen; onboarding runs on first launch only.
+   - **Cut:** the entire Intervals.icu stack (`data/auth`, `data/remote`, `ActivityDataManager`, `IntervalsRepository`, Runs Over Time). The app becomes **fully local and offline — no accounts, no sync, no networking.** Also cut `DesignTokensScreen` (an internal dev tool). ~~Also cut `HomeScreen` (the Scores screen replaces it).~~ — see amendment below.
+   - **App shape:** on a normal launch, open straight to the Scores screen; on first launch only, show the branded welcome screen → intro flow → Scores.
+
+> **Amendment (2026-06-01, during Phase 5):** `HomeScreen` is **retained**, not cut. The original cut list mistook it for a redundant landing surface; it is in fact the branded first-run welcome/splash (GoatMoon logo, app title, *Racing Weight* attribution) whose Continue button gates into the intro flow. Returning users still launch straight to Scores, so the "Scores is the launch surface" intent holds. Only the developer-only `DesignTokensScreen` and the activity screens (`RunsOverTimeScreen`, `RunWeekRow`) were dropped.
 
 4. **Keep the KMP app as a frozen reference.** Move the existing `mobile/` KMP project out of the active build (mirroring the `references/` pattern used for RN v1.4.3) so the new native module builds cleanly while the KMP source remains available for porting.
 

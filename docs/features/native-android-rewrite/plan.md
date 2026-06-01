@@ -1,6 +1,6 @@
 # Native Android Rewrite (Food Scoring Only) — Implementation Plan
 
-**Status:** In progress — Phases 1–4 complete; Phase 5 (UI) next
+**Status:** In progress — Phases 1–5 complete; Phase 6 (release prep) next
 **Date:** 2026-05-31
 **Branch:** `docs/adr-native-android-pivot` (Phases 1–4 landed here)
 
@@ -12,7 +12,7 @@
 - **Phase 2 ✅** KMP frozen at `references/kmp/`; RN v1.4.3 lifted to `references/react-native/`. No active Gradle root references KMP.
 - **Phase 3 ✅** `android/` Gradle root + `:app` module scaffolded; `applicationId`/SDKs matched to the live listing; no `INTERNET` permission; runs on emulator (placeholder UI).
 - **Phase 4 ✅** Scoring core ported verbatim (parity tests pass); Room persistence ([ADR 002](../../decisions/002-room-over-sqldelight.md)) behind the stable `ServingsRepository` interface, with fake-DAO unit tests; activity stack dropped. `:app:testDebugUnitTest` and `:app:assembleDebug` both green; Room schema v1 exported to `android/app/schemas/`.
-- **Phase 5 ⬜ (next)** Scoring-only UI. Port source: `references/kmp/.../screens/` (Compose Multiplatform → Jetpack Compose is near-1:1). Needs `design-specs/` + `design-tokens/tokens.json` as the source of truth, and the full Goat theme/token port (the current `ui/theme/Theme.kt` is a minimal Material 3 placeholder). Drop `RunWeekRow`, `RunsOverTimeScreen`, `HomeScreen`, `DesignTokensScreen` per ADR 001.
+- **Phase 5 ✅** Scoring-only UI ported from `references/kmp/.../screens/`. Verified green: `detekt` (47 files, 0 smells), `:app:assembleDebug`, and `:app:testDebugUnitTest` all pass. Full Goat theme/token port (Color/Spacing/Typography/Theme + Inter fonts in `res/font/`) replacing the Material 3 placeholder; all screens, components, and ViewModels ported near-verbatim against the stable Phase 4 data layer; navigation graph + first-run onboarding wired. Dropped `RunWeekRow`, `RunsOverTimeScreen`, `DesignTokensScreen` per ADR 001. **`HomeScreen` is retained** — it is the branded first-run welcome/splash, not a redundant surface (see ADR 001 amendment).
 - **Phase 6 ⬜** Release prep — versioning, release signing keystore (see the TODO in `android/app/build.gradle.kts`), AAB, internal testing track.
 
 ## Goal
@@ -23,7 +23,7 @@ Replace the Kotlin Multiplatform app with a single-module **native Android** app
 
 **Keep:** scoring engine + suites; food-serving logging + local DB; Scores screen (launch surface); Score history (Scores Over Time); Help/user guide; first-run onboarding; suite/profile switching.
 
-**Cut:** all of `data/auth`, `data/remote`, activity half of `data/cache` (`ActivityDataManager`, `ActivityDataSource`), `IntervalsRepository`, `RunsOverTimeScreen` + VM, `RunWeekRow`, `HomeScreen`, `DesignTokensScreen`. No accounts, networking, or sync.
+**Cut:** all of `data/auth`, `data/remote`, activity half of `data/cache` (`ActivityDataManager`, `ActivityDataSource`), `IntervalsRepository`, `RunsOverTimeScreen` + VM, `RunWeekRow`, `DesignTokensScreen`. No accounts, networking, or sync. (`HomeScreen` was originally listed here but is **retained** — it is the branded first-run welcome/splash; see ADR 001 amendment.)
 
 ## Phases
 
@@ -73,12 +73,14 @@ Do this first — implementation/review agents read these skills, so they must d
 
 ### Phase 5: Rebuild the scoring-only UI
 
-- [ ] Scores screen + `ScoresViewModel` as the launch surface (no Home).
-- [ ] Scores Over Time + VM.
-- [ ] Help screen; first-run onboarding (`IntroFlowScreen`).
-- [ ] Suite/profile switching (`ProfileSwitcherSheet`).
-- [ ] Port reusable components: `FoodScoringComponents`, `ScoreWeekRow`, `WeekRowShared`, `DataLossConfirmationDialog`. Drop `RunWeekRow`.
-- [ ] Navigation: start destination = Scores; onboarding gates first launch only.
+- [x] Scores screen + `ScoresViewModel` as the launch surface for returning users.
+- [x] Scores Over Time + VM.
+- [x] Help screen; first-run welcome (`HomeScreen` + `GoatMoon`) and onboarding (`IntroFlowScreen`).
+- [x] Suite/profile switching (`ProfileSwitcherSheet`).
+- [x] Port reusable components: `FoodScoringComponents`, `ScoreWeekRow`, `WeekRowShared`, `DataLossConfirmationDialog`, `ContinueButton`. Drop `RunWeekRow`.
+- [x] Theme/token port: `Color`, `Spacing`, `Typography`, `Theme` + Inter fonts in `res/font/`.
+- [x] Navigation: returning launch → Scores; first launch → Home → IntroFlow → Scores (gated by a persisted onboarding flag in `OnboardingPreferences`).
+- [x] Verify on a machine with the Android SDK: `./gradlew detekt :app:assembleDebug :app:testDebugUnitTest` — all green.
 
 **Files to create/modify:**
 - `screens/ScoresScreen.kt` (+VM), `screens/ScoresOverTimeScreen.kt` (+VM), `screens/HelpScreen.kt`, `screens/IntroFlowScreen.kt`, `screens/components/*`, navigation graph, theme
