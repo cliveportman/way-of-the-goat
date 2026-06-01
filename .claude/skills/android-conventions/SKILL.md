@@ -1,11 +1,13 @@
 ---
-name: kmp-conventions
-description: Architecture, state management, file naming, error handling, and testing patterns for Kotlin Multiplatform and Compose Multiplatform code in Way of the Goat.
+name: android-conventions
+description: Architecture, state management, file naming, error handling, and testing patterns for native Android (Kotlin + Jetpack Compose) code in Way of the Goat.
 ---
 
-# KMP Conventions
+# Android Conventions
 
-Reference for Kotlin Multiplatform and Compose Multiplatform patterns used in Way of the Goat. Read before writing or reviewing any mobile code.
+Reference for the native Android (Kotlin + Jetpack Compose) patterns used in Way of the Goat. Read before writing or reviewing any app code.
+
+The app is **single-module, Android-only, local and offline** — no accounts, networking, or sync.
 
 ---
 
@@ -20,43 +22,33 @@ Reference for Kotlin Multiplatform and Compose Multiplatform patterns used in Wa
         ↓ suspend functions
     Repository / DataManager
         ↓
-  SQLDelight / Ktor Client
+       Room
 ```
 
 **Layer rules:**
 - Composables: UI only. No business logic. No direct data access.
-- ViewModels: Screen state and user action handling. Use `viewModelScope`. No direct DB/network calls.
-- Repositories: DB and network abstraction. Always return `Result<T>`. Never throw.
+- ViewModels: Screen state and user action handling. Use `viewModelScope`. No direct DB calls.
+- Repositories: DB abstraction over Room DAOs. Always return `Result<T>`. Never throw.
 - DataManagers: In-memory singletons with `StateFlow`. Caches state across the session.
 
 ---
 
-## Source Sets
+## Module Structure
 
-| Set | Purpose |
-|---|---|
-| `commonMain/` | 95%+ of the codebase — all shared logic and UI |
-| `androidMain/` | Android `actual` implementations |
-| `iosMain/` | iOS `actual` implementations |
-| `commonTest/` | All shared unit tests |
-
-**Never** put Android or iOS imports in `commonMain`. Use `expect`/`actual`.
-
----
-
-## Key Directories
+Single Gradle module: `:app`, at `android/app/`. The `android/` directory is the Gradle root; `ios/` is reserved for the future native iOS app.
 
 ```
-composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/
+android/app/src/main/kotlin/co/theportman/way_of_the_goat/
 ├── screens/           # *Screen.kt composables + *ViewModel.kt
 ├── data/
-│   ├── scoring/       # ScoreCalculator, SuiteDefinitions, FoodCategory
+│   ├── scoring/       # ScoreCalculator, SuiteDefinitions, FoodCategory (pure Kotlin)
 │   ├── cache/         # *DataManager.kt — in-memory StateFlow caches
-│   ├── repository/    # *Repository.kt — DB/API abstraction
-│   ├── database/      # SQLDelight expect declarations
-│   └── remote/        # Ktor API clients
+│   ├── repository/    # *Repository.kt — DB abstraction
+│   └── database/      # Room entities, DAOs, @Database
 └── ui/theme/          # Color.kt, Spacing.kt, Typography.kt, Theme.kt
 ```
+
+Local JVM unit tests live in `android/app/src/test/kotlin/` mirroring the source structure. Instrumented tests, if any, live in `android/app/src/androidTest/kotlin/`.
 
 ---
 
@@ -68,7 +60,8 @@ composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/
 | ViewModel | `*ViewModel.kt` | `ScoresViewModel.kt` |
 | Repository | `*Repository.kt` | `ServingsRepository.kt` |
 | In-memory cache | `*DataManager.kt` | `ServingsDataManager.kt` |
-| Ktor client | `*ApiClient.kt` | `NutritionApiClient.kt` |
+| Room DAO | `*Dao.kt` | `ServingDao.kt` |
+| Room entity | `*Entity.kt` | `ServingEntity.kt` |
 
 ---
 
@@ -161,7 +154,7 @@ sealed class ProfileChangeResult {
 ```kotlin
 // Repository — always return Result<T>
 suspend fun getServings(date: LocalDate): Result<List<Serving>> = runCatching {
-    db.servingQueries.getByDate(date).executeAsList().map { it.toServing() }
+    servingDao.getByDate(date.toString()).map { it.toServing() }
 }
 
 // ViewModel — fold the result
@@ -208,7 +201,7 @@ RoundedCornerShape(8.dp)
 
 ## Date and Time
 
-Use `kotlinx.datetime` throughout `commonMain`. Never use `java.time`.
+The ported scoring core uses `kotlinx.datetime` (`LocalDate`, `Clock`, `TimeZone`). Keep it for the scoring/data layers so the lifted logic stays verbatim and parity holds. `kotlinx-datetime` is a normal Android dependency.
 
 ```kotlin
 import kotlinx.datetime.LocalDate
@@ -221,39 +214,43 @@ val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
 
 ---
 
-## SQLDelight
+## Room
 
-Schema: `composeApp/src/commonMain/sqldelight/.../WayOfTheGoatDatabase.sq`
-
-Generated code lives in `build/generated/sqldelight/` — never modify it directly.
-
-Regenerate after schema changes:
-```bash
-./gradlew :composeApp:generateCommonMainWayOfTheGoatDatabaseInterface
-```
-
----
-
-## Ktor Client
-
-Ktor clients live in `data/remote/`. Platform-specific engines configured via `expect`/`actual`.
+The persistence layer is **Room** (see ADR 002). Schema lives in `data/database/` as `@Entity`, `@Dao`, and a `@Database` class. Room generates DAO implementations via KSP at build time.
 
 ```kotlin
-// commonMain — expect declaration
-expect fun httpClient(): HttpClient
+@Entity(tableName = "servings")
+data class ServingEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val date: String,           // ISO LocalDate
+    val categoryId: Long,
+    val count: Int
+)
 
-// androidMain — OkHttp engine
-actual fun httpClient(): HttpClient = HttpClient(OkHttp) { /* config */ }
+@Dao
+interface ServingDao {
+    @Query("SELECT * FROM servings WHERE date = :date")
+    suspend fun getByDate(date: String): List<ServingEntity>
 
-// iosMain — Darwin engine
-actual fun httpClient(): HttpClient = HttpClient(Darwin) { /* config */ }
+    @Insert
+    suspend fun insert(serving: ServingEntity): Long
+}
+
+@Database(entities = [ServingEntity::class], version = 1)
+abstract class WayOfTheGoatDatabase : RoomDatabase() {
+    abstract fun servingDao(): ServingDao
+}
 ```
+
+- DAO functions are `suspend` (or return `Flow<T>` for observable queries) so Room runs them off the main thread.
+- Keep the `ServingsRepository` interface stable; the repository maps Room entities to/from domain models.
+- Bump `@Database(version = …)` and supply a migration for any schema change — never ship a destructive migration to release.
 
 ---
 
 ## Testing
 
-Tests mirror the source directory structure in `composeApp/src/commonTest/kotlin/`.
+Tests mirror the source directory structure in `android/app/src/test/kotlin/`.
 
 ```kotlin
 // Suspend function test
@@ -276,48 +273,30 @@ fun `uiState emits Loading then Success on init`() = runTest {
 
 Test naming: backtick style — `fun \`given X when Y then Z\`()`.
 
+Use fakes for repositories in unit tests — not a real Room database. The scoring engine is pure Kotlin and tests with no Android dependencies.
+
 Run tests:
 ```bash
-./gradlew :composeApp:jvmTest           # Fast — common tests only
-./gradlew :composeApp:allTests          # All platforms (slower)
-```
-
----
-
-## Platform-Specific Code
-
-```kotlin
-// commonMain — declare the expectation
-expect class DatabaseDriverFactory {
-    fun createDriver(): SqlDriver
-}
-
-// androidMain — Android implementation
-actual class DatabaseDriverFactory(private val context: Context) {
-    actual fun createDriver(): SqlDriver =
-        AndroidSqliteDriver(WayOfTheGoatDatabase.Schema, context, "wayofthegoat.db")
-}
-
-// iosMain — iOS implementation
-actual class DatabaseDriverFactory {
-    actual fun createDriver(): SqlDriver =
-        NativeSqliteDriver(WayOfTheGoatDatabase.Schema, "wayofthegoat.db")
-}
+./gradlew :app:testDebugUnitTest      # Local JVM unit tests
 ```
 
 ---
 
 ## Build Commands
 
-Run from the `mobile/` directory.
+Run from the `android/` directory (the Gradle root).
 
 ```bash
-./gradlew detekt                        # Static analysis — must pass with 0 violations
-./gradlew :composeApp:assembleDebug     # Build Android debug APK
-./gradlew :composeApp:jvmTest           # Run common tests
-./gradlew :composeApp:allTests          # Run all tests
-./gradlew :composeApp:generateCommonMainWayOfTheGoatDatabaseInterface   # Regenerate SQLDelight
-./gradlew clean                         # Clean build
+./gradlew detekt                    # Static analysis — must pass with 0 violations
+./gradlew :app:assembleDebug        # Build debug APK
+./gradlew :app:testDebugUnitTest    # Run local unit tests
+./gradlew :app:bundleRelease        # Build release AAB (for Play upload)
+./gradlew clean                     # Clean build
 ```
 
-iOS: Open `iosApp/iosApp.xcodeproj` in Xcode.
+---
+
+## Release Notes
+
+- **Preserve `applicationId = "co.theportman.way_of_the_goat"`** and the existing signing key — required to update the live Play listing.
+- The app is offline: **do not declare the `INTERNET` permission** in `AndroidManifest.xml`.

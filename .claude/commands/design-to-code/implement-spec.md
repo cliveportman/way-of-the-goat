@@ -1,10 +1,10 @@
-Implement a Compose Multiplatform spec from: $ARGUMENTS
+Implement a Jetpack Compose spec from: $ARGUMENTS
 
 # Task: Implement from Design Spec
 
 ## Purpose
 
-Transform a curated design spec (`.md`) into production-ready Compose Multiplatform code. The spec's **Type** field determines the scope:
+Transform a curated design spec (`.md`) into production-ready Jetpack Compose code. The spec's **Type** field determines the scope:
 
 - **Component** → `@Composable` function + `@Preview` + `kotlin-test` tests
 - **Screen** → Screen composable + ViewModel + `@Preview` + tests
@@ -41,7 +41,7 @@ The spec is the single source of truth — follow it precisely.
 
 Before generating anything, inspect the target project:
 
-1. **Find existing composables** — list `mobile/composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/screens/` and read 1–2 existing files to learn:
+1. **Find existing composables** — list `android/app/src/main/kotlin/co/theportman/way_of_the_goat/screens/` and read 1–2 existing files to learn:
    - File structure (one composable per file vs multiple)
    - How `modifier` is handled
    - How state is collected (`collectAsStateWithLifecycle`)
@@ -84,8 +84,8 @@ Present a brief plan before writing code.
 
 **Spec type:** Component
 **Composable:** `ScoreCard`
-**File:** `mobile/composeApp/src/commonMain/kotlin/.../screens/components/ScoreCard.kt`
-**Tests:** `mobile/composeApp/src/commonTest/kotlin/.../screens/components/ScoreCardTest.kt`
+**File:** `android/app/src/main/kotlin/.../screens/components/ScoreCard.kt`
+**Tests:** `android/app/src/test/kotlin/.../screens/components/ScoreCardTest.kt`
 
 **Parameters:**
 - `score: DailyScore` — the score data to display
@@ -109,10 +109,10 @@ Shall I proceed?
 **Screen composable:** `ScoresScreen`
 **ViewModel:** `ScoresViewModel`
 **Files:**
-- `mobile/.../screens/scores/ScoresScreen.kt`
-- `mobile/.../screens/scores/ScoresViewModel.kt`
+- `android/app/.../screens/scores/ScoresScreen.kt`
+- `android/app/.../screens/scores/ScoresViewModel.kt`
 **Tests:**
-- `mobile/.../screens/scores/ScoresViewModelTest.kt`
+- `android/app/.../screens/scores/ScoresViewModelTest.kt`
 
 **ViewModel state:** `ScoresUiState` sealed class (Loading, Success, Error)
 **ViewModel events:** `SharedFlow<String>` for error messages
@@ -128,8 +128,8 @@ Wait for user confirmation before writing any code.
 
 #### Component Implementation
 
-1. Create the composable file in `mobile/composeApp/src/commonMain/kotlin/co/theportman/way_of_the_goat/`
-2. Follow all conventions from `.claude/skills/kmp-conventions/SKILL.md`:
+1. Create the composable file in `android/app/src/main/kotlin/co/theportman/way_of_the_goat/`
+2. Follow all conventions from `.claude/skills/android-conventions/SKILL.md`:
    - Parameters: data → callbacks → `modifier: Modifier = Modifier`
    - All colours via `MaterialTheme.colorScheme.*` or `MaterialTheme.goatColors.*`
    - All spacing via `GoatSpacing.*`
@@ -166,7 +166,7 @@ private fun ScoreCardPreviewLight() {
 }
 ```
 
-4. Write tests in `commonTest/` mirroring the source path:
+4. Write tests in `src/test/kotlin/` mirroring the source path:
 
 ```kotlin
 class ScoreCardTest {
@@ -315,10 +315,10 @@ After implementing, run:
 
 ```bash
 # Build (catches compile errors)
-./gradlew :composeApp:assembleDebug
+./gradlew :app:assembleDebug
 
 # Tests
-./gradlew :composeApp:jvmTest
+./gradlew :app:testDebugUnitTest
 ```
 
 If the build fails: fix errors before presenting results.
@@ -331,9 +331,9 @@ If the build fails: fix errors before presenting results.
 ## Implementation Complete
 
 **Files created:**
-- `mobile/.../screens/scores/ScoresScreen.kt`
-- `mobile/.../screens/scores/ScoresViewModel.kt`
-- `mobile/.../screens/scores/ScoresViewModelTest.kt`
+- `android/app/.../screens/scores/ScoresScreen.kt`
+- `android/app/.../screens/scores/ScoresViewModel.kt`
+- `android/app/.../screens/scores/ScoresViewModelTest.kt`
 
 **Build:** ✅ Passed
 **Tests:** ✅ {n} tests passing
@@ -355,8 +355,8 @@ If the build fails: fix errors before presenting results.
 - [ ] ViewModel uses sealed `UiState` class
 - [ ] Errors surface via `SharedFlow` — not swallowed
 - [ ] Tests use `runTest` + Turbine for Flow assertions
-- [ ] Build passes (`./gradlew :composeApp:assembleDebug`)
-- [ ] All tests pass (`./gradlew :composeApp:jvmTest`)
+- [ ] Build passes (`./gradlew :app:assembleDebug`)
+- [ ] All tests pass (`./gradlew :app:testDebugUnitTest`)
 
 ## Handling Edge Cases
 

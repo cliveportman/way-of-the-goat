@@ -321,7 +321,7 @@ Before completing either mode, verify:
 - [ ] `design-specs/tokens.json` is up to date with all colour values
 - [ ] Spec cross-references (flow → screens → components) use correct relative links
 - [ ] For flows: Mermaid diagram confirmed before the review gate
-- [ ] Implementation files are in the correct directories under `mobile/`
+- [ ] Implementation files are in the correct directories under `android/app/`
 - [ ] Summary lists every created and updated file clearly
 
 ---

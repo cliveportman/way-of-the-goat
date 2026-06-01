@@ -55,7 +55,7 @@ Evaluate the changed file list against these rules. A single run can match multi
 
 | File pattern | Domain | Agent |
 |---|---|---|
-| `mobile/**/*.kt`, `mobile/**/*.kts` | Mobile (KMP) | `nick-butcher` |
+| `android/**/*.kt`, `android/**/*.kts` | Mobile (Android) | `nick-butcher` |
 | `website/**/*.html`, `website/**/*.css`, `website/**/*.js` | Web | `addy-osmani` |
 | `website/**/*.rs`, `website/**/Cargo.toml` | Rust/WASM | `steve-klabnik` |
 | `.claude/**` | Config | `claude-reviewer` |
@@ -75,7 +75,7 @@ If a PR number was given:
 1. Run `git fetch origin <branch>` to get the latest remote state
 2. Call `EnterWorktree` (name: `review-<pr-number>-mobile`) — this switches into an isolated worktree
 3. Inside the worktree, run `git switch --detach origin/<branch>` to switch to the PR branch
-4. From the `mobile/` directory, run `./gradlew detekt`. Note any failures — pass them to Nick Butcher as pre-identified Critical issues.
+4. From the `android/` directory, run `./gradlew detekt`. Note any failures — pass them to Nick Butcher as pre-identified Critical issues.
 5. Dispatch the `nick-butcher` agent (see Agent Dispatch below)
 6. After the agent completes, call `ExitWorktree` with `action: "remove"`
 
@@ -87,7 +87,7 @@ When `--recheck` is passed for the mobile domain:
 
 1. Fetch all comments: `gh api repos/{owner}/{repo}/issues/{pr_number}/comments`
 2. Find the most recent comment whose body starts with "Automated code review" (case-insensitive). Record its timestamp.
-3. Determine which `mobile/` files were modified **after** that timestamp.
+3. Determine which `android/` files were modified **after** that timestamp.
 4. Run the full checklist against those changed files only.
 5. Re-check any Critical Issues or Suggestions from the previous review — even if the file was not re-touched.
 6. Do **not** raise new issues in files unchanged since the last review. If you notice something in an untouched file, note it under `#### Deferred (untouched files)` — informational only, not numbered.
@@ -97,9 +97,8 @@ When `--recheck` is passed for the mobile domain:
 
 Instruct `nick-butcher` to consult:
 
-- `.claude/skills/kmp-review-criteria/SKILL.md`
-- `.claude/skills/kmp-conventions/SKILL.md`
-- `mobile/CLAUDE.md`
+- `.claude/skills/android-review-criteria/SKILL.md`
+- `.claude/skills/android-conventions/SKILL.md`
 
 Pass any detekt violations as pre-identified Critical issues.
 

@@ -4,7 +4,7 @@ Curate Component Spec from raw Figma JSON at: $ARGUMENTS
 
 ## Purpose
 
-Transform raw Figma JSON exports into implementation-ready **component** specs for Compose Multiplatform, following the format in `.claude/skills/design-specs/SKILL.md`.
+Transform raw Figma JSON exports into implementation-ready **component** specs for Jetpack Compose, following the format in `.claude/skills/design-specs/SKILL.md`.
 
 ## Prerequisites
 
